@@ -7,7 +7,6 @@ package com.tarsec.javadoc.pdfdoclet.filter;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
@@ -19,6 +18,9 @@ import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.Tag;
 import com.tarsec.javadoc.pdfdoclet.Configuration;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +39,7 @@ public class Filter
   /**
    * Storage for all general filter tag names.
    */
-  private static Hashtable filterTags = new Hashtable();
+  private static Map<String,String> filterTags = new HashMap<>();
 
   /**
    * Storage for names of all filter tag that must be check contentwise.
@@ -153,7 +155,7 @@ public class Filter
       if (filterTagsContent.get(tagName) != null) {
         String correct = filterTagsContent.getProperty(tagName);
         String content = tags[i].text().toLowerCase();
-        if (content.indexOf(correct) != -1) {
+        if (content.contains(correct)) {
           return false;
         }
       }
@@ -178,7 +180,7 @@ public class Filter
       list[i] = new FilteredClassDoc(input[i]);
     }
     // Otherwise, create a filtered list.
-    ArrayList filteredList = new ArrayList();
+    List<FilteredClassDoc> filteredList = new ArrayList<>();
     for (int i = 0; i < list.length; i++) {
       // If it doesn't have to be filtered out, add it to the list.
       if (!Filter.mustBeFiltered(list[i])) {
@@ -187,7 +189,7 @@ public class Filter
     }
     ClassDoc[] result = new ClassDoc[filteredList.size()];
     LOG.debug("<");
-    return (ClassDoc[]) filteredList.toArray(result);
+    return filteredList.toArray(result);
   }
 
   /**
@@ -201,7 +203,7 @@ public class Filter
   {
     LOG.debug(">");
     // Otherwise, create a filtered list.
-    ArrayList filteredList = new ArrayList();
+    List<ClassDoc> filteredList = new ArrayList<>();
     for (int i = 0; i < input.length; i++) {
       // If it doesn't have to be filtered out, add it to the list.
       if (!Filter.mustBeFiltered(input[i])) {
@@ -210,7 +212,7 @@ public class Filter
     }
     ClassDoc[] result = new ClassDoc[filteredList.size()];
     LOG.debug("<");
-    return (ClassDoc[]) filteredList.toArray(result);
+    return filteredList.toArray(result);
   }
 
   /**
@@ -225,7 +227,7 @@ public class Filter
     LOG.debug(">");
 
     // Otherwise, create a filtered list.
-    ArrayList filteredList = new ArrayList();
+    List<MethodDoc> filteredList = new ArrayList<>();
     for (int i = 0; i < input.length; i++) {
       // If it doesn't have to be filtered out, add it to the list.
       if (!Filter.mustBeFiltered(input[i])) {
@@ -234,7 +236,7 @@ public class Filter
     }
     MethodDoc[] result = new MethodDoc[filteredList.size()];
     LOG.debug("<");
-    return (MethodDoc[]) filteredList.toArray(result);
+    return filteredList.toArray(result);
   }
 
   /**
@@ -248,7 +250,7 @@ public class Filter
   {
     LOG.debug(">");
     // Otherwise, create a filtered list.
-    ArrayList filteredList = new ArrayList();
+    List<FieldDoc> filteredList = new ArrayList<>();
     for (int i = 0; i < input.length; i++) {
       // If it doesn't have to be filtered out, add it to the list.
       if (!Filter.mustBeFiltered(input[i])) {
@@ -257,7 +259,7 @@ public class Filter
     }
     FieldDoc[] result = new FieldDoc[filteredList.size()];
     LOG.debug("<");
-    return (FieldDoc[]) filteredList.toArray(result);
+    return filteredList.toArray(result);
   }
 
   /**
@@ -272,7 +274,7 @@ public class Filter
   {
     LOG.debug(">");
     // Otherwise, create a filtered list.
-    ArrayList filteredList = new ArrayList();
+    List<ConstructorDoc> filteredList = new ArrayList<>();
     for (int i = 0; i < input.length; i++) {
       // If it doesn't have to be filtered out, add it to the list.
       if (!Filter.mustBeFiltered(input[i])) {
@@ -281,7 +283,7 @@ public class Filter
     }
     ConstructorDoc[] result = new ConstructorDoc[filteredList.size()];
     LOG.debug("<");
-    return (ConstructorDoc[]) filteredList.toArray(result);
+    return filteredList.toArray(result);
   }
 
 }
