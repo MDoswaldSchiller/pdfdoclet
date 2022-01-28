@@ -11,17 +11,21 @@ import org.apache.log4j.Logger;
  * @version $Revision: 1.1 $
  * @author Marcel Schoen
  */
-public class TagBODY extends HTMLTag {
+public class TagBODY extends HTMLTag
+{
 
-    /** Logger reference */
-    private static Logger log = Logger.getLogger(TagBODY.class);
+  /**
+   * Logger reference
+   */
+  private static Logger log = Logger.getLogger(TagBODY.class);
 
-	boolean paragraphCreated = false;
+  boolean paragraphCreated = false;
 
-	public TagBODY(HTMLTag parent, int type) {
-		super(parent, type);
-	}
-    /*
+  public TagBODY(HTMLTag parent, int type)
+  {
+    super(parent, type);
+  }
+  /*
     public Element toElement(String text) {
 		// Otherwise, just create a phrase.
 		Phrase result = new Phrase();
@@ -31,5 +35,5 @@ public class TagBODY extends HTMLTag {
 		}
 		return result;
     }
-    */
+   */
 }

@@ -13,16 +13,20 @@ import com.lowagie.text.pdf.PdfPTable;
  * @version $Revision: 1.1 $
  * @author Marcel Schoen
  */
-public class CustomPdfPTable extends PdfPTable {
+public class CustomPdfPTable extends PdfPTable
+{
 
-    /** Logger reference */
-    private static Logger log = Logger.getLogger(CustomPdfPTable.class);
-	
-	/**
-	 * Creates a table for summaries (2 columns, border).
-	 */
-	public CustomPdfPTable() {
-		super(1);
-		super.setWidthPercentage((float) 100);
-	}
+  /**
+   * Logger reference
+   */
+  private static Logger log = Logger.getLogger(CustomPdfPTable.class);
+
+  /**
+   * Creates a table for summaries (2 columns, border).
+   */
+  public CustomPdfPTable()
+  {
+    super(1);
+    super.setWidthPercentage((float) 100);
+  }
 }

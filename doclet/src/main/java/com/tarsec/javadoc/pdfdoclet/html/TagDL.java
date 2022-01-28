@@ -8,51 +8,56 @@ import org.apache.log4j.Logger;
 import com.lowagie.text.Element;
 import com.lowagie.text.Paragraph;
 
-
 /**
  * Implements a definition list (DL) tag.
  *
  * @version $Revision: 1.1 $
  * @author Marcel Schoen
  */
-public class TagDL extends HTMLTag {
+public class TagDL extends HTMLTag
+{
 
-    /** Logger reference */
-    private static Logger log = Logger.getLogger(TagDL.class);
-    
-    /**
-     * Creates a DL tag object.
-     * 
-     * @param parent The parent HTML tag object.
-     * @param type The type of this HTML tag.
-     */
-    public TagDL(HTMLTag parent, int type) {
-        super(parent, type);
-    }
+  /**
+   * Logger reference
+   */
+  private static Logger log = Logger.getLogger(TagDL.class);
 
-    /*
+  /**
+   * Creates a DL tag object.
+   *
+   * @param parent The parent HTML tag object.
+   * @param type The type of this HTML tag.
+   */
+  public TagDL(HTMLTag parent, int type)
+  {
+    super(parent, type);
+  }
+
+  /*
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#openTagElements()
-     */
-    public Element[] openTagElements() {
-        Element[] elements = new Element[2];
-        Paragraph p1 = createParagraph(" ");
-        Paragraph p2 = createParagraph("");
-        elements[0] = p1;
-        elements[1] = p2;
-        return elements;
-    }
+   */
+  public Element[] openTagElements()
+  {
+    Element[] elements = new Element[2];
+    Paragraph p1 = createParagraph(" ");
+    Paragraph p2 = createParagraph("");
+    elements[0] = p1;
+    elements[1] = p2;
+    return elements;
+  }
 
-    /*
+  /*
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#closeTagElements()
-     */
-    public Element[] closeTagElements() {
-        Element[] elements = new Element[2];
-        Paragraph p1 = createParagraph(" ");
-        Paragraph p2 = createParagraph("");
-        elements[0] = p1;
-        elements[1] = p2;
-        return elements;
-    }
+   */
+  public Element[] closeTagElements()
+  {
+    Element[] elements = new Element[2];
+    Paragraph p1 = createParagraph(" ");
+    Paragraph p2 = createParagraph("");
+    elements[0] = p1;
+    elements[1] = p2;
+    return elements;
+  }
 }

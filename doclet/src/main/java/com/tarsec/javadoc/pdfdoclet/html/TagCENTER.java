@@ -7,32 +7,37 @@ import org.apache.log4j.Logger;
 
 import com.lowagie.text.Element;
 
-
 /**
  * Implements the CENTER tag.
  *
  * @version $Revision: 1.1 $
  * @author Marcel Schoen
  */
-public class TagCENTER extends HTMLTag {
+public class TagCENTER extends HTMLTag
+{
 
-    /** Logger reference */
-    private static Logger log = Logger.getLogger(TagCENTER.class);
+  /**
+   * Logger reference
+   */
+  private static Logger log = Logger.getLogger(TagCENTER.class);
 
-    public TagCENTER(HTMLTag parent, int type) {
-        super(parent, type);
-        isCentered = true;
-    }
+  public TagCENTER(HTMLTag parent, int type)
+  {
+    super(parent, type);
+    isCentered = true;
+  }
 
-    public Element[] openTagElements() {
-        Element[] elements = new Element[1];
-        elements[0] = createParagraph("");
-        return elements;
-    }
+  public Element[] openTagElements()
+  {
+    Element[] elements = new Element[1];
+    elements[0] = createParagraph("");
+    return elements;
+  }
 
-    public Element[] closeTagElements() {
-        Element[] elements = new Element[1];
-        elements[0] = createParagraph("\n");
-        return elements;
-    }
+  public Element[] closeTagElements()
+  {
+    Element[] elements = new Element[1];
+    elements[0] = createParagraph("\n");
+    return elements;
+  }
 }
