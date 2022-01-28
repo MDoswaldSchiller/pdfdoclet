@@ -14,8 +14,6 @@ import com.tarsec.javadoc.pdfdoclet.Configuration;
 import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Chunk with internal hyperlink, if possible. For instance, if the target is
@@ -27,8 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LinkPhrase extends Phrase implements IConstants
 {
-  private static final Logger LOG = LoggerFactory.getLogger(LinkPhrase.class);
-
   /**
    * Creates hyperlink chunk where the font is defined after the following
    * rules:

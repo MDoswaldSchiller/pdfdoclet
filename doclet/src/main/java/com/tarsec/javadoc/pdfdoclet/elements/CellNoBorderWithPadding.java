@@ -9,8 +9,6 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Customized version(s) of PdfPCell without a border but with a given padding.
@@ -20,8 +18,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CellNoBorderWithPadding extends PdfPCell
 {
-  private static final Logger LOG = LoggerFactory.getLogger(CellNoBorderWithPadding.class);
-
   /**
    * Creates a PdfPCell with a given padding and an additional wrapping Phrase
    * for the given Phrase.

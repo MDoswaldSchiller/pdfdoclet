@@ -11,8 +11,6 @@ import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Customized version(s) of Paragraph.
@@ -22,8 +20,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CustomTagParagraph extends Paragraph implements IConstants
 {
-  private static final Logger LOG = LoggerFactory.getLogger(CustomTagParagraph.class);
-
   /**
    * Creates a paragraph of PDF phrases for the given tag text.
    *

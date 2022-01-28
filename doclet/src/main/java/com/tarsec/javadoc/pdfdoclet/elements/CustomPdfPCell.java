@@ -3,17 +3,13 @@
  */
 package com.tarsec.javadoc.pdfdoclet.elements;
 
-import java.awt.Color;
-
-
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.awt.Color;
 
 /**
  * Customized version(s) of PdfPCell.
@@ -23,14 +19,11 @@ import org.slf4j.LoggerFactory;
  */
 public class CustomPdfPCell extends PdfPCell implements IConstants
 {
-  private static final Logger LOG = LoggerFactory.getLogger(CustomPdfPCell.class);
-
   /**
    * A coloured title bar (for the "Fields", "Methods" and "Constructors"
    * titles).
    *
-   * @param paragraph The text for the title.
-   * @param backgroundColor Color of the cell
+   * @param title The text for the title.
    */
   public CustomPdfPCell(String title)
   {
