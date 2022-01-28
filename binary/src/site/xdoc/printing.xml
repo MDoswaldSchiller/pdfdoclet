@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Features</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Printing">
+
+    <subsection name="Basic">
+	<p><p></p>If the PDF is to be used for printing mainly, there are a few configuration
+		properties to consider. First of all, make sure that printing is enabled:
+	</p>
+	<pre>
+        encrypted=yes
+        allow.printing=yes
+	</pre>
+	</subsection>
+	
+    <subsection name="Custom Page Breaks">
+	<p><p></p>
+	If the document is to be printed well, it may be necessary to insert custom
+	page breaks in the overview.html or some package.html files. A custom page
+	break can be triggered with a special HTML comment:
+	</p>
+	<pre>
+      &lt;!-- NEWPAGE --&gt;
+	</pre>
+	</subsection>
+    
+    <subsection name="Disabling Hyperlinks">
+	<p><p></p>In a printed document, links are pretty much useless, so it may be
+	better to disable them (to make them be printed black and not underlined):
+	</p>
+	<pre>
+        create.links=no
+	</pre>
+	</subsection>
+	
+</section>
+
+</body>
+</document>

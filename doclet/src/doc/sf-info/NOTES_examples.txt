@@ -1,0 +1,2 @@
+These are some example PDFs created with the latest 
+release of PDFDoclet.

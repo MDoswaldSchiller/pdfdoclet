@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Overview</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Overview">
+	
+	<subsection name="Overview Customization">
+	<p><p></p>
+	PDFDoclet allows to import additional pages from an external PDF document in
+	addition to - or instead of - the regular overview. If the regular overview
+	is used as well, the imported PDF pages are inserted <i>before</i> the regular
+	overview pages, just after the title page.
+	</p>
+	<p><p></p>
+	To import pages from an external PDF document, use this configuration property:
+	<pre>
+      overview.pdf.file=./doc-files/projectinfo.pdf,3-5
+	</pre>
+	The format of the string is the same as for PDF appendices (see 
+	<a href="appendices.html">appendices</a> for more details).
+	</p>
+	<p><p></p>
+	In order to distinguish between the imported pages and the regular overview,
+	the use of custom bookmark entries in the regular overview can be useful
+	(see <a href="bookmarks.html">bookmarks</a> for details). If pages from a
+	PDF document are imported, the default "Overview" bookmark will always point
+	to the first of these imported pages.
+	</p>
+	
+	</subsection>
+	
+</section>
+
+</body>
+</document>

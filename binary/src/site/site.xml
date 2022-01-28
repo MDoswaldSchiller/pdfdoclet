@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="pdfdoclet">
+  <skin>
+	<groupId>pdfdoclet</groupId>
+	<artifactId>pdfdoclet-maven-skin</artifactId>
+	<version>1.0</version>
+  </skin>
+  <title>PDFDoclet</title>
+  <body>
+    <links>
+		<item name="Links" href="/links.html" />
+    </links>
+    <menu name="Usage">
+	    <item name="Running PDFDoclet" href="/running.html"/> 
+	</menu>
+ 	
+    <menu name="Usage">
+	    <item name="Running PDFDoclet" href="/running.html"/> 
+	    <item name="Configuration" href="/configuration.html"/> 
+	    <item name="Title Page" href="/titlepage.html"/> 
+	    <item name="Appendices" href="/appendices.html"/> 
+	    <item name="Bookmarks" href="/bookmarks.html"/> 
+	    <item name="Overview" href="/overview.html"/> 
+	    <item name="Custom Tags" href="/customtags.html"/> 
+	    <item name="Filtering" href="/filtering.html"/> 
+	    <item name="Printing" href="/printing.html"/> 
+	    <item name="Fonts" href="/fonts.html"/> 
+	</menu>   
+	
+    <menu name="Miscellaneous">
+	    <item name="Features" href="/features.html"/> 
+	    <item name="Supported Tags" href="/htmltags.html"/> 
+	    <item name="Examples" href="/samples.html" collapse="true"/> 
+	    <item name="Todo" href="/todo.html"/> 
+	    <item name="FAQ" href="/faq.html"/> 
+	    <item name="Credits" href="/credits.html"/> 
+	    <item name="Build information" href="/build-information.html"/> 
+	</menu>   
+	
+</body>
+</project>

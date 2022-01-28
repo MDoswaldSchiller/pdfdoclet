@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Todo</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Todo">
+	<subsection name="Known issues and bugs">
+		<ul>
+<li>
+	Bug in index: In some cases when a member gets printed completely 
+	on a new page, the index gets the number of the previous page.
+	
+</li>
+  </ul>
+	</subsection>
+	
+	<subsection name="To be done in future releases">
+		<ul>
+<li>
+	Header and footer not flexible enough yet. Placement of page 
+	numbering should be configurable. In the next version, variables 
+	might be introduced to be used in the header.
+</li>
+<li>
+	Optimization for double-sided printing (inserting empty pages when 
+	necessary to ensure that new chapters always begin on the right side).
+</li>
+<li>
+	Unnecessary lines at the end or beginning of a page (after or before 
+	a method description block) should be removed.
+</li>
+			</ul>
+	</subsection>
+	
+</section>
+
+</body>
+</document>

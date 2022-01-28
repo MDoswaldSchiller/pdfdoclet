@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>HTML Tags</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="HTML Tags">
+	<subsection name="HTML tags">
+		<ul>
+			<li>&lt;A&gt; - links to URLs</li>
+			<li>&lt;B&gt; - bold</li>
+			<li>&lt;BR&gt; - line break</li>
+			<li>&lt;CENTER&gt; - centered formatting</li>
+			<li>&lt;CODE&gt; - fixed-with font</li>
+			<li>&lt;EM&gt; - emphasized formatting (italic)</li>
+			<li>&lt;STRONG&gt; - emphasized formatting (bold)</li>
+			<li>&lt;H&gt; - headers in different sizes</li>
+			<li>&lt;HR&gt; - horizontal line</li>
+			<li>&lt;I&gt; - italic font</li>
+			<li>&lt;IMG&gt; - image</li>
+			<li>&lt;LI&gt; - list entry</li>
+			<li>&lt;OL&gt; - ordered list</li>
+			<li>&lt;UL&gt; - bulleted list</li>
+			<li>&lt;DL&gt; - definition list</li>
+			<li>&lt;DT&gt; - definition list term</li>
+			<li>&lt;DD&gt; - definition list definition</li>
+			<li>&lt;P&gt; - paragraph</li>
+			<li>&lt;PRE&gt; - preformatted text</li>
+			<li>&lt;TABLE&gt; - table</li>
+			<li>&lt;TD&gt; - table cell</li>
+			<li>&lt;TH&gt; - table header cell</li>
+			<li>&lt;TR&gt; - table row</li>
+			<li>&lt;U&gt; - underlined font</li>
+		</ul>
+	</subsection>
+	
+	<subsection name="Inline tags">
+		<ul>
+			<li>@link</li>
+			<li>@linkplain</li>
+			<li>@inheritDoc</li>
+		</ul>
+	</subsection>
+	
+</section>
+
+</body>
+</document>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+
+  <properties>
+    <title>XDoc Sample page</title>
+  </properties>
+
+  <body>
+   <section name="Welcome to XDOC Sample">
+
+      <div class="highlightBox">
+        <h5>A Title</h5>
+        <p>
+          Some text which can also contain
+          <a href="#">a Link</a>.
+        </p>
+      </div>
+
+      <div class="highlightBox">
+        <h5>Another Title</h5>
+        <p>
+        	A paragraph
+        </p>
+        <ul class="downloads">
+          <li class="download"><a href="#">With some links</a></li>
+          <li class="download"><a href="#">With some links</a></li>
+        </ul>
+      </div>
+
+      <div>
+      	Then we have some text of course.
+
+      	<source>Some Source Code goes here....
+Some Source Code goes here....
+Some Source Code goes here....
+Some Source Code goes here....</source>
+      </div>
+
+
+	</section>
+
+	<section name="Another Section">
+		<div>A Section can also contain sub-sections.....</div>
+
+		<subsection name="Subsection 1">
+			<div>And some text also....</div>
+			<div>And some other text also.... and a list</div>
+			<ul>
+				<li>Some List Item</li>
+				<li>Some List Item</li>
+				<li>Some List Item</li>
+			</ul>
+		</subsection>
+
+		<subsection name="Subsection 2">
+			<div>There are also <code>div</code>'s with special classes.</div>
+			<div class="errormark">the "errormark" class, and some text also....</div>
+			<div class="warningmark">the "warningmark" class, other text also....</div>
+			<div class="donemark">the "donemark" class, and some other text also....</div>
+			<div class="infomark">the "infomark" class, and some other text also....
+				including again a source code element
+				<source>Some source code..
+
+Some source code..
+Some source code..
+Some source code..
+				</source>
+
+			</div>
+		</subsection>
+
+	</section>
+	</body>
+</document>

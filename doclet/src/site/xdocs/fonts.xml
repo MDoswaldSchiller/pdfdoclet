@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Features</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Fonts">
+	<p><p></p>It is possible to embed custom TrueType fonts into a PDF file.
+	However, some fonts may not be embeddable due to copyright restrictions.
+	In such cases, PDFDoclet usually stops processing with an error message
+	pointing to the source of the problem.
+	</p>
+	<p><p></p>Currently, only two custom fonts can be embedded, one replacing
+	the standard text font and the other the standard fixed font (for
+	preformatted text parts).</p>
+	<p><p></p>Configure the standard text font like this:</p>
+	<pre>
+        font.text.name=&lt;relative path of .ttf file&gt;
+        # optional: define encoding of font
+        font.text.enc=&lt;encoding&gt;
+	</pre>
+	<p><p></p>For example</p>
+	<pre>
+        font.text.name=fonts/Windows/Vera.ttf
+        font.text.enc=UTF-8
+	</pre>
+	<p><p></p>Configure the standard preformatted (fixed-with) font like this:</p>
+	<pre>
+        font.code.name=&lt;relative path of .ttf file&gt;
+        # optional: define encoding of font
+        font.code.enc=&lt;encoding&gt;
+	</pre>
+	<p><p></p>For example</p>
+	<pre>
+        font.code.name=fonts/SF Arch Rival v1.0/SF Arch Rival.ttf
+        font.code.enc=UTF-8
+	</pre>
+</section>
+
+</body>
+</document>

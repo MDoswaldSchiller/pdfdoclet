@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Configuration</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Configuration">
+
+	<subsection name="Overview">
+		<p><p></p>
+	PDFDoclet should be configured through a property file. This 
+is (IMHO) the clearest and easiest way of maintaining a set 
+of configuration values (instead of using dozens of parameters). 
+However, all settings can also be configured through 
+commandline parameters. 
+</p><p><p></p>
+For using a property file, specify the file with the 
+"-config" commandline argument:
+</p><pre>
+  -config &lt;property file path&gt;
+</pre><p><p></p>
+All other configuration values can be specified as an argument 
+or in a property file. For example, to print the "author" tag,
+either the commandline argument "-author" may be specified,
+or the property "author" may be set in the config file.
+</p><p><p></p>
+Note that all properties with a boolean value ("true"/"yes" 
+or "false"/"no") DON'T TAKE A VALUE when specified as commandline
+argument. In that case, they are by default assumed to be "true".
+For example, specifiying "-author" (without a specific value) 
+on the commandline has the same meaning as specifying 
+"author=true" or "author=yes" in the configuration file.
+</p>
+</subsection>
+
+<subsection name="Properties">
+	<p><p></p>
+Here is a list of all available configuration properties. The 
+list has been split in two parts: The first lists all simple
+boolean "yes"/"no" properties. The second list shows all the
+properties which need an additional value argument on the 
+command line.
+</p>
+
+<subsection name="Boolean properties (value &quot;yes&quot;/&quot;no&quot;)">
+	<table>
+		<tr><th>Property</th><th>Description</th></tr>
+		<tr><td>debug</td><td>Lets the doclet print additional output in the console and to a logfile.</td></tr>
+		<tr><td>author</td><td>Print "Author" tags</td></tr>
+		<tr><td>version</td><td>Print "Version" tags</td></tr>
+		<tr><td>tag.since</td><td>Print "since" tags</td></tr>
+		<tr><td>summary.table</td><td>Create summary tables</td></tr>
+		<tr><td>create.index</td><td>Create an index at the end of the document.</td></tr>
+		<tr><td>create.links</td><td>Create hyperlinks</td></tr>
+		<tr><td>encrypted</td><td>Encrypt the PDF file</td></tr>
+		<tr><td>allow.printing</td><td>Allow printing of the PDF file</td></tr>
+		<tr><td>create.frame</td><td>Create a bookmark frame</td></tr>
+		<tr><td>api.title.page</td><td>Print a title page</td></tr>
+		<tr><td>filter</td><td>Enables the tag-based filter</td></tr>
+	</table>
+  </subsection>
+
+  <subsection name="Properties with a value">
+    <table>
+		<tr><th>Property</th><th>Description</th></tr>
+		<tr><td>pdf &lt;file&gt;</td><td>The path of the created PDF file.</td></tr>
+		<tr><td>workdir &lt;dir&gt;</td>
+			 <td>The base directory for image file path specifications (default is the current directory).</td></tr>
+		<tr><td>sort &lt;list&gt;</td>
+			<td>Optional comma-separated list of package names to define the ordering 
+				of the packages in the bookmarks frame.</td></tr>
+		<tr><td>dontspec &lt;list&gt;</td>
+			<td>Optional comma-separated list of package names to define packages whose classes 
+			should not be printed fully qualified (just "String" instead of "java.lang.String").</td></tr>
+		<tr><td>label.tag.&lt;name&gt; &lt;label&gt;</td>
+			<td>Specifies a custom doc tag with a certain label.</td></tr>
+		<tr><td>label.bookmarks.title</td>
+			<td>Overrides the text label to be printed for the title of the bookmarks.</td></tr>
+		<tr><td>label.bookmarks.index</td>
+			<td>Overrides the text label to be printed for the index entry in the bookmarks.</td></tr>
+		<tr><td>label.bookmarks.overview</td>
+			<td>Overrides the text label to be printed for the overview entry in the bookmarks.</td></tr>
+		<tr><td>label.bookmarks.packages</td>
+			<td>Overrides the text label to be printed for the packages entry in the bookmarks.</td></tr>
+		<tr><td>label.bookmarks.otherPackages</td>
+			<td>Only used with the <code>-group</code> parameter. Overrides the text label to be printed 
+			for the "Other Packages" entry in the bookmarks.</td></tr>
+		<tr><td>label.fields</td>
+			<td>Overrides the text label to be printed for the fields entry in the bookmarks.</td></tr>
+		<tr><td>label.constructors</td>
+			<td>Overrides the text label to be printed for the constructors entry in the bookmarks.</td></tr>
+		<tr><td>label.methods</td>
+			<td>Overrides the text label to be printed for the methods entry in the bookmarks.</td></tr>
+		<tr><td>label.tag.&lt;tagname&gt;</td>
+			<td>Defines the text label for a tag. Can either override the label of a default tag
+			such as "author", or define the label for a custom tag (custom tags are not
+			printed as long as no label is defined for them).</td></tr>
+		<tr><td>inherited.summary.table=[yes|internal]</td><td>Create summary tables for inherited fields/methods.
+		    If the values is set to <code>internal</code>, summary tables are printed only for elements inherited
+		    by classes and interfaces within the scope of the API. Elements inherited from other classes such as
+		    <code>java.lang.Object</code> are ignored.</td></tr>
+		<tr><td>appendix.&lt;number&gt;.name</td>
+			<td>Defines the name / number of the appendix.</td></tr>
+		<tr><td>appendix.&lt;number&gt;.title</td>
+			<td>Defines the title label of the appendix.</td></tr>
+		<tr><td>appendix.&lt;number&gt;.file=&lt;file path&gt;[,page,from-to,..,..]</td>
+			<td>Path of the HTML or PDF file that should be included. If a PDF file is specified,
+			the filename may be followed by a comma-separated list of single page numbers or page
+			ranges, to define which pages to import from the PDF document.</td></tr>
+		    
+		<!-- NOT YET IMPLEMENTED
+		<tr><td>header.left &lt;header&gt;</td><td></td></tr>
+		<tr><td>header.right &lt;header&gt;</td><td></td></tr>
+		<tr><td>header.center &lt;header&gt;</td><td></td></tr>
+		-->
+		<tr><td>page.numbers.prefix &lt;text&gt;</td><td>Prefix-text for page numbers.</td></tr>
+		<tr><td>page.numbers.type &lt;type&gt;</td><td>"full" or "simple"</td></tr>
+		<tr><td>page.numbers.alignment &lt;type&gt;</td>
+			<td>"left", "center", "right" or "switch". Defines the alignment of page numbers. 
+			"switch" means that they will switch from left to right and back, as needed for printing.</td></tr>
+		<tr><td>api.title.file &lt;file&gt;</td><td>The path of a HTML file used for the title page of the PDF.</td></tr>
+		<tr><td>api.title &lt;file&gt;</td><td>Title for the title page if no external HTML title page is used.</td></tr>
+		<tr><td>api.copyright &lt;copyright&gt;</td><td>Copyright remark for the title page if no 
+				external HTML title page is used.</td></tr>
+		<tr><td>api.author &lt;author&gt;</td><td>Author's name for the title page if no 
+				external HTML title page is used.</td></tr>
+		<tr><td>font.text.name &lt;ttf-file&gt;</td><td>Font to be used for all regular text. 
+				Default is TIMES-ROMAN (path of TrueType-font, like ./fonts/garait.ttf).</td></tr>
+		<tr><td>font.text.enc</td><td>Optional encoding for the text font.</td></tr>
+		<tr><td>font.code.name &lt;ttf-file&gt;</td><td>Font to be used for all fixed-width code parts. 
+		Default is COURIER.</td></tr>
+		<tr><td>font.code.enc</td><td>Optional encoding for the code font.</td></tr>
+		<tr><td>filter.tags &lt;taglist&gt;</td><td>Comma-separated list of filter tags.</td></tr>
+		<tr><td>filter.tag.&lt;name&gt; &lt;label&gt;</td><td>Filter tag with certain name and value.</td></tr>
+	</table>
+
+  </subsection>
+
+</subsection>
+
+<subsection name="Font embedding">
+	<p><p></p>
+As for the fonts: The specified font will be embedded into the PDF. If 
+that is not possible (due to legal restrictions of the font), the doclet
+will fail to create the PDF.
+	</p>
+</subsection>
+
+<subsection name="Overriding properties with parameters">
+	<p><p></p>
+Please note: A configuration file can be used in combination
+with command-line arguments. However, every configuration 
+value specified on the command line will override the same 
+configuration property from the property file. For example, if 
+the command-line parameter "-workdir=./example/src3" is 
+used, but in the configuration file there's a property 
+"workdir=./example/src1", the value will be "./example/src3".
+	</p>
+	<p><p></p>
+<b>IMPORTANT NOTE</b>: In versions 0.6.0 and older of PDFDoclet, it was exactly 
+the other way around, which was not very logical and intuitive.
+Therefore I decided to change it (better getting rid of bad
+implementation at the risk of causing some temporary confusion 
+than keeping it forever).
+</p>
+<p><p></p>
+For information about how to use additional parameters 
+with a custom doclet, read Sun's javadoc instructions. 
+Also check out the targets "example" and "test-pdf" in 
+the build.xml file to see how it can be done.
+	</p>
+</subsection>
+	
+</section>
+
+</body>
+</document>

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Filtering</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Appendices">
+	<subsection name="Introduction">
+<p><p></p>It is possible to include additional HTML or PDF pages as appendices in the generated
+    PDF document. Each appendix can be given a custom name / number and a label. The files
+    that should be used as appendices must be in the "doc-files" subdirectory, just as any
+    additional files referenced in a javadoc page have to.</p>
+   </subsection>
+   
+   <subsection name="Appendix Configuration">
+	<p><p></p>To define an appendix, a set of properties must be defined. These
+	properties are grouped together (for each appendix) by a number in the name
+	of the property. 
+	</p>
+	<p><p></p>
+	Here are two examples. The first shows how to include an external
+	HTML file in an appendix:
+	<pre>
+       appendix.1.name=A
+       appendix.1.title=Some Stuff
+       appendix.1.file=./doc-files/some-other-file.html
+	</pre>
+	The HTML file will be included in an appendix before the index pages.
+	</p>
+	<p><p></p>
+	The next example shows how to include pages of an external PDF document. If no page
+	numbers are specified, only the first page will be imported.
+	<pre>
+       appendix.2.name=B
+       appendix.2.title=Project Info
+       appendix.2.file=./doc-files/projectinfo.pdf,3-5
+	</pre>
+	This example imports pages 3-5 from the file "projectinfo.pdf". Page numbers can be
+	specified as a list of comma-separated entries, either single values or ranges. Here
+	are a few examples:
+	<pre>
+       appendix.2.file=./doc-files/projectinfo.pdf,1,4-8,20,25
+       appendix.2.file=./doc-files/projectinfo.pdf,1,3,5-7
+	</pre>
+	</p>
+   </subsection>
+   
+   <subsection name="Links To Appendices">
+	<p><p></p>To create a link to an appendix file (which works, of course, both in the
+	HTML javadoc as well as in the PDF file) use a link like this:
+	<pre>
+	    &lt;a href="./doc-files/some-other-file.html"&gt;link to an appendix file.&lt;/a&gt;
+	</pre>
+	This also works for PDF files (but it's not possible to link to a certain 
+	page, if more than one page has been imported).
+	</p>
+   </subsection>
+   </section>
+</body>
+</document>

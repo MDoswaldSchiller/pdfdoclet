@@ -1,0 +1,12 @@
+ ------
+ Welcome to the PDFDoclet
+ ------
+
+Welcome to the PDFDoclet
+
+ This Javadoc doclet allows to create a PDF file for a Java API documentation
+ instead of the standard HTML files.
+
+ The project is split into different modules, one is the actual doclet module,
+ one contains all 3rd party libraries (dependencies) used by PDFDoclet, and the
+ others are for examples and packages.

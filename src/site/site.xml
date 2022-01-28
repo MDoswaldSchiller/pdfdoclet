@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="pdfdoclet">
+
+    <bannerLeft>
+        <name>PDFDoclet</name>
+    </bannerLeft>
+
+    <skin>
+    	<groupId>pdfdoclet</groupId>
+    	<artifactId>pdfdoclet-maven-skin</artifactId>
+    	<version>1.0</version>
+  	</skin>
+
+    <publishDate format="dd.MM.yyyy hh:mm" position="left"/>
+    <version position="left" />
+
+
+    <body>
+        <links>
+            <item name="Continuum" href="http://maven.tetrade.ch/continuum/" />
+        </links>
+
+		<menu name="This component">
+      		<item name="About" href="/index.html"/>
+        	<item name="Readme" href="/readme.html" />
+        </menu>
+
+        <menu ref="modules" />
+        <menu ref="reports" />
+    </body>
+</project>

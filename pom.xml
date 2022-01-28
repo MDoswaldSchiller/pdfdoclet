@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>pdfdoclet</groupId>
+	<artifactId>pom</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.3</version>
+	<name>PDFDoclet</name>
+
+	<!-- =========================================================================== -->	
+	<!-- Due to one of the gazillion bugs in Maven, this "url" element must be here in
+	     the top-POM, or the site generation in the "binary" submodule will result in
+	     an NPE.
+	 -->
+    <url>http://sourceforge.net/projects/pdfdoclet</url>
+	<!-- =========================================================================== -->	
+    
+	<properties>
+		<pdfdoclet.version>${pom.version}</pdfdoclet.version>
+	</properties>
+    
+    <description>
+&lt;p>&lt;/p>
+PDFDoclet is a javadoc doclet which produces PDF output for a given Java API, using another SourceForge 
+library, 
+&lt;a href="http://itext.sourceforge.net/">"iText"&lt;/a>. It requires nothing more than some JAR files in order to create PDF files. Forget now about 
+all the fuss of having to create MIF output first, then having to load it into a FrameMaker installation using 
+some preinstalled batch application and finally needing Acrobat Distiller to create a PDF etc. etc...
+&lt;p>&lt;/p>
+PDFDoclet is a straightforward, simple-to-use 100% pure Java solution. It creates a PDF file as similar as 
+possible to a typical HTML javadoc. Read the features page and the FAQ to see what it can and what it can't do.
+&lt;p>&lt;/p>
+Kudos to the authors of &lt;a href="http://itext.sourceforge.net/">iText&lt;/a>, Bruno Lowagie and Paulo Soares, for making it possible!
+Thanks also to all the people who have contributed to the project by fixing bugs, testing or implementing 
+new features!
+	</description>
+	
+	<prerequisites>
+		<maven>2.0.5</maven>
+	</prerequisites>
+
+	<organization>
+		<name>PDFDoclet</name>
+	    <url>http://sourceforge.net/projects/pdfdoclet</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>GNU LIBRARY GENERAL PUBLIC LICENSE, Version 2, June 1991</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+		</license>
+	</licenses>
+
+	<modules>
+		<module>maven-skin</module>
+		<module>ext-lib</module>
+		<module>doclet</module>
+		<module>big-jar</module>
+		<module>binary</module>
+				<!-- 
+		<module>example</module>
+		-->
+	</modules>
+	
+<!--
+scm:cvs:pserver:anoncvs:@cvs.apache.org:/cvs/root:module
+		<connection>scm:cvs:pserver:anonymous@pdfdoclet.cvs.sourceforge.net:/cvsroot/pdfdoclet:pdfdoclet</connection>
+-->
+	<scm>
+		<connection>scm:cvs:pserver:anoncvs:@pdfdoclet.cvs.sourceforge.net:/cvsroot/pdfdoclet:pdfdoclet</connection>
+		<tag>HEAD</tag>
+		<url>scm:cvs:http://pdfdoclet.cvs.sourceforge.net/pdfdoclet/</url>
+	</scm>
+
+	<issueManagement>
+		<system>SourceForge</system>
+		<url>https://sourceforge.net/tracker/?group_id=55507</url>
+	</issueManagement>
+
+    <developers>
+        <developer>
+            <name>Marcel Schoen</name>
+            <id>marcelschoen</id>
+            <email>marcelschoen@users.sourceforge.net</email>
+            <organization>PDFDoclet</organization>
+            <roles>
+                <role>Project Admin</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Mariusz Zamolski</name>
+            <id>mariuszz</id>
+            <email>mariuszz@users.sourceforge.net</email>
+            <organization>PDFDoclet</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Mark Bryan Yu</name>
+            <id>vafada</id>
+            <email>vafada@users.sourceforge.net</email>
+            <organization>PDFDoclet</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Carl E. Lindberg</name>
+            <id>clindberg</id>
+            <email>clindberg@users.sourceforge.net</email>
+            <organization>PDFDoclet</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+	<distributionManagement>
+		<site>
+			<id>pdfdoclet</id>
+			<url>scp://pdfdoclet.sourceforge.net/home/groups/p/pd/pdfdoclet/htdocs</url>
+		</site>
+		<snapshotRepository>
+			<id>usp-m2-repository</id>
+			<name>USP Maven 2.x Repository</name>
+			<url>scp://cvs.tetrade.ch/data/java/maven2-snap/storage</url>
+		</snapshotRepository>
+		<repository>
+			<id>usp-m2-repository</id>
+			<name>USP Maven 2.x Repository</name>
+			<url>scp://cvs.tetrade.ch/data/java/maven2/storage</url>
+		</repository>
+	</distributionManagement>
+
+	<build>
+		<plugins>
+			
+			<!-- compile with 1.4 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.1</version>
+				<configuration>
+					<!-- verbose>true</verbose -->
+					<source>1.4</source>
+					<target>1.4</target>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<reporting>
+		<plugins>		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>2.0-beta-5</version>
+			</plugin>
+
+			<!-- The default maven 2 site stuff (for the childs components) -->
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>
+					maven-project-info-reports-plugin
+				</artifactId>
+				<version>2.0</version>
+				<inherited>true</inherited>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>index</report>
+							<report>summary</report>
+							<report>dependencies</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<!-- The default maven 2 site stuff (for the current component) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+			    <version>2.0</version>
+				<inherited>false</inherited>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>summary</report>
+							<report>dependencies</report>
+							<report>dependency-convergence</report>
+							<report>project-team</report>
+							<report>scm</report>
+							<report>issue-tracking</report>
+							<report>license</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			
+	        <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-changelog-plugin</artifactId>
+		        <reportSets>
+		          <reportSet>
+		            <id>dual-report</id>
+		            <configuration>
+		              <type>range</type>
+		              <range>30</range>
+		            </configuration>
+		            <reports>
+		            <!--
+		              <report>changelog</report>
+		              -->
+		              <report>file-activity</report>
+		              <report>dev-activity</report>
+		            </reports>
+		          </reportSet>
+		        </reportSets>
+		     </plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<stylesheet>maven</stylesheet>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	
+</project>

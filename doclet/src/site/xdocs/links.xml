@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Links</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Links">
+	
+	<subsection name="Other PDF doclets">
+		<ul>
+			<li><a href="http://sourceforge.net/projects/aurigadoclet/">Auriga</a> generates FO, PDF, PostScript, PCL, SVG etc.
+				</li>
+			<li><a href="http://freshmeat.net/projects/dbdoclet">DocBook</a> doclet creates docbook
+			  XML which can be transformed to PDF as well.</li>
+		</ul>
+	</subsection>
+	
+	<subsection name="Related Stuff">
+		<ul>
+			<li>
+				<a href="http://itext.sourceforge.net/">iText</a> is the free, open source low-level
+				pure-Java API used by PDFDoclet to create a PDF file.
+			</li>
+			<li>Sun's official javadoc <a href="http://java.sun.com/j2se/javadoc/">homepage</a>.</li>
+			<li>If you want to view PDF files, you'll need Adobe's <a 				href="http://www.adobe.com/support/downloads/main.html">Acrobat Reader</a>.</li>
+		</ul>
+	</subsection>
+	
+</section>
+ 
+</body>
+</document>

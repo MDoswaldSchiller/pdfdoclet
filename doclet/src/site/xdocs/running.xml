@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Running PDFDoclet</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Running PDFDoclet">
+	
+    <subsection name="Prerequisites">
+		<p><p></p>
+PDFDoclet requires Java 1.4 because it uses functionality of the
+doclet API available only in 1.4. It will not work with Java
+versions older than 1.4.</p>
+	</subsection>
+
+    <subsection name="With ANT">
+        <p><p></p>
+            This example shows how to create the PDF javadoc for the
+            example source tree "laby".
+        </p>
+        <pre>
+    &lt;javadoc doclet="com.tarsec.javadoc.pdfdoclet.PDFDoclet"
+        docletpath="./jar/pdfdoclet-1.0.0-all.jar"
+        overview="./example/laby/overview_laby.html"
+        packagenames="com.jlaby.*"
+        additionalparam="-pdf ./example/results/laby.pdf -config ./example/laby/config_laby.properties"
+        private="no">
+        &lt;sourcepath&gt;
+            &lt;pathelement location="./example/laby"/&gt;
+        &lt;/sourcepath&gt;
+    &lt;/javadoc&gt;
+        </pre>
+    </subsection>
+
+    <subsection name="With Maven">
+        <p><p></p>
+            The same example, but created in a goal in a maven.xml build file. Obviously, one can
+            simply re-use the ANT code.
+        </p>
+        <pre>
+    &lt;ant:javadoc doclet="com.tarsec.javadoc.pdfdoclet.PDFDoclet"
+            docletpath="./jar/pdfdoclet-1.0.0-all.jar"
+            packagenames="com.jlaby.*"
+            overview="./example/laby/overview_laby.html"
+            additionalparam="-pdf ./example/results/laby.pdf -config ./example/laby/config_laby.properties"
+            private="no"
+            sourcepath="./example/laby" &gt;
+    &lt;/ant:javadoc&gt;
+        </pre>
+    </subsection>
+
+    <subsection name="With a shell script">
+        <p><p></p>
+            This is an example for a Bash shell script running PDFDoclet.
+        </p>
+        <pre>
+    #!/bin/sh
+
+    # Set the JAVA_HOME variable correctly !!
+    JAVA_HOME=/usr/local/java/j2se
+
+    PATH=$JAVA_HOME/bin
+
+    DOCLET=com.tarsec.javadoc.pdfdoclet.PDFDoclet
+    JARS=jar/pdfdoclet-1.0.0-all.jar
+    PACKAGES="com.jlaby"
+    PDF=example/results/laby.pdf
+    CFG=example/laby/config_laby.properties
+    SRC=example/laby
+
+    export JAVA_HOME PATH DOCLET JARS PACKAGES PDF CFG SRC
+
+    javadoc -doclet $DOCLET -docletpath $JARS -pdf $PDF -config $CFG -sourcepath $SRC $PACKAGES
+        </pre>
+    </subsection>
+
+</section>
+
+</body>
+</document>

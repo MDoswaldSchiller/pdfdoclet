@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="pdfdoclet:doclet">
+
+  <bannerLeft>
+    <name>PDFDoclet doclet</name>
+  </bannerLeft>
+
+   <skin>
+   	<groupId>com.usp.maven</groupId>
+   	<artifactId>usp-maven-skin</artifactId>
+   	<version>1.0</version>
+  </skin>
+
+  <body>
+	<menu ref="parent" />
+    <menu name="This component">
+      <item name="About" href="/index.html"/>
+    </menu>
+
+	<menu ref="modules" />
+    <menu ref="reports" />
+
+  </body>
+</project>

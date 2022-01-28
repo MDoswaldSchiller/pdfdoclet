@@ -1,0 +1,177 @@
+README PDFDoclet
+================
+(Version: see file "version.properties")
+
+
+1. Introduction
+2. Directory Overview
+3. Prerequisites
+4. Installation
+5. Usage
+6. Anonymous CVS Access
+7. License
+8. Credits
+
+
+1. Introduction
+---------------
+This is a javadoc doclet which produces PDF output for a given 
+Java API, using another opensource library, "iText" (see 7). It 
+requires nothing more than two JAR files (its own one and 
+the one from iText) in order to create PDF files. Forget now  
+about all the fuss of having to create MIF output first, then 
+having to load it into a FrameMaker installation using some preinstalled 
+batch application and finally needing Acrobat Distiller to create 
+a PDF...
+
+PDFDoclet is a straightforward, simple-to-use 100% pure Java solution. 
+Kudos to the authors of iText for making it possible!
+
+
+2. Directory Overview
+---------------------
+
+/README ............. This file.
+/project.xml ........ The Maven project file.
+/project.properties . The Maven project properties.
+/maven.xml .......... The Maven build file with custom goals.
+/doc/TODO ........... Open issues (to be fixed in future releases)       
+/doc/HISTORY......... Development / change history
+
+/src/ ............... All Java sourcecode files.
+/ext-lib/ ........... 3rd-party libraries (iText)
+/example/laby ....... Example source tree for creating example PDF
+/example/html ....... Example source tree for creating example PDF
+/example/test ....... Example source tree for creating test PDF
+/target/ ............ (created) Contains temporary Maven build results
+/target/example ..... (created) Contains created sample PDF files
+
+
+3. Prerequisites
+----------------
+PDFDoclet has been designed using J2SE 1.4, so it will eventually 
+not work with the older javadoc version. However, since the new 
+javadoc produces much better output anyway, I'd recommend to 
+use it even for Java 1.1.x targeted projects.
+As it has not been tested with older Java versions, feel free 
+to do so. Feedback is greatly appreciated.
+
+
+4. Installation
+---------------
+You need the following things to build PDFDoclet:
+
+- JDK (J2SE)
+- Maven 1.0
+
+It is assumed that you know how to use Maven. If not, 
+get it from the Jakarta homepage (http://ant.apache.org) 
+and install it.
+
+Run the Maven goal "example" to build everything and create 
+all sample PDF files.
+
+
+5. Eclipse Project Setup
+------------------------
+The PDFDoclet CVS module also contains Eclipse project 
+files. In order to be able to compile everything, two
+classpath variables must be created, one under "Window / 
+Preferences / Java / Build Path / Classpath Variables":
+
+  TOOL_LIB_1_4 
+  
+must point to the "tools.jar" file of a J2SE 1.4 JDK.
+And second, a JRE must be registered under "Window / 
+Preferences / Java / Installed JREs":
+
+  JDK_1_4
+  
+must point to the root directory of a JDK 1.4.
+
+
+6. Usage
+--------
+Check out the example goals in the "maven.xml" or, 
+even better, the binary package. The binary package 
+has both examples for how to use the doclet from ANT 
+or from shell scripts.
+
+
+7. Anonymous CVS Access
+-----------------------
+
+This project's SourceForge CVS repository can be checked 
+out through anonymous (pserver) CVS with the following 
+instruction set. The module you wish to check out must be 
+specified as the modulename. When prompted for a password 
+for anonymous, simply press the Enter key.
+
+cvs -d:pserver:anonymous@cvs.pdfdoclet.sourceforge.net:/cvsroot/pdfdoclet login
+ 
+cvs -z3 -d:pserver:anonymous@cvs.pdfdoclet.sourceforge.net:/cvsroot/pdfdoclet co modulename
+
+Updates from within the module's directory do not need 
+the -d parameter.
+
+
+8. License
+----------
+PDFDoclet is distributed under the terms of the LGPL 
+(Library Gnu Public License). See the file "doc/lgpl.txt" 
+for detailled information.
+
+But to make it clear for those who loath legal babble: 
+Do with this code whatever you like, as long as you 
+- send back any bug fixes or improvements
+- keep the credits :)
+You are also welcome to use it in any free or commercial 
+software, be it open or closed source.
+
+
+8. Credits
+----------
+
+PDFDoclet written 2002/2003/2004 by:
+
+
+  Marcel Schoen, Switzerland
+  marcelschoen@users.sourceforge.net
+
+
+And lots of additional code, improvements,
+fixes and testing support were provided by:
+
+
+  Mark Bryan Yu
+  vafada@users.sourceforge.net
+
+  Tomasz Stanczak
+  
+  Fabrice Inconnu
+  fabriceplat@yahoo.fr
+
+  Xavier Gost
+
+  Frank Baxter
+
+  David Beutel
+  jdb@getsu.com
+
+  Lars Heller
+  l.heller@web.de
+
+  Marius Zamolski
+  mariuszz@users.sourceforge.net
+
+  Taichirou Etoh
+  totoll@users.sourceforge.net
+  
+  ...and others who I may have forgotten here...
+
+
+iText PDF creation library written by:
+
+  Bruno Iowagie
+  http://www.lowagie.com/bruno
+

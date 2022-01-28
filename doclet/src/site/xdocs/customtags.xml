@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Custom Tags</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Custom Tags">
+<p><p></p>PDFDoclet allows you to use custom tags in your API doc, like
+	"@TODO", and specify the labels for those custom tags in the configuration.</p>
+	<p><p></p>To define a custom tag and its label set a property like this:</p>
+		<pre>
+        label.tag.&lt;tagname&gt;=&lt;label&gt;
+		</pre>
+	<p><p></p>So, for the "@TODO"-example above, it would be:</p>
+		<pre>
+        label.tag.todo=To Do:
+		</pre>
+   </section>
+</body>
+</document>

@@ -1,0 +1,6 @@
+This is the "binary" package of the PDFDoclet. Is is for users 
+who just want to create javadoc and are not interested about 
+the internals or to participate in the development of the doclet.
+
+Developers who want to get the sourcecode should get the 
+other tarball (or, preferably, get it from the CVS).

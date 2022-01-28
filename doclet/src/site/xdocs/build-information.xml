@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Build information</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Build Information">
+	<subsection name="Overview">
+		<p><p></p>Source code development is being done on your local machine using Maven.</p>
+		<p><p></p>Unit and functional testing is performed on your local machine using JUnit. There is no integration testing 			concept available yet.</p>
+	</subsection>
+	
+	<subsection name="Prerequisites">
+			<p><p></p>Before you can start, your environment must meet the following prerequisites:
+				<ul>
+					<li>Installed Maven</li>
+					<li>J2SE 1.4.X (and JAVA_HOME pointing to it)</li>
+				</ul>
+			</p>
+	</subsection>
+
+	<subsection name="Build Command">
+		<p><p></p>To build the project please use the following:</p>
+
+	<source>maven jar</source>
+	
+	</subsection>
+</section>
+
+<section name="CVS Tags">
+<p><p></p>Valid tags are called rel-x-y-z.</p>
+</section>
+
+<section name="Create Distribution Package">
+	<subsection name="Local">
+		<p>To create a distribution simply lauch:</p>
+	
+		<source>maven dist</source>
+		
+		<p><p></p>This goal creates all distribution files. </p>
+		
+		<p><p></p>The results are always written to ./target/distributions. </p>
+	</subsection>
+
+</section>
+
+<section name="Checklist for Distribution">
+	<subsection name="While Developing">
+	<ul>
+		<li>Create changes, test it</li>
+		<li>create a snapshot for everybody to use, communicate it</li>
+		<source>maven jar:deploy-snapshot</source>
+		<li>define code freeze date, communicate it</li>
+		<li>implement changes told you from others, create SNAPSHOT</li>
+		<source>maven jar:deploy-snapshot</source>
+	</ul>
+	</subsection>
+	<subsection name="Freeze Date is here">
+	<ul>
+		<li>check for version number change in project.xml</li>
+		<li>check documentation (changes.xml, HISTORY.txt, README.txt, Release Notes, etc.)</li>
+		<li>check maven ttdist for correctness</li>
+		<li>check if there are SNAPSHOT dependencies, change them to a released version</li>
+		<li>everything is in cvs now?</li>
+		<li>create a version tag in cvs, e.g. "rel-1-1-0"</li>
+		<li>create the distribution: maven jar:deploy, maven dist:deploy, maven mydist:deploy</li>
+	</ul>
+	</subsection>
+</section>
+
+<section name="Eclipse Integration">
+	<p><p></p>To use/edit this project in eclipse do the following:</p>
+
+	<source>maven eclipse</source>
+	
+	<p><p></p>NOTE: The local maven repository must be referenced using the MAVEN_REPO variable. 
+		This property must me set once for each eclipse installation. (See sample below)</p>
+	<p><p></p>In Eclipse: Windows - Preferences - Java - Build Path - Classpath variables, add a variable:</p>
+	<source>MAVEN_REPO =  <i>your maven repository</i></source>
+	<p><p></p>On Windows, you set the local maven repository location by saving a file build.properties 
+		in the directory where %USERPROFILE% is pointing at. The content of the file can be as follows:</p>	
+	<source>
+	maven.repo.local=c:/workspace/maven-repository
+	# maven.junit.format=plain
+	# maven.junit.usefile=false
+	</source>
+</section>
+
+</body>
+</document>

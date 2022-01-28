@@ -1,0 +1,36 @@
+ ------
+ SLS Framework
+ ------
+
+
+SLS Framework
+
+  This project can be build using Maven 2.
+
+* Prerequisites:
+
+  * JDK 1.5 as JAVA_HOME
+
+  * Maven 2.0.5
+
+
+* Local build
+
+	to build the project locally:
+
++-----------------------+
+mvn install
++-----------------------+
+
+* Build a release:
+
+	[[1]] Finalize documentation on moddoc.tetrade.ch
+
+	[[2]] tag the project
+
+	[[3]] check it out on ariel.tetrade.ch
+
+	[[4]] mvn deploy
+
+	[[5]] Finally, You have a set of ISO CD images. Put them on a central place.
+

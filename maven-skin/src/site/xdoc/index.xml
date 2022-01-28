@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+
+  <properties>
+    <title>USP Maven 2 skin</title>
+  </properties>
+
+  <body>
+
+    <section name="Welcome">
+      <p>
+      	Welcome to the USP Maven 2 Skin project.
+      </p>
+
+      <p>
+      	Please check the sample chapter for various samples which are
+      	supported by this skin.
+      </p>
+
+    </section>
+
+  </body>
+
+</document>

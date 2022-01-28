@@ -1,0 +1,16 @@
+classes
+test
+build_msc.xml
+temp
+jar
+tar
+work
+release
+target
+velocity.log
+pdfdoclet.log
+example.sh
+jdk14.pdf
+pdfdoclet.log*
+*.log
+.settings

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="usp-maven-skin">
+
+    <bannerLeft>
+        <name>USP Maven2 Skin</name>
+    </bannerLeft>
+
+    <skin>
+    	<groupId>com.usp.maven</groupId>
+    	<artifactId>usp-maven-skin</artifactId>
+    	<version>1.0</version>
+  	</skin>
+
+    <publishDate format="dd.MM.yyyy hh:mm" />
+
+    <body>
+        <links>
+      		<item name="Maven" href="http://maven.apache.org/"/>
+        </links>
+
+		<menu name="This component">
+      		<item name="About" href="/index.html"/>
+    	</menu>
+
+		<menu name="Sample Output">
+      		<item name="FAQ" href="/sample-faq.html"/>
+      		<item name="Xdoc" href="/sample-xdoc.html"/>
+    	</menu>
+
+  		<menu ref="modules" />
+        <menu ref="reports" />
+    </body>
+
+</project>

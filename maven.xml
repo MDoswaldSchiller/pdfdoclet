@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ======================================================================== -->
+<!--                                                                          -->
+<!--  maven Buildfile                                                         -->
+<!--                                                                          -->
+<!-- $Id: maven.xml,v 1.14 2007/07/15 11:53:19 marcelschoen Exp $                      -->
+<!--                                                                          -->
+<!-- ======================================================================== -->
+
+<project 
+  xmlns:ant="jelly:ant"
+  xmlns:j="jelly:core" 
+  xmlns:maven="jelly:maven"
+  xmlns:artifact="artifact"
+  xmlns:util="jelly:util">
+
+ <!-- ================================================================== -->
+ <!-- Uploads files to SourceForge FTP server              		  -->
+ <!-- ================================================================== -->
+ <goal name="sf:upload"
+   description="Uploads files to SourceForge FTP server.">
+
+   <ant:ftp server="upload.sourceforge.net" binary="yes"
+        userid="anonymous" password="nobody@nothing.com"
+        verbose="yes" action="put" remotedir="/incoming">
+        <!--
+        <ant:fileset dir="${pdfdoclet.distribution.dir}" includes="*.tar.gz" />
+        -->
+        <ant:fileset dir="${pdfdoclet.distribution.dir}/examples" />
+   </ant:ftp>
+
+	<ant:echo>
+      +-------------------------------------------------+
+      | U P L O A D I N G   T O   S O U R C E F O R G E |
+      +-------------------------------------------------+
+    </ant:echo>
+
+ </goal>
+ 
+  <!-- ================================================================== -->
+  <!-- Experimental: Create file release on SourceForge			  		  -->
+  <!-- ================================================================== -->
+  <goal name="sf:deploy-binary"
+   description="Deploys the binary package to SourceForge"
+  prereqs="mydist:binary">
+  
+   <j:set var="maven.sourceforge.project.packageName" 
+      value="binaries" />
+   <j:set var="maven.sourceforge.project.packageDescription" 
+      value="Contains the runtime only files for people who just want to use the doclet." />
+   <attainGoal name="sourceforge:info" />
+   <attainGoal name="sourceforge:deploy-dist-bin" />
+  </goal>
+  
+  <!-- ================================================================== -->
+  <!-- Copy snapshot images to docs directory							  -->
+  <!-- ================================================================== -->
+  <postGoal name="site:generate">
+      <ant:copy todir="${maven.docs.dest}/images">
+      	<ant:fileset dir="${basedir}/xdocs/images" />
+      </ant:copy>
+  </postGoal>
+  
+  <!-- ================================================================== -->
+  <!-- Creates big jar file with all dependencies                         -->
+  <!-- ================================================================== -->
+  <postGoal name="jar:jar">
+    	          
+    	<!-- Now create the "big" jar file with all dependencies -->
+	    <j:forEach var="lib" items="${pom.artifacts}">
+      		<j:set var="dep" value="${lib.dependency}"/>     
+
+      		<j:set var="useForBigjar" 
+      			value="${dep.getProperty('mydist.bigjar')}"/>     
+			<j:if test="${useForBigjar.trim() != null}">
+				<ant:echo message="Adding dependency ${lib.name} to big jar file" />
+				<ant:unjar dest="${custom.bigjar.dir}" src="${lib.path}"/>  
+	        </j:if>  
+	        
+    	</j:forEach>
+    	
+		<ant:unjar dest="${custom.bigjar.dir}" 
+		            src="${maven.build.dir}/${maven.final.name}.jar"/>  
+    	
+    	<ant:jar destfile="${maven.build.dir}/${maven.final.name}-all.jar"
+    	         manifest="${maven.build.dir}/MANIFEST.MF"
+    	          basedir="${custom.bigjar.dir}" />
+    	          
+  </postGoal>
+
+  <!-- ================================================================== -->
+  <!-- Attach to default dist goal	 									  -->
+  <!-- ================================================================== -->
+  <postGoal name="dist:build">
+      <attainGoal name="mydist"/>
+  </postGoal>
+
+<goal name="test2">
+	    
+	<!-- laby javadoc PDF -->
+    <ant:javadoc doclet="com.tarsec.javadoc.pdfdoclet.PDFDoclet"
+            docletpath="${maven.build.dir}/${maven.final.name}-all.jar"
+			packagenames="java.*,javax.*"
+            additionalparam="-J-Xmx640m -source 1.4 -pdf ${example.results.dir}/jdk14.pdf -config ${example.dir}/jdk14/jdk.properties"
+            private="no"
+            sourcepath="${example.dir}/jdk14">
+            <arg value="-Xmx400m" /> 
+    </ant:javadoc>
+</goal>
+  
+  <!-- ================================================================== -->
+  <!-- Sample PDF files creation                                          -->
+  <!-- ================================================================== -->
+  <goal name="example"
+     description="Generates sample PDF files.">
+     
+    <ant:mkdir dir="${example.results.dir}/laby" />
+    <ant:mkdir dir="${example.results.dir}/html" />
+    
+	<ant:echo>
+      +---------------------------------------------------+
+      | C R E A T I N G   S A M P L E   P D F   F I L E S |
+      +---------------------------------------------------+
+    </ant:echo>
+	    
+	<!-- laby javadoc PDF -->
+    <ant:javadoc doclet="com.tarsec.javadoc.pdfdoclet.PDFDoclet"
+            docletpath="${maven.build.dir}/${maven.final.name}-all.jar"
+			packagenames="com.jlaby.*"
+			overview="${example.dir}/laby/overview_laby.html"
+            additionalparam="-pdf ${example.results.dir}/laby.pdf -config ${example.dir}/laby/config_laby.properties"
+            private="${maven.javadoc.private}"
+            sourcepath="${example.dir}/laby">
+    </ant:javadoc>
+    <ant:echo>
+      PDF example file created: ${example.results.dir}/laby.pdf
+    </ant:echo>
+     
+	<!-- html javadoc PDF -->
+    <ant:javadoc doclet="com.tarsec.javadoc.pdfdoclet.PDFDoclet"
+            docletpath="${maven.build.dir}/${maven.final.name}-all.jar"
+			packagenames="cvu.*"
+            additionalparam="-pdf ${example.results.dir}/html.pdf -config ${example.dir}/html/config_html.properties"
+            private="${maven.javadoc.private}"
+            sourcepath="${example.dir}/html">
+     </ant:javadoc>
+    <ant:echo>
+      PDF example file created: ${example.results.dir}/html.pdf
+    </ant:echo>
+    
+	<ant:echo>
+      +---------------------------------------------------------+
+      | C R E A T I N G   S A M P L E   H T M L   J A V A D O C |
+      +---------------------------------------------------------+
+    </ant:echo>
+
+	<!-- laby javadoc HTML -->
+    <ant:javadoc destdir="${example.results.dir}/laby"
+			packagenames="com.jlaby.*"
+			overview="${example.dir}/laby/overview_laby.html"
+            private="${maven.javadoc.private}"
+            sourcepath="${example.dir}/laby">
+     </ant:javadoc>
+     
+	<!-- html javadoc PDF -->
+    <ant:javadoc destdir="${example.results.dir}/html"
+			packagenames="cvu.*"
+            private="${maven.javadoc.private}"
+            sourcepath="${example.dir}/html">
+     </ant:javadoc>
+     
+     <attainGoal name="test-pdf" />
+  </goal>
+
+  <!-- ================================================================== -->
+  <!-- Test PDF file creation                                             -->
+  <!-- This example source tree is the most useful for testing during     -->
+  <!-- development because it's small but contains test cases for most    -->
+  <!-- features of the PDFDoclet. For this reason, it's useful to be      -->
+  <!-- able to run it separately from the other samples.                  -->
+  <!-- ================================================================== -->
+  <goal name="test-pdf"
+     description="Generates test PDF file."
+     prereqs="jar" >
+
+    <ant:mkdir dir="${example.results.dir}/test" />
+    
+	<ant:echo>
+      +-----------------------------------------------------------+
+      | C R E A T I N G   T E S T   P D F   A N D   J A V A D O C |
+      +-----------------------------------------------------------+
+    </ant:echo>
+    
+	<!-- test.pdf PDF -->
+    <ant:javadoc doclet="com.tarsec.javadoc.pdfdoclet.PDFDoclet"
+            docletpath="${maven.build.dir}/${maven.final.name}-all.jar"
+			packagenames="com.test.*,com.other.*,com.stuff.*,com.dummy.*"
+			overview="${example.dir}/test/overview_test.html"
+			sourcefiles="${example.dir}/test/com/single/SingleClass.java"
+            additionalparam="-pdf ${example.results.dir}/test.pdf -config ${example.dir}/test/config_test.properties"
+            private="${maven.javadoc.private}"
+            sourcepath="${example.dir}/test">
+            <!--
+            -->
+            <group title="Special" packages="com.s*:com.test" />
+            <group title="Cool" packages="com.other" />
+    </ant:javadoc>
+    <ant:echo>
+      PDF example file created: ${example.results.dir}/test.pdf
+    </ant:echo>
+     
+	<!-- test.pdf HTML -->
+    <ant:javadoc destdir="${example.results.dir}/test"
+			packagenames="com.test.*,com.other.*"
+			overview="${example.dir}/test/overview_test.html"
+            private="${maven.javadoc.private}"
+            sourcepath="${example.dir}/test">
+     </ant:javadoc>
+     
+  </goal>
+
+  <!-- ================================================================== -->
+  <!-- Attach to default upload bundle goal	     						  -->
+  <!-- ================================================================== -->
+  <goal name="create-upload-bundle" prereqs="dist">
+      <ant:mkdir dir="${bundle.dir}" />
+      <ant:mkdir dir="${bundle.dir}/jars" />
+      <ant:mkdir dir="${bundle.dir}/distributions" />
+      <ant:copy file="${basedir}/project.xml" todir="${bundle.dir}" />
+      <ant:copy file="${basedir}/LICENSE.txt" todir="${bundle.dir}" />
+      <ant:copy file="${maven.build.dir}/${maven.final.name}-all.jar"
+          overwrite="yes" todir="${bundle.dir}/jars" />
+      <ant:copy todir="${bundle.dir}/distributions">
+          <ant:fileset dir="${pdfdoclet.distribution.dir}" />
+      </ant:copy>
+  </goal>
+  
+  <!-- ================================================================== -->
+  <!-- P R E P A R E  F I L E  S Y S T E M                                -->
+  <!-- ================================================================== -->
+  <goal name="mydist:prepare-filesystem"
+        description="Create the directory structure needed to create pdfdoclet distribution">
+    	
+    	<!-- delete previous, ensures fresh build -->
+    	<ant:delete dir="${pdfdoclet.distribution.dir}"/>
+    	<ant:delete dir="${pdfdoclet.image.dir}"/>
+    	
+    	<ant:echo>
+	      +---------------------------------------------------------------+
+	      | C R E A T I N G   P D F D O C L E T   D I S T R I B U T I O N |
+	      +---------------------------------------------------------------+
+	    </ant:echo>
+
+		<!-- Create all needed directories -->    	  	
+	  	<ant:mkdir dir="${pdfdoclet.image.dir}" />
+		<ant:mkdir dir="${pdfdoclet.image.dir}/jar" />
+		<ant:mkdir dir="${pdfdoclet.image.dir}/docs" />
+		<ant:mkdir dir="${pdfdoclet.image.dir}/example" />
+	  	<ant:mkdir dir="${pdfdoclet.distribution.dir}" />
+  </goal>
+
+  <postGoal name="dist:build-src">
+      <ant:delete file="${pdfdoclet.distribution.dir}/${maven.final.name}-src.tar.gz" />
+      <ant:delete file="${pdfdoclet.distribution.dir}/${maven.final.name}-src.zip" />
+      <attainGoal name="mydist:project" />
+  </postGoal>
+
+  <postGoal name="dist:build-bin">
+      <ant:delete file="${pdfdoclet.distribution.dir}/${maven.final.name}.tar.gz" />
+      <ant:delete file="${pdfdoclet.distribution.dir}/${maven.final.name}.zip" />
+      <attainGoal name="mydist:binary" />
+  </postGoal>
+  
+  <!-- ================================================================== -->
+  <!-- Override Maven's standard dist goal                                -->
+  <!-- ================================================================== -->
+  <goal name="dist">
+      <attainGoal name="mydist:binary" />
+      <attainGoal name="mydist:project" />
+      <attainGoal name="mydist:examples" />
+  </goal>
+  
+  <!-- ================================================================== -->
+  <!-- SourceForge examples package creation                              -->
+  <!-- ================================================================== -->
+  <goal name="mydist:examples" prereqs="example"
+    description="Creates the examples package files">
+    
+        <ant:mkdir dir="${pdfdoclet.distribution.dir}/examples"/>
+        <ant:copy todir="${pdfdoclet.distribution.dir}/examples"> 
+        	<ant:fileset dir="${example.results.dir}" includes="*.pdf" />
+        </ant:copy>
+        <ant:move file="${pdfdoclet.distribution.dir}/examples/test.pdf"
+                tofile="${pdfdoclet.distribution.dir}/examples/examples1.pdf" />
+        <ant:move file="${pdfdoclet.distribution.dir}/examples/laby.pdf"
+                tofile="${pdfdoclet.distribution.dir}/examples/examples2.pdf" />
+        <ant:move file="${pdfdoclet.distribution.dir}/examples/html.pdf"
+                tofile="${pdfdoclet.distribution.dir}/examples/examples3.pdf" />
+    
+  </goal>
+  
+  <!-- ================================================================== -->
+  <!-- Maven project tarball creation                                     -->
+  <!-- ================================================================== -->
+  <goal name="mydist:project"
+    description="Creates the .tar.gz file with the Maven project.">
+			
+	<ant:echo>
+      +-------------------------------------------------+
+      | C R E A T I N G   P R O J E C T   T A R B A L L |
+      +-------------------------------------------------+
+    </ant:echo>
+
+        <ant:mkdir dir="${pdfdoclet.distribution.dir}"/>
+        <ant:delete dir="${project.tar.dir}"/>
+        
+        <ant:mkdir dir="${project.tar.dir}/${maven.final.name}"/>
+        <!-- make sure only required files from basedir are copied -->
+        <ant:copy todir="${project.tar.dir}/${maven.final.name}">
+            <ant:fileset dir="${basedir}"
+                 excludes="**/src/**,**/example/**,**/ext-lib/**,**/target/**,**/website/**,**/xdocs/**,**/*.log"
+                 includes="LICENSE.txt maven.xml project.properties project.xml README .classpath .project"
+                  />
+        </ant:copy>
+        <!-- Now copy all required subdirectories -->
+        <ant:copy todir="${project.tar.dir}/${maven.final.name}">
+            <ant:fileset dir="${basedir}"
+                 excludes="LICENSE.txt,maven.xml,project.properties,project.xml,README,.classpath,.project,**/target/**,**/CVS/**,**/website/**,**/example-X/**,pdfdoclet.log*,**/*.log"
+            />
+        </ant:copy>
+        
+        <ant:tar tarfile="${maven.build.dir}/${maven.final.name}-src.tar"
+             basedir="${project.tar.dir}" />
+        <ant:gzip src="${maven.build.dir}/${maven.final.name}-src.tar"
+              zipfile="${pdfdoclet.distribution.dir}/${maven.final.name}-src.tar.gz" />
+        
+  </goal>
+  
+  <!-- ================================================================== -->
+  <!-- PDFDoclet distribution                                             -->
+  <!-- ================================================================== -->
+  <goal name="mydist:binary"
+        description="Creates the binary distribution"
+			prereqs="mydist:prepare-filesystem,example,jar,javadoc,makefaq,maketodo,
+				announcement:generate-all,site:generate"> 
+			
+	<ant:echo>
+      +---------------------------------------------------------+
+      | C R E A T I N G   B I N A R Y   D I S T R I B U T I O N |
+      +---------------------------------------------------------+
+    </ant:echo>
+
+		<ant:filter token="DOCLET_VERSION" value="${pom.currentVersion}" />
+
+		<!-- copy announcements -->
+		<ant:copy todir="${pdfdoclet.image.dir}" filtering="no" overwrite="yes"> 
+			<ant:fileset dir="${maven.gen.docs}/announcements">
+				<ant:include name="*.txt"/>
+			</ant:fileset>
+			<ant:mapper type="glob" from="announcement-*" to="RELEASE-*"/>
+		</ant:copy>
+
+		<!-- copy license file -->
+		<ant:copy file="${basedir}/LICENSE.txt"
+	        todir="${pdfdoclet.image.dir}" 
+	  		filtering="no" overwrite="yes" /> 
+  	
+		<!-- readme -->
+        <ant:copy todir="${pdfdoclet.image.dir}"
+	  		filtering="yes" overwrite="yes" 
+	  		file="${doc.dir}/README.txt" /> 
+	  		
+	  	<!-- todo and faq -->
+	  	<ant:copy todir="${pdfdoclet.image.dir}"
+	  	     filtering="no" overwrite="yes"
+	  	     file="${maven.build.dir}/TODO.txt" />
+	  	<ant:copy todir="${pdfdoclet.image.dir}"
+	  	     filtering="no" overwrite="yes"
+	  	     file="${maven.build.dir}/FAQ.txt" />
+  	
+		<!-- HTML javadocs -->
+        <ant:copy todir="${pdfdoclet.image.dir}/docs"> 
+	  		<ant:fileset dir="${maven.build.dir}/docs" />
+	  	</ant:copy>
+        
+	  	<!-- Copy generated big jar -->
+	  	<ant:copy file="${maven.build.dir}/${maven.final.name}-all.jar" 
+  			todir="${pdfdoclet.image.dir}/jar" />
+
+	  	<!-- Copy ANT build file and shell script -->
+        <ant:copy file="${example.dir}/example.xml" filtering="yes"
+              tofile="${pdfdoclet.image.dir}/build.xml"/>
+
+        <ant:copy file="${example.dir}/example.sh" filtering="yes"
+              toDir="${pdfdoclet.image.dir}"/>
+
+        <ant:copy todir="${pdfdoclet.image.dir}/example">
+            <ant:fileset dir="${example.dir}" 
+                     includes="*/**"
+                     excludes="**/CVS,example.*" />
+        </ant:copy>
+        
+        <!-- Only last RELEASE-x.y.z.txt file is required -->
+        <ant:move file="${pdfdoclet.image.dir}/RELEASE-${pom.currentVersion}.txt"
+               tofile="${pdfdoclet.image.dir}/RELEASE.txt" />
+        <ant:delete>
+            <ant:fileset dir="${pdfdoclet.image.dir}"
+                 includes="RELEASE-*.*" />
+        </ant:delete>
+
+        <!-- create archive file(s) -->
+        <ant:tar tarfile="${maven.build.dir}/${maven.final.name}.tar">
+             <ant:tarfileset dir="${maven.build.dir}/image" mode="777">
+                 <ant:include name="**/*.sh"/>
+             </ant:tarfileset>
+             <ant:tarfileset dir="${maven.build.dir}/image">
+                 <ant:exclude name="**/example.sh"/>
+             </ant:tarfileset>
+        </ant:tar>
+
+        <ant:gzip src="${maven.build.dir}/${maven.final.name}.tar"
+              zipfile="${pdfdoclet.distribution.dir}/${maven.final.name}.tar.gz" />
+
+  </goal>
+  
+  <!-- ================================================================== -->
+  <!-- Create TODO.txt from todo.xml         							  -->
+  <!-- ================================================================== -->
+  <goal name="maketodo">
+	  <ant:delete file="${maven.build.dir}/TODO.txt" />
+	  ${systemScope.setProperty('javax.xml.transform.TransformerFactory','org.apache.xalan.processor.TransformerFactoryImpl')}
+	  <style in="${basedir}/xdocs/todo.xml"
+	          out="${maven.build.dir}/TODO.txt"
+	          style="${maven.src.dir}/build/todo/todo.xsl"/>
+  </goal>
+  
+  <!-- ================================================================== -->
+  <!-- Create FAQ.txt from faq.xml    	     							  -->
+  <!-- ================================================================== -->
+  <goal name="makefaq">
+	  <ant:delete file="${maven.build.dir}/FAQ.txt" />
+	  ${systemScope.setProperty('javax.xml.transform.TransformerFactory','org.apache.xalan.processor.TransformerFactoryImpl')}
+	  <style in="${basedir}/xdocs/faq.xml"
+	          out="${maven.build.dir}/FAQ.txt"
+	          style="${maven.src.dir}/build/faq/faq.xsl"/>
+  </goal>
+
+  <!-- ==================================================
+       Create MD5 hash files for the jars                   
+       ================================================== -->
+  <postGoal name="jar:jar">
+    	<ant:checksum algorithm="MD5" 
+    	          file="${maven.build.dir}/${maven.final.name}.jar" />
+  </postGoal>
+  
+  <!-- ==================================================
+       Create Manifest and version properties for the jar                   
+       ================================================== -->
+   <preGoal name="jar:jar"> 
+			
+	<ant:echo>
+      +-------------------------------------------+
+      | C R E A T I N G   B I G   J A R   F I L E |
+      +-------------------------------------------+
+    </ant:echo>
+    
+		<!-- do the manifest first -->
+       	<ant:tstamp>
+			<ant:format property="build.timestamp" 
+				pattern="ddMMyyyy-HHmmssSSS" 
+				locale="en"/>
+	   	</ant:tstamp>
+
+		<ant:delete file="${maven.build.dir}/MANIFEST.MF" />
+  		<ant:manifest file="${maven.build.dir}/MANIFEST.MF">
+			<ant:attribute name="Main-Class" value="com.tarsec.javadoc.pdfdoclet.util.Version"/>
+			<ant:attribute name="Built-By" value="${user.name}"/>
+			<ant:attribute name="Built-With" value="Java ${java.version} (${java.vendor}) on ${systemScope['os.name']} ${systemScope['os.version']}"/>
+			<ant:section name="com/tarsec/javadoc/pdfdoclet">
+				<ant:attribute name="Specification-Title" 
+					value="${pom.name}" />
+				<ant:attribute name="Specification-Version" 
+					value="${pom.currentVersion}" />
+					
+				<ant:attribute name="Specification-Vendor" 
+					value="${pom.organization.name}" />
+					
+				<ant:attribute name="Implementation-Title" 
+					value="${pom.name}" />
+				<ant:attribute name="Implementation-Version" 
+					value="${user.name}/${build.timestamp}" />
+				<ant:attribute name="Implementation-Vendor" 
+					value="${pom.organization.name}" />
+				<ant:attribute name="Implementation-Vendor-Id" 
+					value="tetrade" />
+			</ant:section>
+		</ant:manifest>
+		
+  		<!-- next create the versio info file -->
+		<ant:filter token="VERSION" value="${pom.currentVersion}" />
+		<ant:filter token="BUILD" value="${user.name}/${build.timestamp}" />
+		<ant:filter token="COPYRIGHT" value="${pom.organization.name}" />
+		<ant:filter token="NAME" value="${pom.name}" />
+
+		<ant:echo 
+			file="${maven.build.dest}/com/tarsec/javadoc/pdfdoclet/util/version-info.properties">
+copyright=Copyright by Marcel Schoen, Switzerland
+version=${pom.currentVersion}
+build=${user.name}/${build.timestamp}
+name=${pom.name}
+</ant:echo>
+		
+   </preGoal> 
+
+  <!-- ================================================================== -->
+  <!-- Check that a "correct" announcement plugin is installed 	          -->
+  <!-- We use the property maven.announcement.stylesheet.path which is    -->
+  <!-- only supported after 1.3 (Maven 1.0 default has 1.2)		          -->
+  <!-- ================================================================== -->
+  <preGoal name="announcement:init">
+	  <maven:get plugin="maven-announcement-plugin" 
+	  				property="plugin" 
+	  				var="annPlugin" /> 
+    	<j:if test="${annPlugin.currentVersion.compareTo('1.3') lt 0}"> 
+		<ant:fail>Must have ANNOUNCEMENT plugin v1.3 (or later) installed to build the project.
+Download the Plugin: 
+maven plugin:download -DgroupId=maven -DartifactId=maven-announcement-plugin -Dversion=1.3
+      </ant:fail> 
+    </j:if> 
+  </preGoal>
+  
+  <!-- ==================================================
+       Check for correct java version                     
+       ================================================== -->
+  <preGoal name="java:compile">
+	<echo message="Current Java Version is: ${java.specification.version} and should be: ${correct.java.version}"/>
+	
+	<!-- set property if the version is correct -->
+	<condition property="java.version.is.correct">
+	        <!-- Property explanation: -->
+    	    <!-- Less detailled version = java.specification.version (1.2) -->
+        	<!-- More Detailled version = java.version (1.2.1_02) -->
+	
+            <equals arg1="${correct.java.version}"
+                    arg2="${java.specification.version}" />
+    </condition>
+	<fail unless="java.version.is.correct" message="Incorrect java version" />
+  </preGoal>    
+  
+  <!-- ==================================================
+       Check operating system for nightly builds                         
+       ================================================== -->
+  <preGoal name="nightly:build">
+	<echo message="Checking your Operating System ${systemScope['os.name']}."/>
+		<j:choose>
+	        <j:when test="${systemScope['os.name'].startsWith('Windows')}">
+	        	<echo message="This goal is only supported under unix (icefire)"/> 
+	        	<fail message="Operating system not supported" />
+	       	</j:when>		  
+		</j:choose>         
+  </preGoal>
+
+</project>

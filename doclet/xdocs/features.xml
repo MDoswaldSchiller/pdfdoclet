@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Features</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Features">
+	<ul>
+        <li>No additional software required (100 % pure Java).</li>
+		<li>Creates PDF looking similar to the HTML javadoc.</li>
+		<li>Fully configurable through properties file.</li>
+		<li>Embedding of custom TrueType fonts.</li>
+		<li>Support for Chinese-/Korean-/Japanese language characters.</li>
+		<li>Optional summary tables on several levels (e.g. print summaries for
+		inherited methods etc. only for elements within the API's scope).</li>
+		<li>Optional hyperlink references.</li>
+		<li>Filtering of API for creating only an extract of an API, based on custom tags.</li>
+		<li>Optional title page (external HTML or PDF file or predefined).</li>
+		<li>Import of PDF pages for an extended introduction / overview part.</li>
+		<li>Import of additional HTML or PDF pages as appendices.</li>
+		<li>Custom bookmarks can be created through special HTML comments within HTML pages.</li>
+		<li>Custom page breaks can be triggered through special HTML comments within HTML pages to improve printouts.</li>
+		<li>Optional bookmarks frame (outline) with support for the -group parameter and custom bookmarks.</li>
+		<li>Optional alphabetical index of all classes and members at end of document.</li>
+		<li>Supported several embedded HTML tags (see separate <a href="htmltags.html">list</a>)</li>
+		<li>Optional encryption of document.</li>
+		<li>Customize order of packages.</li>
+    </ul>
+	
+</section>
+
+</body>
+</document>

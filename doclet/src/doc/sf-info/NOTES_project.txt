@@ -1,0 +1,11 @@
+This is the project tarball. It is intended for people who 
+want to work on the doclet, take a look into the sourcecode 
+etc. However, if someone really intends to contribute code, 
+the preferred way is to get a SourceForge account and work 
+with the CVS directly (contact the project admin to get 
+permission for CVS commits).
+
+Of course this package also allows to just use the doclet. 
+But anyone who just wants to use the doclet to create 
+javadoc (without having to compile it first) should 
+download the smaller, ready-to-run "binary" package.

@@ -1,0 +1,8 @@
+Steps for a release
+-------------------
+
+1. Build and test binary and project tarball targets
+2. Once everything is fine, commit all changes to CVS
+3. Tag whole CVS module with tag "rel-<version-id>", 
+   such as "rel-0-6-0".
+4. Build example  

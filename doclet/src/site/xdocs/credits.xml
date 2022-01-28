@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Credits</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Credits">
+	
+	<subsection name="PDFDoclet written by">
+		<ul>
+			<li>
+			Marcel Schoen, Switzerland (<a href="mailto:marcelschoen@yahoo.com">marcelschoen@yahoo.com</a>)
+			</li>
+		</ul>
+	</subsection>
+	
+	<subsection name="More code, improvements  and fixes by">
+		<ul>
+            <li>Fabrice Inconnu</li>
+            <li>Xavier Gost</li>
+            <li>Mark Bryan Yu</li>
+            <li>Frank Baxter</li>
+            <li>David Beutel (jdb &lt;at&gt; getsu.com)</li>
+            <li>Lars Heller (l.heller &lt;at&gt; web.de)</li>
+            <li>Ryan C. Brase</li>
+            <li>Carl E. Lindberg (lindberg &lt;at&gt; clindberg.org)</li>
+        </ul>
+		<p><p></p>
+		and many other users and testers.  (If your name is missing here - sorry. Just remind me to add it!)
+		</p>
+	</subsection>
+
+	<subsection name="iText PDF creation library written by">
+	</subsection>
+	<ul>
+		<li>Bruno Iowagie (<a href="http://www.lowagie.com/bruno">http://www.lowagie.com/bruno</a>)
+		</li>
+	</ul>
+</section>
+
+</body>
+</document>

@@ -1,0 +1,34 @@
+<faqs title="A Sample FAQ">
+
+  <part id="faq1">
+    <faq id="sample1">
+      <question>How do i use this skin ?</question>
+      <answer>
+        <p>
+          You can use this skin by referencing the skin in your <code>site.xml</code>
+          file which should be located in <code>./src/site/</code>.
+          The configuration is as follows:
+          <source><project name="usp-maven-skin">
+	...
+
+    <skin>
+    	<groupId>com.usp.maven</groupId>
+    	<artifactId>usp-maven-skin</artifactId>
+    	<version>1.0</version>
+  	</skin>
+
+  	...
+</project></source>
+        </p>
+      </answer>
+    </faq>
+
+    <faq id="sample2">
+      <question>Why should i use this skin ?</question>
+      <answer>
+        <p>All formatting things (including the logo) are already provided in
+        	this skin.</p>
+      </answer>
+	</faq>
+   </part>
+</faqs>

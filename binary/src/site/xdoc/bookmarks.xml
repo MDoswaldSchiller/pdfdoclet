@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Bookmarks</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Bookmarks">
+	
+	<subsection name="Overview">
+	<p><p></p>
+	PDFDoclet allows to create a bookmark outline which makes it easier to access
+	the various parts of the document. The default bookmark outline structure for
+	an API for which an overview and appendices were specified is this:
+	</p>
+	<pre>
+        + Title Page
+        + Overview
+        + All Classes
+        + Packages
+        + Appendices
+        + Index
+	</pre>
+	<p><p></p>
+	Within each package entry, the structure always looks like this:
+	</p>
+	<pre>
+        + Package name
+          + Class name
+            + Fields
+            + Constructors
+            + Methods
+	</pre>
+	<p><p></p>
+	It is possible, however, to change the bookmark structure in various ways, as
+	explained in the following sections.
+	</p>
+	</subsection>
+	
+	<subsection name="Bookmark Labels">
+	<p><p></p>
+	The following list shows the configuration properties which can be used to
+	override the default bookmark labels.
+	<pre>
+        label.bookmarks.title=My Title
+        label.bookmarks.index=My Index
+        label.bookmarks.overview=My Overview
+        label.bookmarks.packages=The Packages
+        label.bookmarks.otherPackages=Remaining Packages
+	</pre>
+	The last two properties are mutual exclusive. The last one ("<code>..otherPackages</code>") 
+	is used only in conjunction with the <code>-group</code> parameter (see next section).
+	</p>
+	</subsection>
+	
+	<subsection name="Bookmark Grouping">
+	<p><p></p>
+	PDFDoclet supports the <code>-group</code> parameter which allows to group certain
+	packages together. See Sun's javadoc for a detailled explanation of this parameter.
+	</p>
+	<p><p></p>
+	The packages not included in any of the groups are all under a bookmark with the
+	default label "Other Packages". To override this label, set this property:
+	<pre>
+        label.bookmarks.otherPackages=Remaining Packages
+	</pre>
+	</p>
+	</subsection>
+	
+	<subsection name="Custom Bookmarks">
+	<p><p></p>
+	As the example <a href="http://prdownloads.sourceforge.net/pdfdoclet/examples1.pdf?download">example1.pdf</a> 
+	shows, it is possible to create custom entries in
+	the bookmark outline. This can be achieved with a special kind of HTML anchor
+	in the <code>overview.html</code> or a <code>package.html</code>:
+	<pre>
+        &lt;a name="pdfbookmark" label="Text Label"&gt;&lt;/a&gt;
+	</pre>
+	Due to some mysterious behaviour of the HTML parser, it's better to create a 
+	separate opening and closing tag, as shown in this example. Usually it also works
+	if the HTML tag is closed directly, XML-style, but in certain situations, following
+	HTML tags may be turned into links (although they shouldn't). This may be fixed in
+	a future release. For the time being, it is recommended to use this notation.
+	</p>
+	</subsection>
+	
+</section>
+
+</body>
+</document>

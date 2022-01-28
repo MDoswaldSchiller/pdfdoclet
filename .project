@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>pdfdoclet</name>
+	<comment>&lt;p&gt;&lt;/p&gt; PDFDoclet is a javadoc doclet which produces PDF output for a given Java API, using another SourceForge library, &lt;a href=&quot;http://itext.sourceforge.net/&quot;&gt;&quot;iText&quot;&lt;/a&gt;. It requires nothing more than some JAR files in order to create PDF files. Forget now about all the fuss of having to create MIF output first, then having to load it into a FrameMaker installation using some preinstalled batch application and finally needing Acrobat Distiller to create a PDF etc. etc... &lt;p&gt;&lt;/p&gt; PDFDoclet is a straightforward, simple-to-use 100% pure Java solution. It creates a PDF file as similar as possible to a typical HTML javadoc. Read the features page and the FAQ to see what it can and what it can&apos;t do. &lt;p&gt;&lt;/p&gt; Kudos to the authors of &lt;a href=&quot;http://itext.sourceforge.net/&quot;&gt;iText&lt;/a&gt;, Bruno Lowagie and Paulo Soares, for making it possible! Thanks also to all the people who have contributed to the project by fixing bugs, testing or implementing new features!</comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.maven.ide.eclipse.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.maven.ide.eclipse.maven2Nature</nature>
+	</natures>
+</projectDescription>

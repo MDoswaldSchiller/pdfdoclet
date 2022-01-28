@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>pdfdoclet</groupId>
+		<artifactId>pom</artifactId>
+		<version>1.0.3-SNAPSHOT</version>
+	</parent>
+
+	<version>1.0.3-SNAPSHOT</version>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>example</artifactId>
+	<packaging>pom</packaging>
+	<name>PDFDoclet Examples</name>
+    
+    <description>
+    Example PDFs created with the PDFDoclet.
+	</description>
+
+	<build>
+	<!--
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		-->
+		<plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                
+                	<!-- Create sample PDF 1 -->
+                    <execution>
+                    	<id>example-1</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+		                <configuration>
+		                	<useStandardDocletOptions>true</useStandardDocletOptions>
+		                    <doclet>com.tarsec.javadoc.pdfdoclet.PDFDoclet</doclet>
+				            <group title="Special" packages="com.s*:com.test" />
+				            <group title="Cool" packages="com.other" />
+		                    <sourcefiles>${basedir}/src/build/test/com/single/SingleClass.java</sourcefiles>
+							<sourcepath>${basedir}/src/build/test</sourcepath>
+		                    <overview>${basedir}/src/build/test/overview_test.html</overview>
+		                    <additionalparam>-workdir ${basedir}/src/build/test -verbose -pdf ${basedir}/target/test.pdf -config ${basedir}/src/build/test/config_test.properties</additionalparam>
+					        <docletArtifacts>
+			                    <docletArtifact>
+			                        <groupId>pdfdoclet</groupId>
+			                        <artifactId>doclet</artifactId>
+		    	                    <version>${pom.version}</version>
+		        	            </docletArtifact>
+						        <docletArtifact>
+		            				<groupId>junit</groupId>
+						            <artifactId>junit</artifactId>
+		        				    <version>3.8.1</version>
+						        </docletArtifact>
+								<docletArtifact>
+									<groupId>log4j</groupId>
+									<artifactId>log4j</artifactId>
+									<version>1.2.13</version>
+								</docletArtifact>
+						        <docletArtifact>
+						            <groupId>pdfdoclet</groupId>
+						            <artifactId>tools-j2se</artifactId>
+						            <version>1.4.2</version>
+						        </docletArtifact>
+						        <docletArtifact>
+						            <groupId>pdfdoclet</groupId>
+						            <artifactId>itext</artifactId>
+						            <version>1.3</version>
+						        </docletArtifact>
+						        <docletArtifact>
+						            <groupId>pdfdoclet</groupId>
+						            <artifactId>itext-asian</artifactId>
+						            <version>1.0</version>
+						        </docletArtifact>
+						        <docletArtifact>
+						            <groupId>pdfdoclet</groupId>
+						            <artifactId>jtidy</artifactId>
+						            <version>r8-beta</version>
+						        </docletArtifact>
+					        </docletArtifacts>
+		                </configuration>
+                    </execution>
+                    
+                	<!-- Create sample PDF 2 -->
+                    <execution>
+                    	<id>example-2</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+		                <configuration>
+		                    <doclet>com.tarsec.javadoc.pdfdoclet.PDFDoclet</doclet>
+							<sourcepath>${basedir}/src/build/laby</sourcepath>
+		                    <overview>${basedir}/src/build/laby/overview_laby.html</overview>
+		                    <additionalparam>-workdir ${basedir}/src/build/laby -verbose -pdf ${basedir}/target/laby.pdf -config ${basedir}/src/build/laby/config_laby.properties</additionalparam>
+					        <docletArtifacts>
+			                    <docletArtifact>
+			                        <groupId>pdfdoclet</groupId>
+			                        <artifactId>doclet</artifactId>
+		    	                    <version>${pom.version}</version>
+		        	            </docletArtifact>
+						        <docletArtifact>
+		            				<groupId>junit</groupId>
+						            <artifactId>junit</artifactId>
+		        				    <version>3.8.1</version>
+						        </docletArtifact>
+								<docletArtifact>
+									<groupId>log4j</groupId>
+									<artifactId>log4j</artifactId>
+									<version>1.2.13</version>
+								</docletArtifact>
+						        <docletArtifact>
+						            <groupId>pdfdoclet</groupId>
+						            <artifactId>tools-j2se</artifactId>
+						            <version>1.4.2</version>
+						        </docletArtifact>
+						        <docletArtifact>
+						            <groupId>pdfdoclet</groupId>
+						            <artifactId>itext</artifactId>
+						            <version>1.3</version>
+						        </docletArtifact>
+						        <docletArtifact>
+						            <groupId>pdfdoclet</groupId>
+						            <artifactId>itext-asian</artifactId>
+						            <version>1.0</version>
+						        </docletArtifact>
+						        <docletArtifact>
+						            <groupId>pdfdoclet</groupId>
+						            <artifactId>jtidy</artifactId>
+						            <version>r8-beta</version>
+						        </docletArtifact>
+					        </docletArtifacts>
+		                </configuration>
+                    </execution>
+                    
+                	<!-- Create sample PDF 3 -->
+                    <execution>
+                    	<id>example-3</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+		                <configuration>
+		                    <doclet>com.tarsec.javadoc.pdfdoclet.PDFDoclet</doclet>
+							<packages>cvu.*</packages>
+							<sourcepath>${basedir}/src/build/html</sourcepath>
+		                    <additionalparam>-workdir ${basedir}/src/build/html -verbose -pdf ${basedir}/target/html.pdf -config ${basedir}/src/build/html/config_html.properties</additionalparam>
+					        <docletArtifacts>
+			                    <docletArtifact>
+			                        <groupId>pdfdoclet</groupId>
+			                        <artifactId>doclet</artifactId>
+		    	                    <version>${pom.version}</version>
+		        	            </docletArtifact>
+						        <docletArtifact>
+		            				<groupId>junit</groupId>
+						            <artifactId>junit</artifactId>
+		        				    <version>3.8.1</version>
+						        </docletArtifact>
+								<docletArtifact>
+									<groupId>log4j</groupId>
+									<artifactId>log4j</artifactId>
+									<version>1.2.13</version>
+								</docletArtifact>
+						        <docletArtifact>
+						            <groupId>pdfdoclet</groupId>
+						            <artifactId>tools-j2se</artifactId>
+						            <version>1.4.2</version>
+						        </docletArtifact>
+						        <docletArtifact>
+						            <groupId>pdfdoclet</groupId>
+						            <artifactId>itext</artifactId>
+						            <version>1.3</version>
+						        </docletArtifact>
+						        <docletArtifact>
+						            <groupId>pdfdoclet</groupId>
+						            <artifactId>itext-asian</artifactId>
+						            <version>1.0</version>
+						        </docletArtifact>
+						        <docletArtifact>
+						            <groupId>pdfdoclet</groupId>
+						            <artifactId>jtidy</artifactId>
+						            <version>r8-beta</version>
+						        </docletArtifact>
+					        </docletArtifacts>
+		                </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+		</plugins>
+	</build>
+
+
+</project>

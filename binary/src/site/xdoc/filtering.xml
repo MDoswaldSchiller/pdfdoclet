@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Filtering</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Filtering">
+	<subsection name="Introduction">
+<p><p></p>It is possible to create a PDF file with only certain classes, methods, constructors
+    and fields of an API in it. The content that should be printed (included in the document) can be
+	defined using custom tags. Each code member <i>with</i> such a filter tag (and,
+	depending on the configuration, the right content) will be included in the PDF.</p>
+   </subsection>
+   <subsection name="Activating Filters">
+	<p><p></p>To activate filtering set this property:</p>
+		<pre>
+        filter=true
+		</pre>
+   </subsection>
+   <subsection name="Tag-Name based filtering">
+	<p><p></p>One option is to define a comma-separated list of names of custom
+		tags that should be used for filtering. Each code member with such
+		a tag will be printed (regardless of the label of the tag). To specify
+		the list set this property:</p>
+		<pre>
+        filter.tags=&lt;tagname&gt;,&lt;tagname&gt;,&lt;tagname&gt;,...
+		</pre>
+   </subsection>
+   <subsection name="Tag-Label based filtering">
+	<p><p></p>It is also possible to use the filter on a more fine-grained level
+	by filtering based on the label of certain custom tags.
+	For example, by using a custom tag <code>"@prerelease x.y.z"</code> it would be possible to
+	print an extract of only those parts of the API that are marked with a tag like
+	<code>"@prerelease 1.3.15"</code>. All code members without such a tag at all, or with such a
+	tag but a different content string, would be excluded from the PDF.</p>
+   </subsection>
+   </section>
+</body>
+</document>

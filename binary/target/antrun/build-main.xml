@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <tar compression="gzip" destfile="/stuff/java/workspace/pdfdoclet/binary/target/pdfdoclet-1.0.3.tar.gz">
+    <tarfileset dir="/stuff/java/workspace/pdfdoclet/binary/target/image" prefix="pdfdoclet-1.0.3"/>
+  </tar>
+</target>
+</project>

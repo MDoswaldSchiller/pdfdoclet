@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="marcelschoen@users.sourceforge.net">Marcel Schoen</author>
+    <title>Samples</title>
+  </properties>
+  <meta name="keyword" content="java, maven, build"/>
+<body>
+
+<section name="Samples">
+	<subsection name="Example PDF Files">
+<p>
+<p></p>The following files have been created with PDFDoclet:
+<ul>
+  <li><a
+ href="http://prdownloads.sourceforge.net/pdfdoclet/examples1.pdf?download">examples1.pdf</a>
+(about 500 KB)</li>
+  <li><a
+ href="http://prdownloads.sourceforge.net/pdfdoclet/examples2.pdf?download">examples2.pdf</a>
+(about 900 KB)</li>
+  <li><a
+ href="http://prdownloads.sourceforge.net/pdfdoclet/examples3.pdf?download">examples3.pdf</a>
+(about 90 KB)</li>
+  <li><a
+ href="http://prdownloads.sourceforge.net/pdfdoclet/jdk14.pdf?download">jdk14.pdf</a>
+(JDK 1.4 API, about 70 MB)</li>
+</ul>
+</p>
+	</subsection>
+	
+	<subsection name="Screenshots">
+<p>
+			<p></p>For people who don't have an Acrobat Reader availble on the system they
+are using when reading this, there are a few GIF-Snapshots from these
+PDFs available. They give a basic idea what the PDFs may look like.
+				<ul>
+					<li><a href="images/snapshot_doc1.png" target="_top">A doc page example.</a></li>
+					<li><a href="images/snapshot_fonts.png" target="_top">An example of a doc with custom fonts.</a></li>
+					<li><a href="images/snapshot_overview.png" target="_top">A custom overview with images etc.</a></li>
+					<li><a href="images/snapshot_title1.png" target="_top">A generated, simple title page.</a></li>
+					<li><a href="images/snapshot_bookmarks.png" target="_top">A look at the bookmark structure.</a></li>
+					<li><a href="images/snapshot_appendix.png" target="_top">An appendix page imported from an external PDF file.</a></li>
+					<li><a href="images/snapshot_index.png" target="_top">The index page.</a></li>
+				</ul>
+			</p>
+	</subsection>
+	
+</section>
+
+</body>
+</document>

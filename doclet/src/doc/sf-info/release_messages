@@ -1,0 +1,17 @@
+------------ MAILING LIST ---------------
+
+The new release 1.0.0 is available for download. The
+most important changes in short:
+
+  - Massively improved support for bookmark customization
+    - More detailled bookmark structure (Methods, Fields, Constructors)
+    - Support for the -group parameter
+    - Creation of custom bookmark entries in HTML pages
+  - Appendices allow to include external HTML or PDF pages
+    and reference them in an appendix
+  - Import of PDF pages in addition to - or instead of - the
+    regular overview.
+  - Title page can now also be imported from a PDF document.    
+  - Inherited tables can now be reduced to print only those with
+    elements inside the API's scope (but not java.lang.Object etc.)
+  - Numerous bugfixes and more major refactorings
