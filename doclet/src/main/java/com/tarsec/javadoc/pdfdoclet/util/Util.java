@@ -9,13 +9,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
-
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
 import com.tarsec.javadoc.pdfdoclet.Configuration;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
 import com.tarsec.javadoc.pdfdoclet.State;
+import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * General static utility methods.
@@ -25,11 +24,7 @@ import com.tarsec.javadoc.pdfdoclet.State;
  */
 public class Util implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Util.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Util.class);
 
   /**
    * Creates a String containing the specified number of "-" characters.
@@ -57,14 +52,14 @@ public class Util implements IConstants
   public static String replace(String content, String toReplace, String replaceWith)
   {
 
-    log.debug(">");
+    LOG.debug(">");
 
-    log.debug("Content: " + content);
-    log.debug("To replace: " + toReplace);
-    log.debug("Replace with: " + replaceWith);
+    LOG.debug("Content: " + content);
+    LOG.debug("To replace: " + toReplace);
+    LOG.debug("Replace with: " + replaceWith);
 
     if (toReplace.equals(replaceWith)) {
-      log.warn("Replace-String is equal to the one to be replaced!");
+      LOG.warn("Replace-String is equal to the one to be replaced!");
       return content;
     }
 
@@ -82,7 +77,7 @@ public class Util implements IConstants
       pos = result.indexOf(toReplace);
     }
 
-    log.debug("<");
+    LOG.debug("<");
 
     return result;
   }
@@ -124,11 +119,11 @@ public class Util implements IConstants
     }
 
     if (foundPath == null) {
-      log.debug("Could not find file for " + filename);
+      LOG.debug("Could not find file for " + filename);
       throw new FileNotFoundException("File: " + filename + " not found.");
     }
 
-    log.debug("Searching for " + filename + " and found " + foundPath);
+    LOG.debug("Searching for " + filename + " and found " + foundPath);
     return foundPath;
   }
 
@@ -210,12 +205,12 @@ public class Util implements IConstants
    */
   public static void error(String text)
   {
-    log.error("****   ERROR: " + text + " ********");
-    log.error("  ** Package: " + State.currentPackage);
-    log.error("  **   Class: " + State.currentClass);
-    log.error("  **  Method: " + State.currentMethod);
-    log.error("  **  Member: " + State.currentMember);
-    log.error("");
+    LOG.error("****   ERROR: " + text + " ********");
+    LOG.error("  ** Package: " + State.currentPackage);
+    LOG.error("  **   Class: " + State.currentClass);
+    LOG.error("  **  Method: " + State.currentMethod);
+    LOG.error("  **  Member: " + State.currentMember);
+    LOG.error("");
   }
 
   /**
@@ -226,13 +221,13 @@ public class Util implements IConstants
    */
   public static void error(String text, Throwable throwable)
   {
-    log.error("****   ERROR: " + text + " ********");
-    log.error("  ** Package: " + State.currentPackage);
-    log.error("  **   Class: " + State.currentClass);
-    log.error("  **  Method: " + State.currentMethod);
-    log.error("  **  Member: " + State.currentMember);
-    log.debug("  ** Causing: " + throwable.toString(), throwable);
-    log.error("");
+    LOG.error("****   ERROR: " + text + " ********");
+    LOG.error("  ** Package: " + State.currentPackage);
+    LOG.error("  **   Class: " + State.currentClass);
+    LOG.error("  **  Method: " + State.currentMethod);
+    LOG.error("  **  Member: " + State.currentMember);
+    LOG.debug("  ** Causing: " + throwable.toString(), throwable);
+    LOG.error("");
   }
 
   /**
@@ -243,7 +238,7 @@ public class Util implements IConstants
    */
   public static void debug(String text)
   {
-    log.debug(text);
+    LOG.debug(text);
   }
 
   /**

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.ConstructorDoc;
@@ -16,6 +15,8 @@ import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.PackageDoc;
 import com.sun.javadoc.RootDoc;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class processes an entire javadoc tree and stores information about
@@ -26,11 +27,7 @@ import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
  */
 public class ImplementorsInformation implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(ImplementorsInformation.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ImplementorsInformation.class);
 
   private static RootDoc rootDoc = null;
   private static Hashtable implementors = new Hashtable();
@@ -194,7 +191,7 @@ public class ImplementorsInformation implements IConstants
    */
   public static String[] getKnownSubclasses(String className)
   {
-    log.debug("Get known subclasses for: " + className);
+    LOG.debug("Get known subclasses for: " + className);
     TreeNode node = (TreeNode) implementors.get(className);
     TreeNode[] nodes = node.getNodes();
     String[] result = new String[nodes.length];
@@ -216,7 +213,7 @@ public class ImplementorsInformation implements IConstants
    */
   public static String[] getDirectSubclasses(String className)
   {
-    log.debug("Get direct subclasses for: " + className);
+    LOG.debug("Get direct subclasses for: " + className);
     TreeNode node = (TreeNode) implementors.get(className);
     TreeNode[] nodes = node.next();
     String[] result = new String[nodes.length];
@@ -238,7 +235,7 @@ public class ImplementorsInformation implements IConstants
    */
   public static String[] getKnownSuperclasses(String className)
   {
-    log.debug("Get known superclasses for: " + className);
+    LOG.debug("Get known superclasses for: " + className);
     TreeNode node = (TreeNode) implementors.get(className);
     TreeNode[] nodes = node.getParents();
     String[] result = new String[nodes.length];

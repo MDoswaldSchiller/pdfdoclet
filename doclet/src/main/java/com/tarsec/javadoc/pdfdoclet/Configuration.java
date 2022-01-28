@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import org.apache.log4j.Logger;
 
 import sun.tools.java.ClassPath;
 
@@ -21,6 +20,8 @@ import com.lowagie.text.Rectangle;
 import com.sun.javadoc.RootDoc;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
 import com.tarsec.javadoc.pdfdoclet.util.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handles the PDFDoclet configuration properties.
@@ -30,11 +31,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Version;
  */
 public class Configuration implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Configuration.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Configuration.class);
 
   /**
    * Default output filename constant
@@ -174,7 +171,7 @@ public class Configuration implements IConstants
    */
   public static boolean isLinksCreationActive()
   {
-    log.debug("Links creation active: " + isCreateLinksActive);
+    LOG.debug("Links creation active: " + isCreateLinksActive);
     return isCreateLinksActive;
   }
 
@@ -185,7 +182,7 @@ public class Configuration implements IConstants
    */
   public static boolean isCreateFrameActive()
   {
-    log.debug("Create bookmark frame: " + isCreateFrame);
+    LOG.debug("Create bookmark frame: " + isCreateFrame);
     return isCreateFrame;
   }
 
@@ -196,7 +193,7 @@ public class Configuration implements IConstants
    */
   public static boolean isShowSummaryActive()
   {
-    log.debug("Show summary: " + isShowSummaryActive);
+    LOG.debug("Show summary: " + isShowSummaryActive);
     return isShowSummaryActive;
   }
 
@@ -207,7 +204,7 @@ public class Configuration implements IConstants
    */
   public static boolean isShowInheritedSummaryActive()
   {
-    log.debug("Show inherited summary: " + isShowInheritedSummaryActive);
+    LOG.debug("Show inherited summary: " + isShowInheritedSummaryActive);
     return isShowInheritedSummaryActive;
   }
 
@@ -220,7 +217,7 @@ public class Configuration implements IConstants
    */
   public static boolean isShowExternalInheritedSummaryActive()
   {
-    log.debug("Show external inherited summary: " + isShowExternalInheritedSummaryActive);
+    LOG.debug("Show external inherited summary: " + isShowExternalInheritedSummaryActive);
     return isShowExternalInheritedSummaryActive;
   }
 
@@ -231,7 +228,7 @@ public class Configuration implements IConstants
    */
   public static boolean isShowVersionActive()
   {
-    log.debug("Show version: " + isShowVersionActive);
+    LOG.debug("Show version: " + isShowVersionActive);
     return isShowVersionActive;
   }
 
@@ -242,7 +239,7 @@ public class Configuration implements IConstants
    */
   public static boolean isShowSinceActive()
   {
-    log.debug("Show sice: " + isShowSinceActive);
+    LOG.debug("Show sice: " + isShowSinceActive);
     return isShowSinceActive;
   }
 
@@ -253,7 +250,7 @@ public class Configuration implements IConstants
    */
   public static boolean isShowAuthorActive()
   {
-    log.debug("Show author: " + isShowAuthorActive);
+    LOG.debug("Show author: " + isShowAuthorActive);
     return isShowAuthorActive;
   }
 
@@ -264,7 +261,7 @@ public class Configuration implements IConstants
    */
   public static boolean isFilterActive()
   {
-    log.debug("Filtering active: " + isFilterActive);
+    LOG.debug("Filtering active: " + isFilterActive);
     return isFilterActive;
   }
 
@@ -295,7 +292,7 @@ public class Configuration implements IConstants
     if (workDir.endsWith(File.separator)) {
       workDir = workDir.substring(0, workDir.length() - 1);
     }
-    log.debug("Work dir: " + workDir);
+    LOG.debug("Work dir: " + workDir);
     return workDir;
   }
 
@@ -414,22 +411,22 @@ public class Configuration implements IConstants
     // Log PDFDoclet version and build information
     String[] headers = Version.getHeaders();
     for (int i = 0; i < headers.length; i++) {
-      log.info(headers[i]);
+      LOG.info(headers[i]);
     }
 
     // Then process command line arguments to override file values
     for (int i = 0; i < options.length; i++) {
-      log.debug(">> OPTION " + i + ": " + options[i][0]);
+      LOG.debug(">> OPTION " + i + ": " + options[i][0]);
 
       if (options[i][0].startsWith("-")) {
         // Special handling of -group parameters for two reasons:
         // 1. this parameter can appear more than once and
         // 2. it has two arguments
         if (options[i][0].startsWith("-group")) {
-          log.debug("-group options length: " + options[i].length);
+          LOG.debug("-group options length: " + options[i].length);
           String groupName = options[i][1];
           String packages = options[i][2];
-          log.debug(">> Config group: " + groupName + "=" + packages);
+          LOG.debug(">> Config group: " + groupName + "=" + packages);
           Configuration.getGroups().setProperty(groupName, packages);
         }
         else {
@@ -439,7 +436,7 @@ public class Configuration implements IConstants
           if (options[i].length > 1) {
             propValue = options[i][1];
           }
-          log.debug(">> Config property: " + propName + "=" + propValue);
+          LOG.debug(">> Config property: " + propName + "=" + propValue);
           Configuration.getConfiguration().setProperty(propName, propValue);
         }
       }
@@ -516,15 +513,15 @@ public class Configuration implements IConstants
     isFilterActive = getBooleanConfigValue(ARG_FILTER, false);
     isCreateLinksActive = getBooleanConfigValue(ARG_CREATE_LINKS, true);
     isCreateFrame = getBooleanConfigValue(ARG_CREATE_FRAME, true);
-    log.debug("Show author tag: " + isShowAuthorActive);
-    log.debug("Show version tag: " + isShowVersionActive);
-    log.debug("Show since tag: " + isShowSinceActive);
-    log.debug("Show summary tables: " + isShowSummaryActive);
-    log.debug("Show inherited summary tables: " + isShowInheritedSummaryActive);
-    log.debug("Show external inherited summary tables: " + isShowExternalInheritedSummaryActive);
-    log.debug("Filter active: " + isFilterActive);
-    log.debug("Create links: " + isCreateLinksActive);
-    log.debug("Create bookmarks frame: " + isCreateFrame);
+    LOG.debug("Show author tag: " + isShowAuthorActive);
+    LOG.debug("Show version tag: " + isShowVersionActive);
+    LOG.debug("Show since tag: " + isShowSinceActive);
+    LOG.debug("Show summary tables: " + isShowSummaryActive);
+    LOG.debug("Show inherited summary tables: " + isShowInheritedSummaryActive);
+    LOG.debug("Show external inherited summary tables: " + isShowExternalInheritedSummaryActive);
+    LOG.debug("Filter active: " + isFilterActive);
+    LOG.debug("Create links: " + isCreateLinksActive);
+    LOG.debug("Create bookmarks frame: " + isCreateFrame);
   }
 
   /**

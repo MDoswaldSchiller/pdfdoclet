@@ -5,7 +5,6 @@ package com.tarsec.javadoc.pdfdoclet;
 
 import java.io.File;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Element;
 import com.lowagie.text.Paragraph;
@@ -14,6 +13,8 @@ import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Prints the overview.
@@ -23,11 +24,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Util;
  */
 public class Overview implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Overview.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Overview.class);
 
   /**
    * Processes overview.
@@ -39,7 +36,7 @@ public class Overview implements IConstants
   {
 
     String overview = JavadocUtil.getComment(rootDoc);
-    log.debug("Overview text: " + overview);
+    LOG.debug("Overview text: " + overview);
 
     // Check if PDF file has been specified
     String[] overviewFileNames
@@ -76,13 +73,13 @@ public class Overview implements IConstants
                                              overviewFileName.length());
           overviewFileName = overviewFileName.substring(0, overviewFileName.indexOf(","));
         }
-        log.debug("MARK Overview Filename: " + overviewFileName);
+        LOG.debug("MARK Overview Filename: " + overviewFileName);
 
         if (overviewFileName.endsWith(".pdf")) {
           if (pages.length() == 0) {
             pages = "1";
           }
-          log.debug("Add PDF pages from " + overviewFileName + " to the overview: " + pages);
+          LOG.debug("Add PDF pages from " + overviewFileName + " to the overview: " + pages);
           File overviewFile = new File(Configuration.getWorkDir(), overviewFileName);
           if (overviewFile.exists() && overviewFile.isFile()) {
             State.setContinued(false);
@@ -94,7 +91,7 @@ public class Overview implements IConstants
         }
         if (overview != null && overview.length() > 0) {
 
-          log.debug("Create regular overview from doc root.");
+          LOG.debug("Create regular overview from doc root.");
 
           if (pdfPagesInserted) {
             PDFDocument.newPage();
@@ -105,7 +102,7 @@ public class Overview implements IConstants
 
     if (overview != null && overview.length() > 0) {
 
-      log.debug("Create regular overview from doc root.");
+      LOG.debug("Create regular overview from doc root.");
       /*
             if(pdfPagesInserted) {
                 PDFDocument.newPage();

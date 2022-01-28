@@ -2,17 +2,11 @@ package com.tarsec.javadoc.pdfdoclet.test;
 
 import junit.framework.TestCase;
 
-import org.apache.log4j.Logger;
 
 import com.tarsec.javadoc.pdfdoclet.html.HTMLTagUtil;
 
 public class TestProject extends TestCase
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TestProject.class);
 
   public TestProject(String Name)
   {

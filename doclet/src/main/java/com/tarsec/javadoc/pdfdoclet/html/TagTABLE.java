@@ -5,7 +5,6 @@ package com.tarsec.javadoc.pdfdoclet.html;
 
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Element;
 import com.lowagie.text.Paragraph;
@@ -14,6 +13,8 @@ import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.tarsec.javadoc.pdfdoclet.elements.TableParagraph;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TagTABLE creates an iText PdfPTable instance and returns it as the only
@@ -25,11 +26,7 @@ import com.tarsec.javadoc.pdfdoclet.elements.TableParagraph;
  */
 public class TagTABLE extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagTABLE.class);
+  private static final Logger LOG = LoggerFactory.getLogger(TagTABLE.class);
 
   /**
    * Reference to the PdfPTable instance.
@@ -110,7 +107,7 @@ public class TagTABLE extends HTMLTag
    */
   private void createTable(int numcols)
   {
-    log.debug("Creating table with " + numcols + " columns");
+    LOG.debug("Creating table with " + numcols + " columns");
 
     table = new PdfPTable(numcols);
 

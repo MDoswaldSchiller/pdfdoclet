@@ -10,10 +10,11 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 
 import com.sun.javadoc.Doc;
 import com.sun.javadoc.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class builds a list of all tags in a given doc object, such as a method
@@ -26,11 +27,7 @@ import com.sun.javadoc.Tag;
  */
 public class TagList implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagList.class);
+  private static final Logger LOG = LoggerFactory.getLogger(TagList.class);
 
   /**
    * Reference to the doc object.
@@ -89,7 +86,7 @@ public class TagList implements IConstants
     if (!name.startsWith("@")) {
       name = "@" + name;
     }
-    log.debug("Set label '" + label + "' for tag '" + name + "'");
+    LOG.debug("Set label '" + label + "' for tag '" + name + "'");
     labels.setProperty(name, label);
   }
 
@@ -106,7 +103,7 @@ public class TagList implements IConstants
       name = "@" + name;
     }
     String label = labels.getProperty(name);
-    log.debug("Get label for '" + name + "': " + label);
+    LOG.debug("Get label for '" + name + "': " + label);
     return label;
   }
 
@@ -129,7 +126,7 @@ public class TagList implements IConstants
           if (!name.equalsIgnoreCase(DOC_TAGS_DEPRECATED)) {
             Tag[] namedTags = doc.tags(name);
             if (namedTags != null && namedTags.length > 0) {
-              log.debug("Store tags for " + name);
+              LOG.debug("Store tags for " + name);
               allTags.put(name, namedTags);
             }
           }
@@ -149,7 +146,7 @@ public class TagList implements IConstants
     if (!name.startsWith("@")) {
       name = "@" + name;
     }
-    log.debug("Tags for name: " + name);
+    LOG.debug("Tags for name: " + name);
     return (Tag[]) allTags.get(name);
   }
 
@@ -165,7 +162,7 @@ public class TagList implements IConstants
     ArrayList nameList = new ArrayList();
     while (names.hasMoreElements()) {
       String name = (String) names.nextElement();
-      log.debug("Add tag name: " + name);
+      LOG.debug("Add tag name: " + name);
       nameList.add(name);
     }
     return (String[]) nameList.toArray(new String[0]);
@@ -202,7 +199,7 @@ public class TagList implements IConstants
     else {
       // custom tags are disabled, if there is no label defined for them
       if (getTagLabel(tag) == null) {
-        log.warn("Custom tag not printed (no label defined): " + tag);
+        LOG.warn("Custom tag not printed (no label defined): " + tag);
         disabled = true;
       }
     }

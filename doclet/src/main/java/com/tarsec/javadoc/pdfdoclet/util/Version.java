@@ -6,7 +6,6 @@ package com.tarsec.javadoc.pdfdoclet.util;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 
 /**
  * Utility class for determining the library version and build information.
@@ -16,12 +15,6 @@ import org.apache.log4j.Logger;
  */
 public final class Version
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Version.class);
-
   /**
    * Avoid instantiation.
    */

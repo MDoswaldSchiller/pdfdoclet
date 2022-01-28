@@ -3,9 +3,10 @@
  */
 package com.tarsec.javadoc.pdfdoclet.elements;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.pdf.PdfPTable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Customized version(s) of PdfPTable.
@@ -15,11 +16,7 @@ import com.lowagie.text.pdf.PdfPTable;
  */
 public class CustomPdfPTable extends PdfPTable
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(CustomPdfPTable.class);
+  private static final Logger LOG = LoggerFactory.getLogger(CustomPdfPTable.class);
 
   /**
    * Creates a table for summaries (2 columns, border).

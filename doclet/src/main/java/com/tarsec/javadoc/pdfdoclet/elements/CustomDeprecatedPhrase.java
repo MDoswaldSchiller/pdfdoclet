@@ -3,7 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet.elements;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Element;
 import com.lowagie.text.Phrase;
@@ -14,6 +13,8 @@ import com.tarsec.javadoc.pdfdoclet.IConstants;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Custom phrase with 'deprecated' text. A phrase object is required because it
@@ -24,11 +25,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Util;
  */
 public class CustomDeprecatedPhrase extends Phrase implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(CustomDeprecatedPhrase.class);
+  private static final Logger LOG = LoggerFactory.getLogger(CustomDeprecatedPhrase.class);
 
   public CustomDeprecatedPhrase(Doc doc)
   {

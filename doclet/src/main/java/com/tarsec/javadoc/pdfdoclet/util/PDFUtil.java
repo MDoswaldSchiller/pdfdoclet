@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.StringTokenizer;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
@@ -32,6 +31,8 @@ import com.tarsec.javadoc.pdfdoclet.elements.CellNoBorderWithPadding;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.elements.TableParagraph;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PDF utility class.
@@ -41,11 +42,7 @@ import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
  */
 public class PDFUtil implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(PDFUtil.class);
+  private static final Logger LOG = LoggerFactory.getLogger(PDFUtil.class);
 
   /**
    * Inserts pages from a PDF file into the document.
@@ -69,7 +66,7 @@ public class PDFUtil implements IConstants
           try {
             int from = Integer.parseInt(token.substring(0, dashPos));
             int to = Integer.parseInt(token.substring(dashPos + 1, token.length()));
-            log.debug("Insert page range from " + from + " to " + to);
+            LOG.debug("Insert page range from " + from + " to " + to);
             insertPdfPages(reader, from, to, createPage);
           }
           catch (NumberFormatException e) {
@@ -80,7 +77,7 @@ public class PDFUtil implements IConstants
           // It's a single page
           try {
             int no = Integer.parseInt(token);
-            log.debug("Insert single page " + no);
+            LOG.debug("Insert single page " + no);
             insertPdfPages(reader, no, no, createPage);
           }
           catch (NumberFormatException e) {
@@ -92,7 +89,7 @@ public class PDFUtil implements IConstants
     }
     else {
       // By default, insert page 1
-      log.debug("Insert first page only.");
+      LOG.debug("Insert first page only.");
       insertPdfPages(reader, 1, 1, false);
     }
   }
@@ -523,7 +520,7 @@ public class PDFUtil implements IConstants
         PDFDocument.instance().add(objs[i]);
       }
       else {
-        log.warn("Null element returned!");
+        LOG.warn("Null element returned!");
       }
     }
   }

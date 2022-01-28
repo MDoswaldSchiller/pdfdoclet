@@ -5,7 +5,6 @@ package com.tarsec.javadoc.pdfdoclet;
 
 import java.io.FileOutputStream;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -13,6 +12,8 @@ import com.lowagie.text.Graphic;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Encapsulates a PDF document. Handles initialization of and access to the
@@ -23,11 +24,7 @@ import com.lowagie.text.pdf.PdfWriter;
  */
 public class PDFDocument implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(PDFDocument.class);
+  private static final Logger LOG = LoggerFactory.getLogger(PDFDocument.class);
 
   /**
    * Document instance.

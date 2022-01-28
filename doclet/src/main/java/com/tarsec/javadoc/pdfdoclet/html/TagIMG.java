@@ -7,14 +7,14 @@ import java.awt.Toolkit;
 import java.io.FileNotFoundException;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Element;
 import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
 import com.lowagie.text.Rectangle;
 import com.tarsec.javadoc.pdfdoclet.Configuration;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements external links (http://..)
@@ -24,11 +24,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Util;
  */
 public class TagIMG extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagIMG.class);
+  private static final Logger LOG = LoggerFactory.getLogger(TagIMG.class);
 
   public TagIMG(HTMLTag parent, int type)
   {
@@ -42,7 +38,7 @@ public class TagIMG extends HTMLTag
     Element result = null;
 
     if (src == null) {
-      log.error("** Image tag has no 'src' attribute.");
+      LOG.error("** Image tag has no 'src' attribute.");
       return null;
     }
 

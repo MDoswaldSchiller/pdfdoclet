@@ -3,8 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import org.apache.log4j.Logger;
-
 /**
  * Implements the italic tag.
  *
@@ -13,12 +11,6 @@ import org.apache.log4j.Logger;
  */
 public class TagI extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagI.class);
-
   public TagI(HTMLTag parent, int type)
   {
     super(parent, type);

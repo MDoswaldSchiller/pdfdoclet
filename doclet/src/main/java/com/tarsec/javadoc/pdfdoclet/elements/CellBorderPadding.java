@@ -5,12 +5,13 @@ package com.tarsec.javadoc.pdfdoclet.elements;
 
 import java.awt.Color;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Customized version(s) of PdfPCell with a border of with 1 (gray) and a
@@ -21,11 +22,7 @@ import com.lowagie.text.pdf.PdfPCell;
  */
 public class CellBorderPadding extends PdfPCell
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(CellBorderPadding.class);
+  private static final Logger LOG = LoggerFactory.getLogger(CellBorderPadding.class);
 
   /**
    * Creates a PdfPCell with a border and a padding of 6.

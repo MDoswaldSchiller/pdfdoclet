@@ -5,10 +5,11 @@
  */
 package com.tarsec.javadoc.pdfdoclet.elements;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Cell;
 import com.lowagie.text.Phrase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Wraps the PdfPRow object to provide an additional method for querying the
@@ -19,11 +20,7 @@ import com.lowagie.text.Phrase;
  */
 public class CustomPdfPRow extends Phrase
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(CustomPdfPRow.class);
+  private static final Logger LOG = LoggerFactory.getLogger(CustomPdfPRow.class);
 
   /**
    * Stores the number of columns in this row.
@@ -40,7 +37,7 @@ public class CustomPdfPRow extends Phrase
   public CustomPdfPRow(Cell[] cells)
   {
     super();
-    log.debug("Create row with " + cells.length + " columns.");
+    LOG.debug("Create row with " + cells.length + " columns.");
     this.cells = cells;
     columns = cells.length;
   }

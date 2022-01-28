@@ -3,8 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import org.apache.log4j.Logger;
-
 /**
  * Represents the underline tag
  *
@@ -13,12 +11,6 @@ import org.apache.log4j.Logger;
  */
 public class TagU extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagU.class);
-
   public TagU(HTMLTag parent, int type)
   {
     super(parent, type);

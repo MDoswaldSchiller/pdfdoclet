@@ -13,9 +13,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
-
-import org.apache.log4j.Logger;
-
 import com.lowagie.text.pdf.PdfAction;
 import com.lowagie.text.pdf.PdfOutline;
 import com.lowagie.text.pdf.PdfWriter;
@@ -26,6 +23,8 @@ import com.sun.javadoc.FieldDoc;
 import com.sun.javadoc.MemberDoc;
 import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.PackageDoc;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class creates the bookmarks frame.
@@ -35,11 +34,7 @@ import com.sun.javadoc.PackageDoc;
  */
 public class Bookmarks implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Bookmarks.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Bookmarks.class);
 
   /**
    * Stores a reference to the root PDF outline object.
@@ -112,9 +107,9 @@ public class Bookmarks implements IConstants
    */
   private static void createClassesBookmarks(TreeMap classesList)
   {
-    log.debug(">");
+    LOG.debug(">");
 
-    log.debug("Create all classes bookmarks");
+    LOG.debug("Create all classes bookmarks");
 
     // Prepare bookmark entries for all classes
     String labelClasses = Configuration.getProperty(ARG_LB_OUTLINE_CLASSES, LB_CLASSES);
@@ -127,7 +122,7 @@ public class Bookmarks implements IConstants
       BookmarkEntry classBookmark = Bookmarks.addClassBookmark(bookmarkClasses, doc);
       classBookmarks.put(doc.qualifiedName(), classBookmark);
     }
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -138,16 +133,16 @@ public class Bookmarks implements IConstants
   private static void createPackagesBookmarks(Map packagesList)
   {
 
-    log.debug(">");
+    LOG.debug(">");
 
-    log.debug("Create all packages bookmarks");
+    LOG.debug("Create all packages bookmarks");
 
     Iterator iter = packagesList.entrySet().iterator();
     while (iter.hasNext()) {
       Map.Entry entry = (Map.Entry) iter.next();
       PackageDoc doc = (PackageDoc) entry.getKey();
       String name = doc.name();
-      log.debug("Create Bookmark Entry for Package: " + name);
+      LOG.debug("Create Bookmark Entry for Package: " + name);
       BookmarkEntry packageBookmark = new BookmarkEntry(name, name);
 
       // Now create sub-entries for classes within that package
@@ -189,7 +184,7 @@ public class Bookmarks implements IConstants
     }
 
     // Now create rest of bookmarks
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -203,7 +198,7 @@ public class Bookmarks implements IConstants
   private static void connectPackages(String groupName, String list)
   {
     BookmarkEntry bookmarkPackages = null;
-    log.debug("Group name: " + groupName + ", list: " + list);
+    LOG.debug("Group name: " + groupName + ", list: " + list);
     if (list.equals("*")) {
 
       // No group defined, use one package entry
@@ -260,7 +255,7 @@ public class Bookmarks implements IConstants
               addPackage = true;
             }
           }
-          log.debug("add package: " + addPackage);
+          LOG.debug("add package: " + addPackage);
           if (addPackage) {
             BookmarkEntry packageBookmark = (BookmarkEntry) packagesBookmarks.get(name);
             bookmarkPackages.addChild(packageBookmark);
@@ -272,7 +267,7 @@ public class Bookmarks implements IConstants
         }
       }
     }
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -281,9 +276,9 @@ public class Bookmarks implements IConstants
    */
   public static void createBookmarkOutline()
   {
-    log.debug(">");
+    LOG.debug(">");
     createBookmarks(rootOutline, rootEntry.getChildren());
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -296,13 +291,13 @@ public class Bookmarks implements IConstants
    */
   private static void createBookmarks(PdfOutline parent, BookmarkEntry[] entries)
   {
-    log.debug(">");
+    LOG.debug(">");
     if (entries == null) {
       return;
     }
     for (int i = 0; i < entries.length; i++) {
       String name = entries[i].getDestinationName();
-      log.debug("Entry name: " + name);
+      LOG.debug("Entry name: " + name);
       PdfAction action = null;
       if (name == null) {
         action = new PdfAction();
@@ -314,7 +309,7 @@ public class Bookmarks implements IConstants
       outline.setOpen(false);
       createBookmarks(outline, entries[i].getChildren());
     }
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -434,7 +429,7 @@ public class Bookmarks implements IConstants
         label = label + execDoc.flatSignature();
       }
       BookmarkEntry entry = new BookmarkEntry(label, dest);
-      log.debug("add entry for: " + dest);
+      LOG.debug("add entry for: " + dest);
       parent.addChild(entry);
 
     }

@@ -6,7 +6,6 @@ package com.tarsec.javadoc.pdfdoclet;
 import java.awt.Color;
 import java.util.Arrays;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Paragraph;
@@ -20,6 +19,8 @@ import com.tarsec.javadoc.pdfdoclet.elements.CellBorderPadding;
 import com.tarsec.javadoc.pdfdoclet.elements.CustomPdfPCell;
 import com.tarsec.javadoc.pdfdoclet.elements.CustomPdfPTable;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Prints the inherited tables.
@@ -29,11 +30,7 @@ import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
  */
 public class Inherited implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Inherited.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Inherited.class);
 
   /**
    * Prints inherited methods and fields from superclasses
@@ -50,7 +47,7 @@ public class Inherited implements IConstants
     FieldDoc[] fields = supercls.fields();
 
     Arrays.sort(fields);
-    log.debug("Fields: " + fields.length);
+    LOG.debug("Fields: " + fields.length);
 
     if (supercls.isInterface()) {
       type = "interface";
@@ -105,7 +102,7 @@ public class Inherited implements IConstants
     MethodDoc[] meth = supercls.methods();
 
     Arrays.sort(meth);
-    log.debug("Methods: " + meth.length);
+    LOG.debug("Methods: " + meth.length);
 
     if ((meth.length > 0) && (show == SHOW_METHODS)) {
       PDFDocument.instance().add(new Paragraph((float) 6.0, " "));
@@ -161,7 +158,7 @@ public class Inherited implements IConstants
     }
 
     ClassDoc[] interfaces = supercls.interfaces();
-    log.debug("Interfaces: " + interfaces.length);
+    LOG.debug("Interfaces: " + interfaces.length);
     for (int i = 0; i < interfaces.length; i++) {
       supersupercls = interfaces[i];
       String className = supersupercls.qualifiedName();
@@ -181,7 +178,7 @@ public class Inherited implements IConstants
     boolean printClass = true;
     if (!Destinations.isValid(className)
         && !Configuration.isShowExternalInheritedSummaryActive()) {
-      log.debug("Do not print inherited table for external element " + className);
+      LOG.debug("Do not print inherited table for external element " + className);
       printClass = false;
     }
     return printClass;

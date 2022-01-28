@@ -8,7 +8,6 @@ package com.tarsec.javadoc.pdfdoclet;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
@@ -23,6 +22,8 @@ import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Prints class information.
@@ -32,11 +33,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Util;
  */
 public class Classes implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Classes.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Classes.class);
 
   /**
    * Prints javadoc of one given class.
@@ -49,14 +46,14 @@ public class Classes implements IConstants
       throws Exception
   {
 
-    log.debug(">");
+    LOG.debug(">");
 
     PDFDocument.newPage();
     State.increasePackageSection();
 
     State.setCurrentClass(classDoc.qualifiedName());
     State.setCurrentDoc(classDoc);
-    log.info("..> " + State.getCurrentClass());
+    LOG.info("..> " + State.getCurrentClass());
 
     // Simulate javadoc HTML layout
     // package (small) and class (large) name header
@@ -207,7 +204,7 @@ public class Classes implements IConstants
     PDFUtil.printLine();
 
     // Class type / declaration
-    log.debug("Print class type / declaration");
+    LOG.debug("Print class type / declaration");
     String info = "";
 
     Tag[] deprecatedTags = classDoc.tags(DOC_TAGS_DEPRECATED);
@@ -333,7 +330,7 @@ public class Classes implements IConstants
     PDFDocument.add(new Paragraph((float) 6.0, " "));
     Members.printMembers(classDoc);
 
-    log.debug("<");
+    LOG.debug("<");
   }
 
 }

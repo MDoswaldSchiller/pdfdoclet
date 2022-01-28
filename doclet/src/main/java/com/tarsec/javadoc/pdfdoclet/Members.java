@@ -5,7 +5,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
@@ -26,6 +25,8 @@ import com.tarsec.javadoc.pdfdoclet.elements.CustomPdfPCell;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Prints member (method, variable) information.
@@ -35,11 +36,7 @@ import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
  */
 public class Members implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Members.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Members.class);
 
   /**
    * Prints all methods of a class or interface.
@@ -51,7 +48,7 @@ public class Members implements IConstants
   {
     Phrase deprecatedPhrase = null;
 
-    log.debug(">");
+    LOG.debug(">");
 
     // test if class is deprecated
     boolean allDeprecated = false;
@@ -60,7 +57,7 @@ public class Members implements IConstants
       allDeprecated = true;
     }
 
-    log.debug("Print fields...");
+    LOG.debug("Print fields...");
     State.setTypeOfCurrentMember(State.TYPE_FIELD);
     FieldDoc[] fields = classDoc.fields();
 
@@ -98,7 +95,7 @@ public class Members implements IConstants
       }
     }
 
-    log.debug("Print constructors...");
+    LOG.debug("Print constructors...");
     State.setTypeOfCurrentMember(State.TYPE_CONSTRUCTOR);
     ConstructorDoc[] constructors = classDoc.constructors();
 
@@ -136,7 +133,7 @@ public class Members implements IConstants
       }
     }
 
-    log.debug("Print methods...");
+    LOG.debug("Print methods...");
     State.setTypeOfCurrentMember(State.TYPE_METHOD);
     MethodDoc[] methods = classDoc.methods();
 
@@ -184,7 +181,7 @@ public class Members implements IConstants
     }
 
     State.setTypeOfCurrentMember(State.TYPE_NONE);
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -210,14 +207,14 @@ public class Members implements IConstants
       throws Exception
   {
 
-    log.debug(">");
+    LOG.debug(">");
 
     String name = commentDoc.name();
 
     State.setCurrentMember(State.getCurrentClass() + "." + name);
     State.setCurrentDoc(commentDoc);
 
-    log.info("....> " + State.getCurrentMember());
+    LOG.info("....> " + State.getCurrentMember());
 
     // Create bookmark anchors
     // Returns the text, resolving any "inheritDoc" inline tags
@@ -428,6 +425,6 @@ public class Members implements IConstants
     // Add whole method block to document
     PDFDocument.add(table);
 
-    log.debug("<");
+    LOG.debug("<");
   }
 }

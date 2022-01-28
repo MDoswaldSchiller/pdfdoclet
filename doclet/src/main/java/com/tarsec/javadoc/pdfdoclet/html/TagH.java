@@ -3,7 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
@@ -18,12 +17,6 @@ import com.tarsec.javadoc.pdfdoclet.Fonts;
  */
 public class TagH extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagH.class);
-
   public TagH(HTMLTag parent, int type)
   {
     super(parent, type);

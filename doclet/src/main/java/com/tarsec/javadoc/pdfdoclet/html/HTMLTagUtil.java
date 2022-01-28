@@ -6,10 +6,11 @@ package com.tarsec.javadoc.pdfdoclet.html;
 import java.awt.Color;
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Element;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class provides static utility methods for HTML and HTML tag handling.
@@ -19,14 +20,11 @@ import com.tarsec.javadoc.pdfdoclet.IConstants;
  */
 public class HTMLTagUtil implements IConstants
 {
+  private static final Logger LOG = LoggerFactory.getLogger(HTMLTagUtil.class);
 
   private static int UNKNOWN = -1;
   protected static String[] tags = HTMLTag.tags;
 
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(HTMLTagUtil.class);
 
   /**
    * Determines the type of a HTML tag by parsing it and gettings its type from
@@ -151,7 +149,7 @@ public class HTMLTagUtil implements IConstants
         color = new Color(Integer.parseInt(htmlColorString, 16));
       }
       catch (NumberFormatException e) {
-        log.debug("Bad HTML color value " + htmlColorString, e);
+        LOG.debug("Bad HTML color value " + htmlColorString, e);
         /* leave color as null */
       }
     }

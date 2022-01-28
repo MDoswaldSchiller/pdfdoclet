@@ -3,7 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Element;
 
@@ -15,12 +14,6 @@ import com.lowagie.text.Element;
  */
 public class TagBR extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagBR.class);
-
   public TagBR(HTMLTag parent, int type)
   {
     super(parent, type);

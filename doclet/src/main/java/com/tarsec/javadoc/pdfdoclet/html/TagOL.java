@@ -3,13 +3,14 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
 import com.lowagie.text.List;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.RomanList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements an Ordered-List Tag (OL)
@@ -19,11 +20,7 @@ import com.lowagie.text.RomanList;
  */
 public class TagOL extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagOL.class);
+  private static final Logger LOG = LoggerFactory.getLogger(TagOL.class);
 
   /**
    * Stores list entries.
@@ -66,7 +63,7 @@ public class TagOL extends HTMLTag
       }
     }
     catch (NumberFormatException e) {
-      log.debug("Invalid OL start value '" + firstAttr + "'", e);
+      LOG.debug("Invalid OL start value '" + firstAttr + "'", e);
     }
     return 1;
   }

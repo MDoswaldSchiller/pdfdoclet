@@ -3,7 +3,8 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements external links (http://..)
@@ -13,11 +14,7 @@ import org.apache.log4j.Logger;
  */
 public class TagDIV extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagDIV.class);
+  private static final Logger LOG = LoggerFactory.getLogger(TagDIV.class);
 
   /**
    * Create a link tag instance.
@@ -29,6 +26,6 @@ public class TagDIV extends HTMLTag
   {
     super(parent, type);
 
-    log.debug("** DIV tag created ");
+    LOG.debug("** DIV tag created ");
   }
 }

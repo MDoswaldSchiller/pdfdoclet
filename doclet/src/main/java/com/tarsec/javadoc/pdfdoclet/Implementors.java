@@ -3,7 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Paragraph;
@@ -14,6 +13,8 @@ import com.tarsec.javadoc.pdfdoclet.elements.CellNoBorderNoPadding;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Prints the implementor info.
@@ -23,11 +24,7 @@ import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
  */
 public class Implementors implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Implementors.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Implementors.class);
 
   /**
    * Prints all known subclasses or implementing classes.

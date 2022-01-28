@@ -3,7 +3,8 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Factory for creating HTML tag objects.
@@ -13,11 +14,7 @@ import org.apache.log4j.Logger;
  */
 public class TagFactory
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagFactory.class);
+  private static final Logger LOG = LoggerFactory.getLogger(TagFactory.class);
 
   protected static String[] tags = HTMLTag.tags;
 
@@ -32,7 +29,7 @@ public class TagFactory
    */
   public static HTMLTag createTag(HTMLTag parent, int type)
   {
-    log.debug(">");
+    LOG.debug(">");
     switch (type) {
       case HTMLTag.TAG_UL:
         return new TagUL(parent, type);

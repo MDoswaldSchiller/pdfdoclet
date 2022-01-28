@@ -5,7 +5,6 @@ package com.tarsec.javadoc.pdfdoclet;
 
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Element;
 import com.lowagie.text.Paragraph;
@@ -23,6 +22,8 @@ import com.tarsec.javadoc.pdfdoclet.elements.CellNoBorderNoPadding;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Prints class and member tag lists. These are javadoc tags like "author" etc.
@@ -32,11 +33,7 @@ import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
  */
 public class TagLists implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagLists.class);
+  private static final Logger LOG = LoggerFactory.getLogger(TagLists.class);
 
   /**
    *
@@ -46,7 +43,7 @@ public class TagLists implements IConstants
    */
   public static void printClassTags(ClassDoc classDoc) throws Exception
   {
-    log.debug("> class: " + classDoc.name());
+    LOG.debug("> class: " + classDoc.name());
     // Get list of all tags
     TagList list = new TagList(classDoc);
     String[] names = list.getTagNames();
@@ -56,11 +53,11 @@ public class TagLists implements IConstants
       String tagLabel = TagList.getTagLabel(names[i]);
       Tag[] tags = list.getTags(names[i]);
       if (tags == null) {
-        log.error("NO TAGS FOR: " + names[i]);
+        LOG.error("NO TAGS FOR: " + names[i]);
       }
       printTags(tagLabel, tags, true, false);
     }
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -114,7 +111,7 @@ public class TagLists implements IConstants
    */
   public static void printMemberTags(Doc doc) throws Exception
   {
-    log.debug("> member: " + doc.name());
+    LOG.debug("> member: " + doc.name());
     // Get list of all tags
     TagList list = new TagList(doc);
 
@@ -141,12 +138,12 @@ public class TagLists implements IConstants
         String tagLabel = TagList.getTagLabel(customNames[i]);
         Tag[] tags = list.getTags(customNames[i]);
         if (tags == null) {
-          log.error("NO TAGS FOR: " + customNames[i]);
+          LOG.error("NO TAGS FOR: " + customNames[i]);
         }
         printTags(tagLabel, tags, false, true);
       }
     }
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -162,9 +159,9 @@ public class TagLists implements IConstants
    */
   public static void printMemberTags(String title, Tag[] tags) throws Exception
   {
-    log.debug("> title: " + title);
+    LOG.debug("> title: " + title);
     printTags(title, tags, false, true);
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -184,7 +181,7 @@ public class TagLists implements IConstants
                                 boolean compress, boolean isMember) throws Exception
   {
 
-    log.debug("> title: " + title);
+    LOG.debug("> title: " + title);
 
     if ((tags != null) && (tags.length > 0)) {
       float[] widthsMember = {(float) 6.0, (float) 4.0, (float) 94.0};
@@ -253,7 +250,7 @@ public class TagLists implements IConstants
       // Add whole method block to document
       PDFDocument.instance().add(table);
     }
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**

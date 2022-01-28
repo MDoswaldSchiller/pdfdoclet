@@ -7,7 +7,6 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
@@ -15,17 +14,15 @@ import com.lowagie.text.Paragraph;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Prints extra appendices
  */
 public class Appendices implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Appendices.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Appendices.class);
 
   private static ArrayList appendices = new ArrayList();
 
@@ -66,15 +63,15 @@ public class Appendices implements IConstants
             AppendixInfo info = new AppendixInfo(index, file, pages);
             appendices.add(info);
             Destinations.addValidDestinationFile(file);
-            log.debug("Adding appendix " + info.name + ": " + file);
+            LOG.debug("Adding appendix " + info.name + ": " + file);
           }
           catch (RuntimeException e) {
-            log.debug("Error processing appendix argument " + key);
+            LOG.debug("Error processing appendix argument " + key);
           }
 
         }
         else {
-          log.debug("Could not find appendix file " + fileName);
+          LOG.debug("Could not find appendix file " + fileName);
         }
       }
     }
@@ -124,7 +121,7 @@ public class Appendices implements IConstants
       fullTitle += ": " + info.title;
     }
 
-    log.debug("Printing appendix " + info.name);
+    LOG.debug("Printing appendix " + info.name);
     PDFDocument.newPage();
     State.setContinued(true);
     State.setCurrentClass(fullTitle);
@@ -133,7 +130,7 @@ public class Appendices implements IConstants
 
     if (file.getName().toLowerCase().endsWith(".pdf")) {
 
-      log.debug("Add PDF document as appendix.");
+      LOG.debug("Add PDF document as appendix.");
       Chunk anchorChunk = PDFUtil.createAnchor(appendixAnchor);
       PDFDocument.instance().add(anchorChunk);
       PDFUtil.insertPdfPages(file, info.pages);
@@ -141,7 +138,7 @@ public class Appendices implements IConstants
     }
     else {
 
-      log.debug("Add HTML file as appendix.");
+      LOG.debug("Add HTML file as appendix.");
       String html = Util.getHTMLBodyContent(file);
       Chunk titleChunk = new Chunk(fullTitle, Fonts.getFont(TIMES_ROMAN, BOLD, 22));
       titleChunk.setLocalDestination(appendixAnchor);

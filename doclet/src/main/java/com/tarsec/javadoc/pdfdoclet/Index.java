@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
@@ -21,6 +20,8 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.ColumnText;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Creates and alphabetical index at the end of the API document.
@@ -30,11 +31,7 @@ import com.lowagie.text.pdf.PdfWriter;
  */
 public class Index implements IConstants, Comparator
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Index.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Index.class);
 
   /**
    * Container for member index information
@@ -71,13 +68,13 @@ public class Index implements IConstants, Comparator
    */
   public void addToMemberList(String memberName)
   {
-    log.debug(">");
+    LOG.debug(">");
     // Separate name of unqualified member only
     String memberShortName = memberName.substring(memberName.lastIndexOf(
         ".") + 1, memberName.length());
     addPageNoForMember(memberShortName);
     memberList.put(memberShortName, memberShortName);
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -88,13 +85,13 @@ public class Index implements IConstants, Comparator
    */
   private void addPageNoForMember(String memberName)
   {
-    log.debug(">");
+    LOG.debug(">");
     if (memberIndex.get(memberName) == null) {
       memberIndex.put(memberName, new TreeSet());
     }
     TreeSet list = (TreeSet) memberIndex.get(memberName);
     list.add(new Integer(State.getCurrentPage()));
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -106,10 +103,10 @@ public class Index implements IConstants, Comparator
    */
   private Iterator getSortedPageNumbers(String memberName)
   {
-    log.debug(">");
+    LOG.debug(">");
     TreeSet list = (TreeSet) memberIndex.get(memberName);
     Collections.synchronizedSet(list);
-    log.debug("<");
+    LOG.debug("<");
     return list.iterator();
   }
 
@@ -120,14 +117,14 @@ public class Index implements IConstants, Comparator
    */
   public void create() throws Exception
   {
-    log.debug(">");
+    LOG.debug(">");
 
     if (!Configuration.getBooleanConfigValue(ARG_CREATE_INDEX, false)) {
-      log.debug("Index creation disabled.");
+      LOG.debug("Index creation disabled.");
       return;
     }
 
-    log.debug("** Start creating Index...");
+    LOG.debug("** Start creating Index...");
 
     State.setCurrentHeaderType(HEADER_INDEX);
     State.increasePackageChapter();
@@ -173,7 +170,7 @@ public class Index implements IConstants, Comparator
     while (realNames.hasNext()) {
       String memberName = (String) realNames.next();
       String currentLetter = memberName.substring(0, 1).toUpperCase();
-      log.debug("Create index entry for " + memberName);
+      LOG.debug("Create index entry for " + memberName);
 
       // Check if next letter in alphabet is reached
       if (currentLetter.equalsIgnoreCase(letter) == false) {
@@ -226,9 +223,9 @@ public class Index implements IConstants, Comparator
       }
     }
 
-    log.debug("** Index created.");
+    LOG.debug("** Index created.");
 
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**

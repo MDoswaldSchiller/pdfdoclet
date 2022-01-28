@@ -3,7 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet.elements;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
@@ -12,6 +11,8 @@ import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Customized version(s) of Paragraph.
@@ -21,11 +22,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Util;
  */
 public class CustomTagParagraph extends Paragraph implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(CustomTagParagraph.class);
+  private static final Logger LOG = LoggerFactory.getLogger(CustomTagParagraph.class);
 
   /**
    * Creates a paragraph of PDF phrases for the given tag text.

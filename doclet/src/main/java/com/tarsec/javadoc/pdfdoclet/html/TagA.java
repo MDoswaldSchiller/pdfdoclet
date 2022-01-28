@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
@@ -24,6 +23,8 @@ import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements external links (http://..)
@@ -33,11 +34,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Util;
  */
 public class TagA extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagA.class);
+  private static final Logger LOG = LoggerFactory.getLogger(TagA.class);
 
   /**
    * Create a link tag instance.
@@ -125,7 +122,7 @@ public class TagA extends HTMLTag
         return new Chunk(text, getFont()).setAnchor(url);
       }
       catch (MalformedURLException e) {
-        log.error("** Malformed URL: " + addr);
+        LOG.error("** Malformed URL: " + addr);
       }
     }
     else {
@@ -150,12 +147,12 @@ public class TagA extends HTMLTag
         }
       }
       catch (FileNotFoundException e) {
-        log.debug("Could not find linked file " + fileName);
+        LOG.debug("Could not find linked file " + fileName);
       }
 
       if (isLocalAnchor || Destinations.isValidDestinationFile(file)) {
         String fullAnchor = Destinations.createAnchorDestination(file, anchorName);
-        log.debug("Adding link to " + fullAnchor);
+        LOG.debug("Adding link to " + fullAnchor);
         PdfAction action = new PdfAction("", "");
         action.remove(PdfName.F);
         action.put(PdfName.S, PdfName.GOTO);

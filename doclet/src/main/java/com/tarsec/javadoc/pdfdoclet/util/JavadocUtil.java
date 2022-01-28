@@ -9,7 +9,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
-import org.apache.log4j.Logger;
 
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.ConstructorDoc;
@@ -29,6 +28,8 @@ import com.tarsec.javadoc.pdfdoclet.Configuration;
 import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
 import com.tarsec.javadoc.pdfdoclet.State;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Javadoc parsing utility class.
@@ -38,11 +39,7 @@ import com.tarsec.javadoc.pdfdoclet.State;
  */
 public class JavadocUtil implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(JavadocUtil.class);
+  private static final Logger LOG = LoggerFactory.getLogger(JavadocUtil.class);
 
   /**
    * List of package prefixes (built at startup time).
@@ -244,7 +241,7 @@ public class JavadocUtil implements IConstants
         return getComment(((ClassDoc) doc).superclass());
       }
       else {
-        log.warn("Unknown @inheritDoc doc type " + doc);
+        LOG.warn("Unknown @inheritDoc doc type " + doc);
       }
       return tag.text();
     }
@@ -253,8 +250,8 @@ public class JavadocUtil implements IConstants
     }
     else {
       //FIXME custom tag handling?
-      if (log.isDebugEnabled()) {
-        log.debug("Unknown tag " + tag.name() + ": " + tag.text());
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("Unknown tag " + tag.name() + ": " + tag.text());
       }
       return tag.text(); // not sure this is right
     }
@@ -621,14 +618,14 @@ public class JavadocUtil implements IConstants
 
   public static String findSuperClassWithMethod(String method)
   {
-    log.debug("Method: " + method);
+    LOG.debug("Method: " + method);
     String result = State.currentClass;
     Doc doc = State.getCurrentDoc();
     if (doc instanceof ClassDoc) {
       ClassDoc classDoc = (ClassDoc) doc;
       result = findMethodInClass(classDoc, method);
     }
-    log.debug("Result: " + result);
+    LOG.debug("Result: " + result);
     return result;
   }
 
@@ -641,7 +638,7 @@ public class JavadocUtil implements IConstants
    */
   private static String findMethodInClass(ClassDoc classDoc, String method)
   {
-    log.debug("ClassDoc: " + classDoc.name() + ", Method: " + method);
+    LOG.debug("ClassDoc: " + classDoc.name() + ", Method: " + method);
     String result = null;
     MethodDoc[] methods = classDoc.methods();
     if (methods != null && methods.length > 0) {

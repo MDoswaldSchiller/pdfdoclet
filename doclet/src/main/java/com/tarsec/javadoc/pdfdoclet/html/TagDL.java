@@ -3,7 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Element;
 import com.lowagie.text.Paragraph;
@@ -16,12 +15,6 @@ import com.lowagie.text.Paragraph;
  */
 public class TagDL extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagDL.class);
-
   /**
    * Creates a DL tag object.
    *

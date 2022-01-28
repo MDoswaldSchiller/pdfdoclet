@@ -3,7 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
@@ -24,11 +23,6 @@ public class TagUL extends HTMLTag
    * Bullet symbol.
    */
   private static final String BULLET = "\u2022";
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagUL.class);
 
   /**
    * Stores list entries.

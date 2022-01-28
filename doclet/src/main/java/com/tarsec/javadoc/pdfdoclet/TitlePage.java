@@ -5,7 +5,6 @@ package com.tarsec.javadoc.pdfdoclet;
 
 import java.io.File;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
@@ -14,6 +13,8 @@ import com.lowagie.text.Paragraph;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Prints (optionally) a title page for the API documentation based on the
@@ -24,11 +25,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Util;
  */
 public class TitlePage implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TitlePage.class);
+  private static final Logger LOG = LoggerFactory.getLogger(TitlePage.class);
 
   private static boolean titlePrinted = false;
 
@@ -80,14 +77,14 @@ public class TitlePage implements IConstants
 
           if (apiFile.getName().toLowerCase().endsWith(".pdf")) {
 
-            log.debug("Add PDF page as title page.");
+            LOG.debug("Add PDF page as title page.");
             // Always use 1st page of document as title page
             PDFUtil.insertPdfPages(apiFile, "1");
 
           }
           else {
 
-            log.debug("Use HTML file as title page.");
+            LOG.debug("Use HTML file as title page.");
             String html = Util.getHTMLBodyContent(apiFile);
             Element[] objs = HtmlParserWrapper.createPdfObjects(html);
             PDFUtil.printPdfElements(objs);
@@ -96,7 +93,7 @@ public class TitlePage implements IConstants
 
         }
         else {
-          log.error(
+          LOG.error(
               "** WARNING: Title page file not found or invalid: "
               + apiFileProp);
         }

@@ -3,8 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import org.apache.log4j.Logger;
-
 /**
  * Implements the CODE tag.
  *
@@ -13,12 +11,6 @@ import org.apache.log4j.Logger;
  */
 public class TagCODE extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagCODE.class);
-
   public TagCODE(HTMLTag parent, int type)
   {
     super(parent, type);

@@ -6,7 +6,6 @@ package com.tarsec.javadoc.pdfdoclet;
 import java.awt.Color;
 import java.util.Arrays;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.DocumentException;
@@ -31,6 +30,8 @@ import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Prints the summary tables.
@@ -40,11 +41,7 @@ import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
  */
 public class Summary implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Summary.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Summary.class);
 
   /**
    * Prints all field, constructor and methods summary
@@ -55,7 +52,7 @@ public class Summary implements IConstants
   public static void printAll(ClassDoc classDoc) throws Exception
   {
 
-    log.debug(">");
+    LOG.debug(">");
 
     Phrase deprecatedPhrase = null;
 
@@ -67,7 +64,7 @@ public class Summary implements IConstants
     }
 
     // Print inner classes summary table                
-    log.debug("Print inner classes summary");
+    LOG.debug("Print inner classes summary");
     ClassDoc[] innerClasses = classDoc.innerClasses();
     Arrays.sort(innerClasses);
 
@@ -93,7 +90,7 @@ public class Summary implements IConstants
     }
 
     // Print fields summary table        
-    log.debug("Print fields summary");
+    LOG.debug("Print fields summary");
     FieldDoc[] fields = classDoc.fields();
     Arrays.sort(fields);
 
@@ -151,7 +148,7 @@ public class Summary implements IConstants
     }
 
     // Print constructor summary table
-    log.debug("Print constructors summary");
+    LOG.debug("Print constructors summary");
     ConstructorDoc[] constructors = classDoc.constructors();
 
     if ((constructors != null) && (constructors.length > 0)) {
@@ -177,7 +174,7 @@ public class Summary implements IConstants
     }
 
     // Print method summary table
-    log.debug("Print methods summary");
+    LOG.debug("Print methods summary");
     MethodDoc[] methods = classDoc.methods();
     Arrays.sort(methods);
 

@@ -5,7 +5,6 @@ package com.tarsec.javadoc.pdfdoclet.html;
 
 import java.awt.Color;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Element;
 import com.lowagie.text.Paragraph;
@@ -22,12 +21,6 @@ import com.tarsec.javadoc.pdfdoclet.elements.CustomPdfPTable;
  */
 public class TagPRE extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagPRE.class);
-
   private PdfPTable mainTable = new CustomPdfPTable();
   private Paragraph cellPara = null;
   private PdfPCell colorTitleCell = null;

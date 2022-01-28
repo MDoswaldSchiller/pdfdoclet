@@ -11,7 +11,6 @@ import java.util.Hashtable;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-import org.apache.log4j.Logger;
 
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.ConstructorDoc;
@@ -20,6 +19,8 @@ import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.Tag;
 import com.tarsec.javadoc.pdfdoclet.Configuration;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility class for filtering out classes and methods from a print process
@@ -31,10 +32,7 @@ import com.tarsec.javadoc.pdfdoclet.IConstants;
 public class Filter
 {
 
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Filter.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Filter.class);
 
   /**
    * Storage for all general filter tag names.
@@ -51,9 +49,9 @@ public class Filter
    */
   public static void initialize()
   {
-    log.debug(">");
+    LOG.debug(">");
     if (Configuration.isFilterActive()) {
-      log.debug("Filter is active!");
+      LOG.debug("Filter is active!");
       String tags = Configuration.getProperty(IConstants.ARG_FILTER_TAGS,
                                               "");
       // The tag names are in a comma separated list, so we use
@@ -62,7 +60,7 @@ public class Filter
       while (tok.hasMoreTokens()) {
         String tag = "@" + tok.nextToken();
         filterTags.put(tag, "X");
-        log.debug("Filter tag: " + tag);
+        LOG.debug("Filter tag: " + tag);
       }
       // Now check for specific filter tags
       Enumeration keys = Configuration.getConfiguration().keys();
@@ -74,13 +72,13 @@ public class Filter
                                            key.length());
           String content
               = Configuration.getProperty(key, "").toLowerCase();
-          log.debug("Content filter tag '" + tagName + "': "
+          LOG.debug("Content filter tag '" + tagName + "': "
                     + content);
           filterTagsContent.setProperty(tagName, content);
         }
       }
     }
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -92,7 +90,7 @@ public class Filter
    */
   public static boolean mustBeFiltered(FieldDoc fieldDoc)
   {
-    log.debug(">");
+    LOG.debug(">");
     return mustBeFiltered(fieldDoc.tags());
   }
 
@@ -105,7 +103,7 @@ public class Filter
    */
   public static boolean mustBeFiltered(MethodDoc methodDoc)
   {
-    log.debug(">");
+    LOG.debug(">");
     return mustBeFiltered(methodDoc.tags());
   }
 
@@ -118,7 +116,7 @@ public class Filter
    */
   public static boolean mustBeFiltered(ConstructorDoc constructorDoc)
   {
-    log.debug(">");
+    LOG.debug(">");
     return mustBeFiltered(constructorDoc.tags());
   }
 
@@ -131,7 +129,7 @@ public class Filter
    */
   public static boolean mustBeFiltered(ClassDoc classDoc)
   {
-    log.debug(">");
+    LOG.debug(">");
     return mustBeFiltered(classDoc.tags());
   }
 
@@ -144,7 +142,7 @@ public class Filter
    */
   private static boolean mustBeFiltered(Tag[] tags)
   {
-    log.debug(">");
+    LOG.debug(">");
     for (int i = 0; i < tags.length; i++) {
       String tagName = tags[i].name();
       if (filterTags.get(tagName) != null) {
@@ -160,7 +158,7 @@ public class Filter
         }
       }
     }
-    log.debug("<");
+    LOG.debug("<");
     return true;
   }
 
@@ -174,7 +172,7 @@ public class Filter
    */
   public static ClassDoc[] createFilteredClassesList(ClassDoc[] input)
   {
-    log.debug(">");
+    LOG.debug(">");
     FilteredClassDoc[] list = new FilteredClassDoc[input.length];
     for (int i = 0; i < input.length; i++) {
       list[i] = new FilteredClassDoc(input[i]);
@@ -188,7 +186,7 @@ public class Filter
       }
     }
     ClassDoc[] result = new ClassDoc[filteredList.size()];
-    log.debug("<");
+    LOG.debug("<");
     return (ClassDoc[]) filteredList.toArray(result);
   }
 
@@ -201,7 +199,7 @@ public class Filter
    */
   public static ClassDoc[] createClassesList(ClassDoc[] input)
   {
-    log.debug(">");
+    LOG.debug(">");
     // Otherwise, create a filtered list.
     ArrayList filteredList = new ArrayList();
     for (int i = 0; i < input.length; i++) {
@@ -211,7 +209,7 @@ public class Filter
       }
     }
     ClassDoc[] result = new ClassDoc[filteredList.size()];
-    log.debug("<");
+    LOG.debug("<");
     return (ClassDoc[]) filteredList.toArray(result);
   }
 
@@ -224,7 +222,7 @@ public class Filter
    */
   public static MethodDoc[] createMethodList(MethodDoc[] input)
   {
-    log.debug(">");
+    LOG.debug(">");
 
     // Otherwise, create a filtered list.
     ArrayList filteredList = new ArrayList();
@@ -235,7 +233,7 @@ public class Filter
       }
     }
     MethodDoc[] result = new MethodDoc[filteredList.size()];
-    log.debug("<");
+    LOG.debug("<");
     return (MethodDoc[]) filteredList.toArray(result);
   }
 
@@ -248,7 +246,7 @@ public class Filter
    */
   public static FieldDoc[] createFieldList(FieldDoc[] input)
   {
-    log.debug(">");
+    LOG.debug(">");
     // Otherwise, create a filtered list.
     ArrayList filteredList = new ArrayList();
     for (int i = 0; i < input.length; i++) {
@@ -258,7 +256,7 @@ public class Filter
       }
     }
     FieldDoc[] result = new FieldDoc[filteredList.size()];
-    log.debug("<");
+    LOG.debug("<");
     return (FieldDoc[]) filteredList.toArray(result);
   }
 
@@ -272,7 +270,7 @@ public class Filter
    */
   public static ConstructorDoc[] createConstructorList(ConstructorDoc[] input)
   {
-    log.debug(">");
+    LOG.debug(">");
     // Otherwise, create a filtered list.
     ArrayList filteredList = new ArrayList();
     for (int i = 0; i < input.length; i++) {
@@ -282,7 +280,7 @@ public class Filter
       }
     }
     ConstructorDoc[] result = new ConstructorDoc[filteredList.size()];
-    log.debug("<");
+    LOG.debug("<");
     return (ConstructorDoc[]) filteredList.toArray(result);
   }
 

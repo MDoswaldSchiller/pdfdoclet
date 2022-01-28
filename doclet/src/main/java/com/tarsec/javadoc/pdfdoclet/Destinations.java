@@ -11,7 +11,6 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.zip.CRC32;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Font;
@@ -21,6 +20,8 @@ import com.sun.javadoc.ExecutableMemberDoc;
 import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.ProgramElementDoc;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class keeps a list of valid destinations for internal links to avoid
@@ -31,11 +32,7 @@ import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
  */
 public class Destinations implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Destinations.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Destinations.class);
 
   /**
    * Stores the names of all valid destinations.
@@ -55,11 +52,11 @@ public class Destinations implements IConstants
   {
     if (aFile != null && aFile.exists() && aFile.isFile()) {
       try {
-        log.debug("Adding destination file " + aFile);
+        LOG.debug("Adding destination file " + aFile);
         destinationFiles.add(aFile.getCanonicalPath());
       }
       catch (IOException e) {
-        log.debug("Error adding destination file " + aFile, e);
+        LOG.debug("Error adding destination file " + aFile, e);
       }
     }
   }
@@ -76,7 +73,7 @@ public class Destinations implements IConstants
       return destinationFiles.contains(aFile.getCanonicalPath());
     }
     catch (IOException e) {
-      log.debug("Error checking destination file " + aFile, e);
+      LOG.debug("Error checking destination file " + aFile, e);
       return false;
     }
   }
@@ -88,7 +85,7 @@ public class Destinations implements IConstants
    */
   public static void addValidDestination(String destination)
   {
-    log.debug("Add: " + destination);
+    LOG.debug("Add: " + destination);
     destinations.setProperty(destination, "x");
   }
 
@@ -105,10 +102,10 @@ public class Destinations implements IConstants
       throw new IllegalArgumentException("null destination not allowed!");
     }
     if (destinations.get(destination) != null) {
-      log.debug("Is valid: " + destination);
+      LOG.debug("Is valid: " + destination);
       return true;
     }
-    log.debug("Is invalid: " + destination);
+    LOG.debug("Is invalid: " + destination);
     return false;
   }
 
@@ -165,31 +162,31 @@ public class Destinations implements IConstants
     if (doc instanceof ConstructorDoc
         || doc instanceof MethodDoc) {
       canHaveParms = true;
-      log.debug("is method or constructor.");
+      LOG.debug("is method or constructor.");
     }
 
     if (canHaveParms) {
       multiPart = true;
-      log.debug("Create multi-part link.");
+      LOG.debug("Create multi-part link.");
     }
     chunk = new Chunk(label, font);
     Phrase phrase = new Phrase(chunk);
 
     String destination = doc.qualifiedName();
-    log.debug("Create destination 1: " + destination);
+    LOG.debug("Create destination 1: " + destination);
     phrase.add(PDFUtil.createAnchor(destination));
     if (multiPart) {
       ExecutableMemberDoc execDoc = (ExecutableMemberDoc) doc;
       String destinationTwo = destination + "()";
-      log.debug("Create destination 2: " + destinationTwo);
+      LOG.debug("Create destination 2: " + destinationTwo);
       phrase.add(PDFUtil.createAnchor(destinationTwo));
 
       String destinationThree = destination + execDoc.signature();
-      log.debug("Create destination 3: " + destinationThree);
+      LOG.debug("Create destination 3: " + destinationThree);
       phrase.add(PDFUtil.createAnchor(destinationThree));
 
       String destinationFour = destination + execDoc.flatSignature();
-      log.debug("Create destination 4: " + destinationFour);
+      LOG.debug("Create destination 4: " + destinationFour);
       phrase.add(PDFUtil.createAnchor(destinationFour));
     }
 
@@ -206,7 +203,7 @@ public class Destinations implements IConstants
   {
     String destination = doc.qualifiedName();
     if (destinations.get(destination) != null) {
-      log.debug("Create link to: " + destination);
+      LOG.debug("Create link to: " + destination);
       chunk.setLocalGoto(destination);
     }
   }

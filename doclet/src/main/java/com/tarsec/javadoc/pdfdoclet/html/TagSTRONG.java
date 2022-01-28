@@ -3,8 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import org.apache.log4j.Logger;
-
 /**
  * Implements the STRONG HTML tag.
  *
@@ -13,12 +11,6 @@ import org.apache.log4j.Logger;
  */
 public class TagSTRONG extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagSTRONG.class);
-
   public TagSTRONG(HTMLTag parent, int type)
   {
     super(parent, type);

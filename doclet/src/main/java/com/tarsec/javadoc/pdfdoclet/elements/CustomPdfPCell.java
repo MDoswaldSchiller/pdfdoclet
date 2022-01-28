@@ -5,7 +5,6 @@ package com.tarsec.javadoc.pdfdoclet.elements;
 
 import java.awt.Color;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
@@ -13,6 +12,8 @@ import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Customized version(s) of PdfPCell.
@@ -22,11 +23,7 @@ import com.tarsec.javadoc.pdfdoclet.IConstants;
  */
 public class CustomPdfPCell extends PdfPCell implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(CustomPdfPCell.class);
+  private static final Logger LOG = LoggerFactory.getLogger(CustomPdfPCell.class);
 
   /**
    * A coloured title bar (for the "Fields", "Methods" and "Constructors"

@@ -7,12 +7,13 @@ import java.awt.Color;
 import java.io.File;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.pdf.BaseFont;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handles fonts loading and creation.
@@ -22,11 +23,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Util;
  */
 public class Fonts implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(Fonts.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Fonts.class);
 
   /**
    * Stores mapping of font face types to font files
@@ -163,7 +160,7 @@ public class Fonts implements IConstants
       else {
 
         Util.error("Font file not found: " + fontFile);
-        log.error("Cancelling processing of Javadoc, deleting PDF file.");
+        LOG.error("Cancelling processing of Javadoc, deleting PDF file.");
         PDFDoclet.getPdfFile().delete();
         System.exit(-1);
 

@@ -3,8 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import org.apache.log4j.Logger;
-
 /**
  * Implements the BODY tag.
  *
@@ -13,12 +11,6 @@ import org.apache.log4j.Logger;
  */
 public class TagBODY extends HTMLTag
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(TagBODY.class);
-
   boolean paragraphCreated = false;
 
   public TagBODY(HTMLTag parent, int type)

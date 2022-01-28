@@ -8,7 +8,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -22,6 +21,8 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
 import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Wrapper for the 3rd-party HTML parser. The purpose of this class is to
@@ -33,11 +34,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Util;
  */
 public class HtmlParserWrapper implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(HtmlParserWrapper.class);
+  private static final Logger LOG = LoggerFactory.getLogger(HtmlParserWrapper.class);
 
   private static Tidy parser = null;
 
@@ -52,7 +49,7 @@ public class HtmlParserWrapper implements IConstants
   public static Element[] createPdfObjects(String text)
   {
 
-    log.debug(">");
+    LOG.debug(">");
 
     Element[] result = new Element[0];
 
@@ -66,7 +63,7 @@ public class HtmlParserWrapper implements IConstants
       InputStream in = new ByteArrayInputStream(content.getBytes());
 
       // Parse the HTML document and return the root node
-      log.debug("Parse DOM...");
+      LOG.debug("Parse DOM...");
       Node node = parser.parseDOM(in, null);
 
       // Now build HTML object tree
@@ -117,15 +114,15 @@ public class HtmlParserWrapper implements IConstants
       // If HTML parsing fails, print warning and 
       // return a null result.
       e.printStackTrace();
-      log.error("**");
-      log.error("** WARNING: HTML parsing failed with exception: " + e);
-      log.error("** - package: " + State.getCurrentPackage());
-      log.error("**   class  : " + State.getCurrentClass());
-      log.error("**   member : " + State.getCurrentMember());
-      log.error("**");
+      LOG.error("**");
+      LOG.error("** WARNING: HTML parsing failed with exception: " + e);
+      LOG.error("** - package: " + State.getCurrentPackage());
+      LOG.error("**   class  : " + State.getCurrentClass());
+      LOG.error("**   member : " + State.getCurrentMember());
+      LOG.error("**");
     }
 
-    log.debug("<");
+    LOG.debug("<");
 
     return result;
   }
@@ -214,7 +211,7 @@ public class HtmlParserWrapper implements IConstants
   private static String preProcessHtmlContent(String text) throws Exception
   {
 
-    log.debug(">");
+    LOG.debug(">");
 
     InputStream in = new ByteArrayInputStream(text.getBytes());
     ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -236,7 +233,7 @@ public class HtmlParserWrapper implements IConstants
       String rightText = content.substring(pos + 16);
       content = leftText + "<a href=\"newpage\" />" + rightText;
     }
-    log.debug("<");
+    LOG.debug("<");
 
     return content;
   }
@@ -249,7 +246,7 @@ public class HtmlParserWrapper implements IConstants
   private static void initializeParser() throws Exception
   {
 
-    log.debug(">");
+    LOG.debug(">");
 
     parser = new Tidy();
     parser.setXmlTags(false);
@@ -269,6 +266,6 @@ public class HtmlParserWrapper implements IConstants
     parser.setForceOutput(true);
     parser.setHideEndTags(false);
 
-    log.debug("<");
+    LOG.debug("<");
   }
 }

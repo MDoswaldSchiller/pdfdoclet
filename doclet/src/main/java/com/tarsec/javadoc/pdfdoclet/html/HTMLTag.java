@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
@@ -21,6 +20,8 @@ import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
 import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base class for HTML tags. This class also includes the HTML parsing code.
@@ -30,11 +31,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Util;
  */
 public abstract class HTMLTag implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(HTMLTag.class);
+  private static final Logger LOG = LoggerFactory.getLogger(HTMLTag.class);
 
   /**
    * Array with HTML tag names. NOTE: The contents of this table relate directly
@@ -175,7 +172,7 @@ public abstract class HTMLTag implements IConstants
   public Element[] toPdfObjects()
   {
 
-    log.debug("> MARK: HTML tag type: " + getType());
+    LOG.debug("> MARK: HTML tag type: " + getType());
 
     try {
       contentPdf = new ArrayList(100);
@@ -244,7 +241,7 @@ public abstract class HTMLTag implements IConstants
 
     }
 
-    log.debug("<");
+    LOG.debug("<");
 
     return null;
   }

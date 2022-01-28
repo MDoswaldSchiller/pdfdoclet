@@ -3,7 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.pdf.BaseFont;
@@ -11,6 +10,8 @@ import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfPageEventHelper;
 import com.lowagie.text.pdf.PdfTemplate;
 import com.lowagie.text.pdf.PdfWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handler for PDF document page events. This class creates headers and footers
@@ -23,11 +24,7 @@ public class PageEventHandler
     extends PdfPageEventHelper
     implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(PageEventHandler.class);
+  private static final Logger LOG = LoggerFactory.getLogger(PageEventHandler.class);
 
   /**
    * Flag which ensures that the link target for the Overview page is created
@@ -62,7 +59,7 @@ public class PageEventHandler
    */
   public PageEventHandler(PdfWriter pdfWriter) throws Exception
   {
-    log.debug(">");
+    LOG.debug(">");
     cb = pdfWriter.getDirectContent();
     bf
         = BaseFont.createFont(
@@ -111,7 +108,7 @@ public class PageEventHandler
     if (pageNumberAlignValue.equalsIgnoreCase(ARG_VAL_SWITCH)) {
       pageNumberAlign = PAGE_NUMBER_ALIGN_SWITCH;
     }
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -123,7 +120,7 @@ public class PageEventHandler
    */
   public void onEndPage(PdfWriter writer, Document document)
   {
-    log.debug(">");
+    LOG.debug(">");
     currentPage = document.getPageNumber();
     State.setCurrentPage(currentPage);
 
@@ -279,7 +276,7 @@ public class PageEventHandler
           0);
       cb.endText();
     }
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -289,7 +286,7 @@ public class PageEventHandler
    */
   private String parseHeader(String text)
   {
-    log.debug(">");
+    LOG.debug(">");
     if (text.equalsIgnoreCase("$SHORTCLASS")) {
       String name = State.getCurrentClass();
 
@@ -308,7 +305,7 @@ public class PageEventHandler
       return State.getCurrentPackage();
     }
 
-    log.debug("<");
+    LOG.debug("<");
     return text;
   }
 
@@ -322,7 +319,7 @@ public class PageEventHandler
       float position)
   {
 
-    log.debug(">");
+    LOG.debug(">");
 
     // Create the navigation frame (outline)
     if (Configuration.isCreateFrameActive()) {
@@ -332,7 +329,7 @@ public class PageEventHandler
       // Creates bookmarks entry for packages / index
 //            Bookmarks.createPackageBookmark(writer);
     }
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -343,8 +340,8 @@ public class PageEventHandler
       Document document,
       float position)
   {
-    log.debug(">");
-    log.debug("<");
+    LOG.debug(">");
+    LOG.debug("<");
   }
 
   /**
@@ -353,7 +350,7 @@ public class PageEventHandler
    */
   public void onStartPage(PdfWriter writer, Document document)
   {
-    log.debug(">");
+    LOG.debug(">");
     if (State.isContinued()) {
       try {
         if (State.getCurrentHeaderType() != HEADER_DEFAULT) {
@@ -370,19 +367,19 @@ public class PageEventHandler
       catch (Exception e) {
       }
     }
-    log.debug("<");
+    LOG.debug("<");
   }
 
   // we override the onCloseDocument method
   public void onCloseDocument(PdfWriter writer, Document document)
   {
-    log.debug(">");
+    LOG.debug(">");
     if (pageNumberType == PAGE_NUMBER_FULL) {
       template.beginText();
       template.setFontAndSize(bf, 8);
       template.showText(String.valueOf(writer.getPageNumber() - 1));
       template.endText();
     }
-    log.debug("<");
+    LOG.debug("<");
   }
 }

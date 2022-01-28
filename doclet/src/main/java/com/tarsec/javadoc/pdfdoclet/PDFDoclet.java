@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
@@ -28,6 +27,8 @@ import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This javadoc doclet creates PDF output for an API documentation.
@@ -41,11 +42,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Util;
  */
 public class PDFDoclet implements IConstants
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(PDFDoclet.class);
+  private static final Logger LOG = LoggerFactory.getLogger(PDFDoclet.class);
 
   /**
    * Default name for output file.
@@ -71,7 +68,7 @@ public class PDFDoclet implements IConstants
   public PDFDoclet()
   {
     super();
-    log.debug("Creating PDFDoclet");
+    LOG.debug("Creating PDFDoclet");
   }
 
   /**
@@ -81,7 +78,7 @@ public class PDFDoclet implements IConstants
    */
   public PDFDoclet(String filename)
   {
-    log.debug("Creating PDFDoclet with output file " + filename);
+    LOG.debug("Creating PDFDoclet with output file " + filename);
 
     String workDir = Configuration.getWorkDir();
     boolean relative = false;
@@ -97,7 +94,7 @@ public class PDFDoclet implements IConstants
 
     file = (!relative ? new File(filename) : new File(workDir, filename));
 
-    log.debug("Filename set to: " + file.getAbsolutePath());
+    LOG.debug("Filename set to: " + file.getAbsolutePath());
   }
 
   /**
@@ -109,18 +106,18 @@ public class PDFDoclet implements IConstants
   private void listClasses(RootDoc root) throws Exception
   {
 
-    log.debug(">");
+    LOG.debug(">");
 
     PdfWriter pdfWriter = null;
     try {
-      log.debug("Initializing PDF document...");
+      LOG.debug("Initializing PDF document...");
       pdfWriter = PDFDocument.initialize();
       Bookmarks.init();
     }
     catch (IOException e) {
-      log.error("**** ERROR: FAILED TO OPEN PDF FILE FOR WRITING! *****");
-      log.error("**** PLEASE CHECK IF THE FILE IS CURRENTLY USED  *****");
-      log.error("**** BY ANOTHER PROGRAM (ACROBAT READER ETC.     *****");
+      LOG.error("**** ERROR: FAILED TO OPEN PDF FILE FOR WRITING! *****");
+      LOG.error("**** PLEASE CHECK IF THE FILE IS CURRENTLY USED  *****");
+      LOG.error("**** BY ANOTHER PROGRAM (ACROBAT READER ETC.     *****");
       return;
     }
 
@@ -128,21 +125,21 @@ public class PDFDoclet implements IConstants
     index = new Index(pdfWriter, PDFDocument.instance());
 
     // Print title page
-    log.debug("print Title page...");
+    LOG.debug("print Title page...");
     TitlePage title = new TitlePage(PDFDocument.instance());
     title.print();
     PDFDocument.instance().newPage();
 
     // Print javadoc overview
-    log.debug("print Overview...");
+    LOG.debug("print Overview...");
     State.setCurrentHeaderType(HEADER_OVERVIEW);
     Overview.print(root);
 
     State.setCurrentHeaderType(HEADER_API);
 
-    log.debug("print classes...");
+    LOG.debug("print classes...");
     ClassDoc[] classes = root.classes();
-    log.debug("Number of classes: " + classes.length);
+    LOG.debug("Number of classes: " + classes.length);
 
     Map pkgMap = null;
     if (Configuration.getPackageOrder() != null) {
@@ -169,18 +166,18 @@ public class PDFDoclet implements IConstants
         }
       };
       pkgMap = new TreeMap(cmp);
-      log.debug("Custom package order specified.");
+      LOG.debug("Custom package order specified.");
 
     }
     else {
       // Use a treemap to create an alphabetically
       // sorted list of all packages
       pkgMap = new TreeMap();
-      log.debug("No package order specified, use alphabetical order.");
+      LOG.debug("No package order specified, use alphabetical order.");
     }
 
     // Iterate through all single, separately specified classes
-    log.debug("Iterating through single classes...");
+    LOG.debug("Iterating through single classes...");
     for (int i = 0; i < classes.length; i++) {
       // Fetch the classes list for the package of this class
       List classList = (List) pkgMap.get(classes[i].containingPackage());
@@ -195,13 +192,13 @@ public class PDFDoclet implements IConstants
 
     // At this point we have a collection of packages. For each package,
     // we have a list of all classes that should be processed.
-    log.debug("Size of package collection: " + pkgMap.size());
+    LOG.debug("Size of package collection: " + pkgMap.size());
 
     // Prepare alphabetically sorted list of all classes for bookmarks
     Bookmarks.prepareBookmarkEntries(pkgMap);
 
     // Now process all packages and classes
-    log.debug("Iterating through package list...");
+    LOG.debug("Iterating through package list...");
     for (Iterator i = pkgMap.entrySet().iterator(); i.hasNext();) {
       // Get package..
       Map.Entry entry = (Map.Entry) i.next();
@@ -214,20 +211,20 @@ public class PDFDoclet implements IConstants
       printPackage(pkgDoc, pkgClasses);
     }
 
-    log.debug("Adding appendices");
+    LOG.debug("Adding appendices");
     Appendices.print();
 
-    log.debug("Creating index");
+    LOG.debug("Creating index");
     index.create();
 
-    log.debug("Content completed, creating bookmark outline tree");
+    LOG.debug("Content completed, creating bookmark outline tree");
     Bookmarks.createBookmarkOutline();
 
     String endMessage = "PDF completed: " + file.getPath();
     String line = Util.getLine(endMessage.length());
-    log.info(line);
-    log.info(endMessage);
-    log.info(line);
+    LOG.info(line);
+    LOG.info(endMessage);
+    LOG.info(line);
 
     // step 5: we close the document
     PDFDocument.close();
@@ -243,7 +240,7 @@ public class PDFDoclet implements IConstants
       throws Exception
   {
 
-    log.debug(">");
+    LOG.debug(">");
 
     State.setCurrentPackage(packageDoc.name());
     State.setCurrentDoc(packageDoc);
@@ -293,7 +290,7 @@ public class PDFDoclet implements IConstants
 
     printClasses(JavadocUtil.sort(packageClasses), packageDoc);
 
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -307,7 +304,7 @@ public class PDFDoclet implements IConstants
   private void printClasses(ClassDoc[] classDocs, PackageDoc packageDoc)
       throws Exception
   {
-    log.debug(">");
+    LOG.debug(">");
     for (int i = 0; i < classDocs.length; i++) {
 
       // Avoid processing a class which has already been
@@ -317,7 +314,7 @@ public class PDFDoclet implements IConstants
         printClassWithInnerClasses(doc, packageDoc, false);
       }
     }
-    log.debug("<");
+    LOG.debug("<");
   }
 
   /**
@@ -335,10 +332,10 @@ public class PDFDoclet implements IConstants
   {
 
     if (isInnerClass) {
-      log.debug("Print inner class: " + doc.name());
+      LOG.debug("Print inner class: " + doc.name());
     }
     else {
-      log.debug("Print class: " + doc.name());
+      LOG.debug("Print class: " + doc.name());
     }
     Classes.printClass(doc, packageDoc);
 
@@ -444,7 +441,7 @@ public class PDFDoclet implements IConstants
     }
 
     if (option.equals("-" + ARG_GROUP)) {
-      log.debug("GROUP PARAMETER");
+      LOG.debug("GROUP PARAMETER");
       return 3;
     }
 

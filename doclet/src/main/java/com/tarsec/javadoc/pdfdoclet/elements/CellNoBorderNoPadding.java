@@ -3,12 +3,13 @@
  */
 package com.tarsec.javadoc.pdfdoclet.elements;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Customized version(s) of PdfPCell without a border and without padding.
@@ -18,11 +19,7 @@ import com.lowagie.text.pdf.PdfPCell;
  */
 public class CellNoBorderNoPadding extends PdfPCell
 {
-
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(CellNoBorderNoPadding.class);
+  private static final Logger LOG = LoggerFactory.getLogger(CellNoBorderNoPadding.class);
 
   /**
    * Creates a PdfPCell with a border and a padding of 6.

@@ -5,11 +5,12 @@ package com.tarsec.javadoc.pdfdoclet;
 
 import java.io.File;
 
-import org.apache.log4j.Logger;
 
 import com.lowagie.text.pdf.PdfOutline;
 import com.sun.javadoc.Doc;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Holds the state of the doclet creation process.
@@ -27,10 +28,7 @@ public class State
 
   private static int CURRENT_MEMBER_TYPE = TYPE_NONE;
 
-  /**
-   * Logger reference
-   */
-  private static Logger log = Logger.getLogger(State.class);
+  private static final Logger LOG = LoggerFactory.getLogger(State.class);
 
   private static boolean lastTagEndedWithText = false;
 
@@ -379,7 +377,7 @@ public class State
    */
   public static boolean isOverview()
   {
-    log.debug("Get isOverview: " + isOverview);
+    LOG.debug("Get isOverview: " + isOverview);
     return isOverview;
   }
 
@@ -390,7 +388,7 @@ public class State
    */
   public static void setOverview(boolean value)
   {
-    log.debug("Set isOverview to " + value);
+    LOG.debug("Set isOverview to " + value);
     isOverview = value;
   }
 
@@ -402,7 +400,7 @@ public class State
    */
   public static String getCurrentClass()
   {
-    log.debug("Get current class: " + currentClass);
+    LOG.debug("Get current class: " + currentClass);
     return currentClass;
   }
 
@@ -413,7 +411,7 @@ public class State
    */
   public static void setCurrentClass(String value)
   {
-    log.debug("Set current class to " + value);
+    LOG.debug("Set current class to " + value);
     currentClass = value;
   }
 
@@ -425,7 +423,7 @@ public class State
    */
   public static String getCurrentPackage()
   {
-    log.debug("Get current package: " + currentPackage);
+    LOG.debug("Get current package: " + currentPackage);
     return currentPackage;
   }
 
@@ -436,7 +434,7 @@ public class State
    */
   public static void setCurrentPackage(String value)
   {
-    log.debug("Set current package to " + value);
+    LOG.debug("Set current package to " + value);
     currentPackage = value;
   }
 
@@ -448,7 +446,7 @@ public class State
    */
   public static String getCurrentMember()
   {
-    log.debug("Get current member: " + currentMember);
+    LOG.debug("Get current member: " + currentMember);
     return currentMember;
   }
 
@@ -459,7 +457,7 @@ public class State
    */
   public static void setCurrentMember(String value)
   {
-    log.debug("Set current member to " + value);
+    LOG.debug("Set current member to " + value);
     currentMember = value;
   }
 
@@ -516,7 +514,7 @@ public class State
    */
   public static void setCurrentPage(int page)
   {
-    log.debug("Set current page to " + page);
+    LOG.debug("Set current page to " + page);
     currentPage = page;
   }
 
@@ -527,7 +525,7 @@ public class State
    */
   public static int getCurrentPage()
   {
-    log.debug("Get current page: " + currentPage);
+    LOG.debug("Get current page: " + currentPage);
     return currentPage;
   }
 
