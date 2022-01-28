@@ -2,198 +2,198 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<parent>
-		<groupId>pdfdoclet</groupId>
-		<artifactId>pom</artifactId>
-		<version>1.0.3</version>
-	</parent>
+  <parent>
+    <groupId>pdfdoclet</groupId>
+    <artifactId>pom</artifactId>
+    <version>1.0.4-SNAPSHOT</version>
+  </parent>
 
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>big-jar</artifactId>
-	<packaging>jar</packaging>
-	<name>PDFDoclet Big Jar</name>
-    
-    <description>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>big-jar</artifactId>
+  <packaging>jar</packaging>
+  <name>PDFDoclet Big Jar</name>
+
+  <description>
     The PDFDoclet jar with all dependencies.
-	</description>
+  </description>
 
-	<build>
-		<plugins>
-		
-			<!-- Unpack 3rd party libs to integrate them in "fat" executable jar -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack-shared-resources</id>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<phase>generate-resources</phase>
-						<configuration>
-							<outputDirectory>${project.build.directory}/classes</outputDirectory>
-							<artifactItems>
-								<artifactItem>
-									<groupId>junit</groupId>
-									<artifactId>junit</artifactId>
-									<version>3.8.1</version>
-								</artifactItem>
-								<artifactItem>
-									<groupId>log4j</groupId>
-									<artifactId>log4j</artifactId>
-									<version>1.2.13</version>
-								</artifactItem>
-								<artifactItem>
-									<groupId>pdfdoclet</groupId>
-									<artifactId>itext</artifactId>
-									<version>1.3</version>
-								</artifactItem>
-								<artifactItem>
-									<groupId>pdfdoclet</groupId>
-									<artifactId>itext-asian</artifactId>
-									<version>1.0</version>
-								</artifactItem>
-								<artifactItem>
-									<groupId>pdfdoclet</groupId>
-									<artifactId>jtidy</artifactId>
-									<version>r8-beta</version>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>doclet</artifactId>
-									<version>${project.version}</version>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
+  <build>
+    <plugins>
 
-       	<tstamp>
-			<format property="build.timestamp" 
-				pattern="ddMMyyyy-HHmmssSSS" 
-				locale="en"/>
-	   	</tstamp>
+      <!-- Unpack 3rd party libs to integrate them in "fat" executable jar -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-shared-resources</id>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <outputDirectory>${project.build.directory}/classes</outputDirectory>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>junit</groupId>
+                  <artifactId>junit</artifactId>
+                  <version>3.8.1</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>log4j</groupId>
+                  <artifactId>log4j</artifactId>
+                  <version>1.2.13</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>pdfdoclet</groupId>
+                  <artifactId>itext</artifactId>
+                  <version>1.3</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>pdfdoclet</groupId>
+                  <artifactId>itext-asian</artifactId>
+                  <version>1.0</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>pdfdoclet</groupId>
+                  <artifactId>jtidy</artifactId>
+                  <version>r8-beta</version>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>doclet</artifactId>
+                  <version>${project.version}</version>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
-  		<!-- next create the versio info file -->
-		<filter token="VERSION" value="${pom.currentVersion}" />
-		<filter token="BUILD" value="${user.name}/${build.timestamp}" />
-		<filter token="COPYRIGHT" value="${pom.organization.name}" />
-		<filter token="NAME" value="${pom.name}" />
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
 
-		<echo 
-			file="target/classes/com/tarsec/javadoc/pdfdoclet/util/version-info.properties">
-copyright=Copyright by Marcel Schoen, Switzerland
-version=${pdfdoclet.version}
-build=${user.name}/${build.timestamp}
-name=${pom.name}
-</echo>
-							</tasks>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			
-			<!-- Create "fat", executable jar -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.2</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<finalName>pdfdoclet-${project.version}-all</finalName>
-					<archive>
-						<manifestEntries>
-							<Main-Class>${main.class.name}</Main-Class>
-							<Built-By>${user.name}</Built-By>
-							<Built-With>
-								Java ${java.version} (${java.vendor})
-							</Built-With>
-							<Specification-Title>
-								${pom.name}
-							</Specification-Title>
-							<Specification-Version>
-								${pom.currentVersion}
-							</Specification-Version>
-							<Specification-Vendor>
-								${pom.organization.name}
-							</Specification-Vendor>
-							<Implementation-Title>
-								${pom.name}
-							</Implementation-Title>
-							<Implementation-Version>
-								${pom.version}
-							</Implementation-Version>
-							<Implementation-Vendor>
-								${pom.organization.name}
-							</Implementation-Vendor>
-							<Implementation-Vendor-Id>
-								usp
-							</Implementation-Vendor-Id>
-						</manifestEntries>
-					</archive>
-					<forceCreation>true</forceCreation>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	<!-- ============================================
-		DEPENDENCIES REQUIRED BY PDFDOCLET
-		============================================ -->
-	<dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-        </dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.13</version>
-		</dependency>
-        <dependency>
-            <groupId>pdfdoclet</groupId>
-            <artifactId>tools-j2se</artifactId>
-            <version>1.4.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>pdfdoclet</groupId>
-            <artifactId>itext</artifactId>
-            <version>1.3</version>
-        </dependency>
-        <dependency>
-            <groupId>pdfdoclet</groupId>
-            <artifactId>itext-asian</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>pdfdoclet</groupId>
-            <artifactId>jtidy</artifactId>
-            <version>r8-beta</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>doclet</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-	</dependencies>
+                <tstamp>
+                  <format property="build.timestamp"
+                          pattern="ddMMyyyy-HHmmssSSS"
+                          locale="en"/>
+                </tstamp>
+
+                <!-- next create the versio info file -->
+                <filter token="VERSION" value="${pom.currentVersion}" />
+                <filter token="BUILD" value="${user.name}/${build.timestamp}" />
+                <filter token="COPYRIGHT" value="${pom.organization.name}" />
+                <filter token="NAME" value="${pom.name}" />
+
+                <echo
+                  file="target/classes/com/tarsec/javadoc/pdfdoclet/util/version-info.properties">
+                  copyright=Copyright by Marcel Schoen, Switzerland
+                  version=${pdfdoclet.version}
+                  build=${user.name}/${build.timestamp}
+                  name=${pom.name}
+                </echo>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Create "fat", executable jar -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <finalName>pdfdoclet-${project.version}-all</finalName>
+          <archive>
+            <manifestEntries>
+              <Main-Class>${main.class.name}</Main-Class>
+              <Built-By>${user.name}</Built-By>
+              <Built-With>
+                Java ${java.version} (${java.vendor})
+              </Built-With>
+              <Specification-Title>
+                ${pom.name}
+              </Specification-Title>
+              <Specification-Version>
+                ${pom.currentVersion}
+              </Specification-Version>
+              <Specification-Vendor>
+                ${pom.organization.name}
+              </Specification-Vendor>
+              <Implementation-Title>
+                ${pom.name}
+              </Implementation-Title>
+              <Implementation-Version>
+                ${pom.version}
+              </Implementation-Version>
+              <Implementation-Vendor>
+                ${pom.organization.name}
+              </Implementation-Vendor>
+              <Implementation-Vendor-Id>
+                usp
+              </Implementation-Vendor-Id>
+            </manifestEntries>
+          </archive>
+          <forceCreation>true</forceCreation>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <!-- ============================================
+  DEPENDENCIES REQUIRED BY PDFDOCLET
+  ============================================ -->
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.13</version>
+    </dependency>
+    <dependency>
+      <groupId>pdfdoclet</groupId>
+      <artifactId>tools-j2se</artifactId>
+      <version>1.4.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>pdfdoclet</groupId>
+      <artifactId>itext</artifactId>
+      <version>1.3</version>
+    </dependency>
+    <dependency>
+      <groupId>pdfdoclet</groupId>
+      <artifactId>itext-asian</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>pdfdoclet</groupId>
+      <artifactId>jtidy</artifactId>
+      <version>r8-beta</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>doclet</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
 </project>

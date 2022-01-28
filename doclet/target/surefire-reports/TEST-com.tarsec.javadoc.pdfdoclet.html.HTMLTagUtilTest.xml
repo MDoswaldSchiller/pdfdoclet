@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.097" errors="0" skipped="0" tests="1" name="com.tarsec.javadoc.pdfdoclet.html.HTMLTagUtilTest">
+<testsuite tests="1" failures="0" name="com.tarsec.javadoc.pdfdoclet.html.HTMLTagUtilTest" time="0.057" errors="0" skipped="0">
   <properties>
-    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
-    <property name="sun.boot.library.path" value="/stuff/java/j2se/jdk1.7.0_15/jre/lib/amd64"/>
-    <property name="java.vm.version" value="23.7-b01"/>
-    <property name="java.vm.vendor" value="Oracle Corporation"/>
-    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="java.vm.version" value="17.0.1+12"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/jdk-17.0.1+12/lib"/>
+    <property name="maven.multiModuleProjectDirectory" value="/home/mdo/Dev/3rdParty/pdfdoclet"/>
+    <property name="java.vm.vendor" value="Eclipse Adoptium"/>
+    <property name="java.vendor.url" value="https://adoptium.net/"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
     <property name="path.separator" value=":"/>
-    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
-    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
-    <property name="sun.os.patch.level" value="unknown"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="/stuff/java/workspace/pdfdoclet/doclet"/>
-    <property name="java.runtime.version" value="1.7.0_15-b03"/>
-    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="basedir" value="/stuff/java/workspace/pdfdoclet/doclet"/>
-    <property name="java.endorsed.dirs" value="/stuff/java/j2se/jdk1.7.0_15/jre/lib/endorsed"/>
+    <property name="user.dir" value="/home/mdo/Dev/3rdParty/pdfdoclet"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="java.runtime.version" value="17.0.1+12"/>
     <property name="os.arch" value="amd64"/>
-    <property name="surefire.real.class.path" value="/tmp/surefirebooter5688219422388623647.jar"/>
     <property name="java.io.tmpdir" value="/tmp"/>
     <property name="line.separator" value="
 "/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="os.name" value="Linux"/>
+    <property name="maven.ext.class.path" value="/home/mdo/programs/netbeans-12.6/java/maven-nblib/netbeans-eventspy.jar"/>
+    <property name="classworlds.conf" value="/home/mdo/programs/apache-maven-3.8.1/bin/m2.conf"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
-    <property name="surefire.test.class.path" value="/stuff/java/workspace/pdfdoclet/doclet/target/test-classes:/stuff/java/workspace/pdfdoclet/doclet/target/classes:/home/msc/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar:/home/msc/.m2/repository/log4j/log4j/1.2.13/log4j-1.2.13.jar:/home/msc/.m2/repository/pdfdoclet/tools-j2se/1.4.2/tools-j2se-1.4.2.jar:/home/msc/.m2/repository/pdfdoclet/itext/1.3/itext-1.3.jar:/home/msc/.m2/repository/pdfdoclet/itext-asian/1.0/itext-asian-1.0.jar:/home/msc/.m2/repository/pdfdoclet/jtidy/r8-beta/jtidy-r8-beta.jar:"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="maven.conf" value="/home/mdo/programs/apache-maven-3.8.1/conf"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="java.class.version" value="61.0"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="java.class.version" value="51.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="os.version" value="3.8.0-32-generic"/>
-    <property name="user.home" value="/home/msc"/>
+    <property name="os.version" value="5.13.0-27-generic"/>
+    <property name="library.jansi.path" value="/home/mdo/programs/apache-maven-3.8.1/lib/jansi-native"/>
+    <property name="user.home" value="/home/mdo"/>
     <property name="user.timezone" value="Europe/Zurich"/>
-    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
     <property name="file.encoding" value="UTF-8"/>
-    <property name="java.specification.version" value="1.7"/>
-    <property name="user.name" value="msc"/>
-    <property name="java.class.path" value="/stuff/java/workspace/pdfdoclet/doclet/target/test-classes:/stuff/java/workspace/pdfdoclet/doclet/target/classes:/home/msc/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar:/home/msc/.m2/repository/log4j/log4j/1.2.13/log4j-1.2.13.jar:/home/msc/.m2/repository/pdfdoclet/tools-j2se/1.4.2/tools-j2se-1.4.2.jar:/home/msc/.m2/repository/pdfdoclet/itext/1.3/itext-1.3.jar:/home/msc/.m2/repository/pdfdoclet/itext-asian/1.0/itext-asian-1.0.jar:/home/msc/.m2/repository/pdfdoclet/jtidy/r8-beta/jtidy-r8-beta.jar:"/>
-    <property name="java.vm.specification.version" value="1.7"/>
+    <property name="java.specification.version" value="17"/>
+    <property name="user.name" value="mdo"/>
+    <property name="java.class.path" value="/home/mdo/programs/apache-maven-3.8.1/boot/plexus-classworlds-2.6.0.jar"/>
+    <property name="java.vm.specification.version" value="17"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="java.home" value="/stuff/java/j2se/jdk1.7.0_15/jre"/>
-    <property name="sun.java.command" value="/tmp/surefirebooter5688219422388623647.jar /tmp/surefire1253527274726805322tmp /tmp/surefire144255533335108074tmp"/>
-    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=/home/mdo/programs/netbeans-12.6/java/maven-nblib/netbeans-eventspy.jar clean install"/>
+    <property name="java.home" value="/usr/lib/jvm/jdk-17.0.1+12"/>
     <property name="user.language" value="en"/>
-    <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
-    <property name="java.vm.info" value="mixed mode"/>
-    <property name="java.version" value="1.7.0_15"/>
-    <property name="java.ext.dirs" value="/stuff/java/j2se/jdk1.7.0_15/jre/lib/ext:/usr/java/packages/lib/ext"/>
-    <property name="sun.boot.class.path" value="/stuff/java/j2se/jdk1.7.0_15/jre/lib/resources.jar:/stuff/java/j2se/jdk1.7.0_15/jre/lib/rt.jar:/stuff/java/j2se/jdk1.7.0_15/jre/lib/sunrsasign.jar:/stuff/java/j2se/jdk1.7.0_15/jre/lib/jsse.jar:/stuff/java/j2se/jdk1.7.0_15/jre/lib/jce.jar:/stuff/java/j2se/jdk1.7.0_15/jre/lib/charsets.jar:/stuff/java/j2se/jdk1.7.0_15/jre/lib/jfr.jar:/stuff/java/j2se/jdk1.7.0_15/jre/classes"/>
-    <property name="java.vendor" value="Oracle Corporation"/>
-    <property name="localRepository" value="/home/msc/.m2/repository"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.version" value="17.0.1"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="securerandom.source" value="file:/dev/./urandom"/>
+    <property name="java.vendor" value="Eclipse Adoptium"/>
+    <property name="maven.home" value="/home/mdo/programs/apache-maven-3.8.1"/>
     <property name="file.separator" value="/"/>
-    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
-    <property name="sun.cpu.endian" value="little"/>
+    <property name="java.version.date" value="2021-10-19"/>
+    <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
-    <property name="sun.cpu.isalist" value=""/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="java.vendor.version" value="Temurin-17.0.1+12"/>
   </properties>
-  <testcase time="0.086" classname="com.tarsec.javadoc.pdfdoclet.html.HTMLTagUtilTest" name="testClosingListTags"/>
+  <testcase classname="com.tarsec.javadoc.pdfdoclet.html.HTMLTagUtilTest" name="testClosingListTags" time="0.057"/>
 </testsuite>

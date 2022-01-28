@@ -1,8 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<project name="maven-antrun-" default="main"  >
-<target name="main">
-  <tar compression="gzip" destfile="/stuff/java/workspace/pdfdoclet/binary/target/pdfdoclet-1.0.3.tar.gz">
-    <tarfileset dir="/stuff/java/workspace/pdfdoclet/binary/target/image" prefix="pdfdoclet-1.0.3"/>
-  </tar>
-</target>
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="maven-antrun-" default="main">
+  <target name="main">
+    <copy todir="/home/mdo/Dev/3rdParty/pdfdoclet/binary/target/image" overwrite="true">
+      <fileset dir="/home/mdo/Dev/3rdParty/pdfdoclet/binary/src/build" />
+      <filterset>
+        <filter value="1.0.4-SNAPSHOT" token="VERSION" />
+      </filterset>
+    </copy>
+    <copy todir="/home/mdo/Dev/3rdParty/pdfdoclet/binary/target/image/docs" overwrite="true">
+      <fileset dir="/home/mdo/Dev/3rdParty/pdfdoclet/binary/target/site" />
+    </copy>
+  </target>
 </project>

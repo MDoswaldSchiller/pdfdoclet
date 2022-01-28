@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>pdfdoclet</groupId>
 		<artifactId>pom</artifactId>
-		<version>1.0.3</version>
+		<version>1.0.4-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>doclet</artifactId>
 	<packaging>jar</packaging>
 	<name>PDFDoclet</name>
-    
+
     <description>
     The PDFDoclet itself.
 	</description>
@@ -21,7 +21,7 @@
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
-		
+
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
@@ -34,8 +34,8 @@
 							<tasks>
 
        	<tstamp>
-			<format property="build.timestamp" 
-				pattern="ddMMyyyy-HHmmssSSS" 
+			<format property="build.timestamp"
+				pattern="ddMMyyyy-HHmmssSSS"
 				locale="en"/>
 	   	</tstamp>
 
@@ -45,32 +45,19 @@
 		<filter token="COPYRIGHT" value="${pom.organization.name}" />
 		<filter token="NAME" value="${pom.name}" />
 
-		<echo 
+		<echo
 			file="target/classes/com/tarsec/javadoc/pdfdoclet/util/version-info.properties">
 copyright=Copyright by Marcel Schoen, Switzerland
 version=${pdfdoclet.version}
 build=${user.name}/${build.timestamp}
 name=${pom.name}
 </echo>
-		
+
 							</tasks>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-		
-			<!-- compile with 1.4 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.0.1</version>
-				<configuration>
-					<!-- verbose>true</verbose -->
-					<source>1.4</source>
-					<target>1.4</target>
-				</configuration>
-			</plugin>
-			
 		</plugins>
 	</build>
 	<!-- ============================================
@@ -85,7 +72,7 @@ name=${pom.name}
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.13</version>
+			<version>1.2.17</version>
 		</dependency>
         <dependency>
             <groupId>pdfdoclet</groupId>

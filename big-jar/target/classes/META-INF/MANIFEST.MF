@@ -1,14 +1,6 @@
 Manifest-Version: 1.0
-Ant-Version: Apache Ant 1.5.3 
-Created-By: Apache Maven
-Built-By: msc
-Package: org.w3c.tidy
-Build-Jdk: 1.4.2_05
-Extension-Name: jtidy
-Specification-Title: JTidy - HTML syntax checker and pretty printer
-Specification-Vendor: sourceforge
-Implementation-Title: org.w3c.tidy
-Implementation-Vendor: sourceforge
-Implementation-Version: r8-SNAPSHOT
-Main-Class: org.w3c.tidy.Tidy
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven 3.8.1
+Built-By: mdo
+Build-Jdk: 17.0.1
 

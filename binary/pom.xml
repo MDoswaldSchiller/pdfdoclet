@@ -2,114 +2,116 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<parent>
-		<groupId>pdfdoclet</groupId>
-		<artifactId>pom</artifactId>
-		<version>1.0.3</version>
-	</parent>
+  <parent>
+    <groupId>pdfdoclet</groupId>
+    <artifactId>pom</artifactId>
+    <version>1.0.4-SNAPSHOT</version>
+  </parent>
 
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>binary</artifactId>
-	<packaging>jar</packaging>
-	<name>PDFDoclet Binaries</name>
-    
-    <description>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>binary</artifactId>
+  <packaging>jar</packaging>
+  <name>PDFDoclet Binaries</name>
+
+  <description>
     The binaries of the PDFDoclet, with documentation.
-	</description>
+  </description>
 
-    <properties>
-        <image.dir></image.dir>
-    </properties>
+  <properties>
+    <image.dir></image.dir>
+  </properties>
 
-	<build>
-		<plugins>
+  <build>
+    <plugins>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-						<goals>
-							<goal>site</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-				</configuration>
-			</plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.10.0</version>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>site</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+        </configuration>
+      </plugin>
 
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.7</version>
-				<executions>
-					<execution>
-					    <id>prepare-image</id>
-						<phase>test</phase>
-						<configuration>
-							<target>
-								<copy todir="${project.build.directory}/image" overwrite="true">
-									<fileset dir="${basedir}/src/build" />
-									<filterset>
-										<filter token="VERSION" value="${project.version}" />
-									</filterset>
-								</copy>
-								<copy todir="${project.build.directory}/image/docs" overwrite="true">
-									<fileset dir="${project.build.directory}/site" />
-								</copy>
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-					
-					<execution>
-					    <id>create-archives</id>
-						<phase>package</phase>
-						<configuration>
-							<target>
-							    <tar destfile="${project.build.directory}/pdfdoclet-${project.version}.tar.gz"
-							        compression="gzip">
-									<tarfileset dir="${project.build.directory}/image"
-									        prefix="pdfdoclet-${project.version}" />
-								</tar>
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-									</executions>
-			</plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <id>prepare-image</id>
+            <phase>test</phase>
+            <configuration>
+              <target>
+                <copy todir="${project.build.directory}/image" overwrite="true">
+                  <fileset dir="${basedir}/src/build" />
+                  <filterset>
+                    <filter token="VERSION" value="${project.version}" />
+                  </filterset>
+                </copy>
+                <copy todir="${project.build.directory}/image/docs" overwrite="true">
+                  <fileset dir="${project.build.directory}/site" />
+                </copy>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy</id>
-						<phase>test</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>big-jar</artifactId>
-									<version>${project.version}</version>
-									<type>jar</type>
-									<overWrite>true</overWrite>
-									<outputDirectory>${project.build.directory}/image/jar</outputDirectory>
-									<destFileName>pdfdoclet-${project.version}-all.jar</destFileName>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+          <execution>
+            <id>create-archives</id>
+            <phase>package</phase>
+            <configuration>
+              <target>
+                <tar destfile="${project.build.directory}/pdfdoclet-${project.version}.tar.gz"
+                       compression="gzip">
+                  <tarfileset dir="${project.build.directory}/image"
+                              prefix="pdfdoclet-${project.version}" />
+                </tar>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-		</plugins>
-	</build>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>test</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>big-jar</artifactId>
+                  <version>${project.version}</version>
+                  <type>jar</type>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/image/jar</outputDirectory>
+                  <destFileName>pdfdoclet-${project.version}-all.jar</destFileName>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
 </project>
