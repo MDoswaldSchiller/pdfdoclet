@@ -6,37 +6,37 @@
 	<groupId>pdfdoclet</groupId>
 	<artifactId>pom</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.3</version>
+	<version>1.0.4-SNAPSHOT</version>
 	<name>PDFDoclet</name>
 
-	<!-- =========================================================================== -->	
+	<!-- =========================================================================== -->
 	<!-- Due to one of the gazillion bugs in Maven, this "url" element must be here in
 	     the top-POM, or the site generation in the "binary" submodule will result in
 	     an NPE.
 	 -->
     <url>http://sourceforge.net/projects/pdfdoclet</url>
-	<!-- =========================================================================== -->	
-    
+	<!-- =========================================================================== -->
+
 	<properties>
 		<pdfdoclet.version>${pom.version}</pdfdoclet.version>
 	</properties>
-    
+
     <description>
 &lt;p>&lt;/p>
-PDFDoclet is a javadoc doclet which produces PDF output for a given Java API, using another SourceForge 
-library, 
-&lt;a href="http://itext.sourceforge.net/">"iText"&lt;/a>. It requires nothing more than some JAR files in order to create PDF files. Forget now about 
-all the fuss of having to create MIF output first, then having to load it into a FrameMaker installation using 
+PDFDoclet is a javadoc doclet which produces PDF output for a given Java API, using another SourceForge
+library,
+&lt;a href="http://itext.sourceforge.net/">"iText"&lt;/a>. It requires nothing more than some JAR files in order to create PDF files. Forget now about
+all the fuss of having to create MIF output first, then having to load it into a FrameMaker installation using
 some preinstalled batch application and finally needing Acrobat Distiller to create a PDF etc. etc...
 &lt;p>&lt;/p>
-PDFDoclet is a straightforward, simple-to-use 100% pure Java solution. It creates a PDF file as similar as 
+PDFDoclet is a straightforward, simple-to-use 100% pure Java solution. It creates a PDF file as similar as
 possible to a typical HTML javadoc. Read the features page and the FAQ to see what it can and what it can't do.
 &lt;p>&lt;/p>
 Kudos to the authors of &lt;a href="http://itext.sourceforge.net/">iText&lt;/a>, Bruno Lowagie and Paulo Soares, for making it possible!
-Thanks also to all the people who have contributed to the project by fixing bugs, testing or implementing 
+Thanks also to all the people who have contributed to the project by fixing bugs, testing or implementing
 new features!
 	</description>
-	
+
 	<prerequisites>
 		<maven>2.0.5</maven>
 	</prerequisites>
@@ -59,11 +59,11 @@ new features!
 		<module>doclet</module>
 		<module>big-jar</module>
 		<module>binary</module>
-				<!-- 
+				<!--
 		<module>example</module>
 		-->
 	</modules>
-	
+
 <!--
 scm:cvs:pserver:anoncvs:@cvs.apache.org:/cvs/root:module
 		<connection>scm:cvs:pserver:anonymous@pdfdoclet.cvs.sourceforge.net:/cvsroot/pdfdoclet:pdfdoclet</connection>
@@ -137,7 +137,7 @@ scm:cvs:pserver:anoncvs:@cvs.apache.org:/cvs/root:module
 
 	<build>
 		<plugins>
-			
+
 			<!-- compile with 1.4 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -154,7 +154,7 @@ scm:cvs:pserver:anoncvs:@cvs.apache.org:/cvs/root:module
 	</build>
 
 	<reporting>
-		<plugins>		
+		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
@@ -201,7 +201,7 @@ scm:cvs:pserver:anoncvs:@cvs.apache.org:/cvs/root:module
 					</reportSet>
 				</reportSets>
 			</plugin>
-			
+
 	        <plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-changelog-plugin</artifactId>
@@ -233,5 +233,5 @@ scm:cvs:pserver:anoncvs:@cvs.apache.org:/cvs/root:module
 		</plugins>
 	</reporting>
 
-	
+
 </project>
