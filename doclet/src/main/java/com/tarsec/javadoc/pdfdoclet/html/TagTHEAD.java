@@ -28,6 +28,7 @@ public class TagTHEAD extends HTMLTag
   /**
    * Override to only allow PdfPCell instances
    */
+  @Override
   public void addNestedTagContent(Element[] elements)
   {
     for (int i = 0; elements != null && i < elements.length; i++) {
@@ -43,6 +44,7 @@ public class TagTHEAD extends HTMLTag
   /**
    * Interior text is ignored between THEAD tags
    */
+  @Override
   public Element toElement(String text)
   {
     return null;

@@ -188,6 +188,7 @@ public class Appendices implements IConstants
     /**
      *
      */
+    @Override
     public int compareTo(Object other)
     {
       return index - ((AppendixInfo) other).index;

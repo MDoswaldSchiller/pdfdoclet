@@ -35,6 +35,7 @@ public class TagDD extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#openTagElements()
    */
+  @Override
   public Element[] openTagElements()
   {
     Element[] elements = new Element[1];

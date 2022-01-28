@@ -31,6 +31,7 @@ public class TagIMG extends HTMLTag
     super(parent, type);
   }
 
+  @Override
   public Element[] toPdfObjects()
   {
     String src = getAttribute("src");
@@ -113,11 +114,13 @@ public class TagIMG extends HTMLTag
     return results;
   }
 
+  @Override
   public Element[] openTagElements()
   {
     return null;
   }
 
+  @Override
   public Element[] closeTagElements()
   {
     return null;

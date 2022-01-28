@@ -25,6 +25,7 @@ public class TagTR extends HTMLTag
   /**
    * Override to only allow PdfPCell instances
    */
+  @Override
   public void addNestedTagContent(Element[] elements)
   {
     for (int i = 0; elements != null && i < elements.length; i++) {
@@ -37,6 +38,7 @@ public class TagTR extends HTMLTag
   /**
    * Interior text is ignored between TR tags
    */
+  @Override
   public Element toElement(String text)
   {
     return null;
@@ -46,6 +48,7 @@ public class TagTR extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#toPdfObjects()
    */
+  @Override
   public Element[] toPdfObjects()
   {
     Element[] objs = super.toPdfObjects();

@@ -22,6 +22,7 @@ public class TagP extends HTMLTag
     super(parent, type);
   }
 
+  @Override
   public Element[] openTagElements()
   {
     int parentType = parent.getType();

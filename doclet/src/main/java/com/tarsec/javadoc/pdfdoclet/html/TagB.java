@@ -17,6 +17,7 @@ public class TagB extends HTMLTag
     isBold = true;
   }
 
+  @Override
   public boolean isBold()
   {
     return true;

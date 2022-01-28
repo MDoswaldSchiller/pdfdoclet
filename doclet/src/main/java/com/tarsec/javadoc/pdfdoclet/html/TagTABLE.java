@@ -165,6 +165,7 @@ public class TagTABLE extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#addNestedTagContent(com.lowagie.text.Element[])
    */
+  @Override
   public void addNestedTagContent(Element[] elements)
   {
     PdfPCell[] row = getRow(elements);
@@ -203,6 +204,7 @@ public class TagTABLE extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#toElement(java.lang.String)
    */
+  @Override
   public Element toElement(String text)
   {
     // Interior text is ignored... though I think Tidy does that for us 
@@ -213,6 +215,7 @@ public class TagTABLE extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#openTagElements()
    */
+  @Override
   public Element[] openTagElements()
   {
     table = null;
@@ -226,6 +229,7 @@ public class TagTABLE extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#closeTagElements()
    */
+  @Override
   public Element[] closeTagElements()
   {
     if (table == null) {

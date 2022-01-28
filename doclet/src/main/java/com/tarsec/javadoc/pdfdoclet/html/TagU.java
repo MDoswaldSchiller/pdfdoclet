@@ -21,6 +21,7 @@ public class TagU extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#isUnderline()
    */
+  @Override
   public boolean isUnderline()
   {
     return true;

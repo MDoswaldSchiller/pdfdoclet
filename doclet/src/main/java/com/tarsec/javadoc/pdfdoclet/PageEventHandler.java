@@ -118,6 +118,7 @@ public class PageEventHandler
    * @param document The current PDF document.
    * @param writer The writer used to create the document.
    */
+  @Override
   public void onEndPage(PdfWriter writer, Document document)
   {
     LOG.debug(">");
@@ -313,6 +314,7 @@ public class PageEventHandler
    * This method is called every time a new paragraph begins. It is used to
    * create the frame (or outline) with all classes in the PDF document.
    */
+  @Override
   public void onParagraph(
       PdfWriter writer,
       Document document,
@@ -335,6 +337,7 @@ public class PageEventHandler
   /**
    * Creates bookmarks (navigation tree) entry for method
    */
+  @Override
   public void onParagraphEnd(
       PdfWriter writer,
       Document document,
@@ -348,6 +351,7 @@ public class PageEventHandler
    * This method is called when a new page is started. It is used to print the
    * "(continued from last page)" header if necessary.
    */
+  @Override
   public void onStartPage(PdfWriter writer, Document document)
   {
     LOG.debug(">");
@@ -371,6 +375,7 @@ public class PageEventHandler
   }
 
   // we override the onCloseDocument method
+  @Override
   public void onCloseDocument(PdfWriter writer, Document document)
   {
     LOG.debug(">");

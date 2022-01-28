@@ -149,6 +149,7 @@ public class PDFDoclet implements IConstants
       Comparator cmp = new Comparator()
       {
 
+        @Override
         public int compare(Object packageName1, Object packageName2)
         {
           String packageOrder = Configuration.getPackageOrder();

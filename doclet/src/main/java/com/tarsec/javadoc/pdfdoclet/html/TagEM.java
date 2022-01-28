@@ -17,6 +17,7 @@ public class TagEM extends HTMLTag
     isItalic = true;
   }
 
+  @Override
   public boolean isItalic()
   {
     return true;

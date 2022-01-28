@@ -36,7 +36,7 @@ public class HtmlParserWrapper implements IConstants
 {
   private static final Logger LOG = LoggerFactory.getLogger(HtmlParserWrapper.class);
 
-  private static Tidy parser = null;
+  private static Tidy parser;
 
   /**
    * Parses an explanation text which may have HTML tags embedded, and create

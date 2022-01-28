@@ -21,6 +21,7 @@ public class TagSTRONG extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#isBold()
    */
+  @Override
   public boolean isBold()
   {
     return true;

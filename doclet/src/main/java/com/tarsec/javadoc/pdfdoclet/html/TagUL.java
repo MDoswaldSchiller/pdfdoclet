@@ -44,6 +44,7 @@ public class TagUL extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#openTagElements()
    */
+  @Override
   public Element[] openTagElements()
   {
     Font symbolFont = new Font(Font.UNDEFINED, getFont().size());
@@ -59,6 +60,7 @@ public class TagUL extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#closeTagElements()
    */
+  @Override
   public Element[] closeTagElements()
   {
     if (this.parent.getType() == TAG_LI
@@ -82,6 +84,7 @@ public class TagUL extends HTMLTag
 	 *  (non-Javadoc)
 	 * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#addNestedTagContent(com.lowagie.text.Element[])
    */
+  @Override
   public void addNestedTagContent(Element[] content)
   {
     for (int i = 0; i < content.length; i++) {

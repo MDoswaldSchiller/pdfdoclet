@@ -17,6 +17,7 @@ public class TagCODE extends HTMLTag
     isCode = true;
   }
 
+  @Override
   public boolean isCode()
   {
     return true;

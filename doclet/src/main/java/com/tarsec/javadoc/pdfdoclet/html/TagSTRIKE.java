@@ -14,6 +14,7 @@ public class TagSTRIKE extends HTMLTag
     isStrikethrough = true;
   }
 
+  @Override
   public boolean isStrikethrough()
   {
     return true;

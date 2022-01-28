@@ -19,6 +19,7 @@ public class TagBR extends HTMLTag
     super(parent, type);
   }
 
+  @Override
   public Element[] openTagElements()
   {
     Element[] elements = new Element[1];

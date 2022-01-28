@@ -48,6 +48,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.RootDoc#classes()
    */
+  @Override
   public ClassDoc[] classes()
   {
     if (!Configuration.isFilterActive()) {
@@ -59,6 +60,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.RootDoc#specifiedClasses()
    */
+  @Override
   public ClassDoc[] specifiedClasses()
   {
     if (!Configuration.isFilterActive()) {
@@ -70,6 +72,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.RootDoc#specifiedPackages()
    */
+  @Override
   public PackageDoc[] specifiedPackages()
   {
     PackageDoc[] list = rootDoc.specifiedPackages();
@@ -83,6 +86,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.RootDoc#options()
    */
+  @Override
   public String[][] options()
   {
     return rootDoc.options();
@@ -91,6 +95,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.RootDoc#classNamed(java.lang.String)
    */
+  @Override
   public ClassDoc classNamed(String arg0)
   {
     return rootDoc.classNamed(arg0);
@@ -99,6 +104,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.RootDoc#packageNamed(java.lang.String)
    */
+  @Override
   public PackageDoc packageNamed(String arg0)
   {
     return rootDoc.packageNamed(arg0);
@@ -107,6 +113,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isClass()
    */
+  @Override
   public boolean isClass()
   {
     return rootDoc.isClass();
@@ -115,6 +122,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isConstructor()
    */
+  @Override
   public boolean isConstructor()
   {
     return rootDoc.isConstructor();
@@ -123,6 +131,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isError()
    */
+  @Override
   public boolean isError()
   {
     return rootDoc.isError();
@@ -131,6 +140,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isException()
    */
+  @Override
   public boolean isException()
   {
     return rootDoc.isException();
@@ -139,6 +149,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isField()
    */
+  @Override
   public boolean isField()
   {
     return rootDoc.isField();
@@ -147,6 +158,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isIncluded()
    */
+  @Override
   public boolean isIncluded()
   {
     return rootDoc.isIncluded();
@@ -155,6 +167,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isInterface()
    */
+  @Override
   public boolean isInterface()
   {
     return rootDoc.isInterface();
@@ -163,6 +176,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isMethod()
    */
+  @Override
   public boolean isMethod()
   {
     return rootDoc.isMethod();
@@ -171,6 +185,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isOrdinaryClass()
    */
+  @Override
   public boolean isOrdinaryClass()
   {
     return rootDoc.isOrdinaryClass();
@@ -179,6 +194,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#seeTags()
    */
+  @Override
   public SeeTag[] seeTags()
   {
     return rootDoc.seeTags();
@@ -187,6 +203,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#position()
    */
+  @Override
   public SourcePosition position()
   {
     return rootDoc.position();
@@ -195,6 +212,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#firstSentenceTags()
    */
+  @Override
   public Tag[] firstSentenceTags()
   {
     return rootDoc.firstSentenceTags();
@@ -203,6 +221,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#inlineTags()
    */
+  @Override
   public Tag[] inlineTags()
   {
     return rootDoc.inlineTags();
@@ -211,6 +230,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#tags()
    */
+  @Override
   public Tag[] tags()
   {
     return rootDoc.tags();
@@ -219,6 +239,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(Object arg0)
   {
     return rootDoc.compareTo(arg0);
@@ -227,6 +248,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#commentText()
    */
+  @Override
   public String commentText()
   {
     return rootDoc.commentText();
@@ -235,6 +257,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#getRawCommentText()
    */
+  @Override
   public String getRawCommentText()
   {
     return rootDoc.getRawCommentText();
@@ -243,6 +266,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#name()
    */
+  @Override
   public String name()
   {
     return rootDoc.name();
@@ -251,6 +275,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#setRawCommentText(java.lang.String)
    */
+  @Override
   public void setRawCommentText(String arg0)
   {
     rootDoc.setRawCommentText(arg0);
@@ -259,6 +284,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#tags(java.lang.String)
    */
+  @Override
   public Tag[] tags(String arg0)
   {
     return rootDoc.tags(arg0);
@@ -267,6 +293,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.DocErrorReporter#printError(java.lang.String)
    */
+  @Override
   public void printError(String arg0)
   {
     rootDoc.printError(arg0);
@@ -275,6 +302,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.DocErrorReporter#printNotice(java.lang.String)
    */
+  @Override
   public void printNotice(String arg0)
   {
     rootDoc.printNotice(arg0);
@@ -283,6 +311,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.DocErrorReporter#printWarning(java.lang.String)
    */
+  @Override
   public void printWarning(String arg0)
   {
     rootDoc.printWarning(arg0);
@@ -291,6 +320,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.DocErrorReporter#printError(com.sun.javadoc.SourcePosition, java.lang.String)
    */
+  @Override
   public void printError(SourcePosition arg0, String arg1)
   {
     rootDoc.printError(arg0, arg1);
@@ -299,6 +329,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.DocErrorReporter#printNotice(com.sun.javadoc.SourcePosition, java.lang.String)
    */
+  @Override
   public void printNotice(SourcePosition arg0, String arg1)
   {
     rootDoc.printNotice(arg0, arg1);
@@ -307,6 +338,7 @@ public class FilteredRootDoc implements RootDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.DocErrorReporter#printWarning(com.sun.javadoc.SourcePosition, java.lang.String)
    */
+  @Override
   public void printWarning(SourcePosition arg0, String arg1)
   {
     rootDoc.printWarning(arg0, arg1);

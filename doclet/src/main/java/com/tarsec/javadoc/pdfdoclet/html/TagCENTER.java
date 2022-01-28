@@ -20,6 +20,7 @@ public class TagCENTER extends HTMLTag
     isCentered = true;
   }
 
+  @Override
   public Element[] openTagElements()
   {
     Element[] elements = new Element[1];
@@ -27,6 +28,7 @@ public class TagCENTER extends HTMLTag
     return elements;
   }
 
+  @Override
   public Element[] closeTagElements()
   {
     Element[] elements = new Element[1];

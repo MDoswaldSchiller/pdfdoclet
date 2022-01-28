@@ -60,6 +60,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#definesSerializableFields()
    */
+  @Override
   public boolean definesSerializableFields()
   {
     return classDoc.definesSerializableFields();
@@ -68,6 +69,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#isAbstract()
    */
+  @Override
   public boolean isAbstract()
   {
     return classDoc.isAbstract();
@@ -76,6 +78,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#isExternalizable()
    */
+  @Override
   public boolean isExternalizable()
   {
     return classDoc.isExternalizable();
@@ -84,6 +87,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#isSerializable()
    */
+  @Override
   public boolean isSerializable()
   {
     return classDoc.isSerializable();
@@ -92,6 +96,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#superclass()
    */
+  @Override
   public ClassDoc superclass()
   {
     return classDoc.superclass();
@@ -100,6 +105,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#importedClasses()
    */
+  @Override
   public ClassDoc[] importedClasses()
   {
     // TODO: Check if these classes must be filtered as well
@@ -109,6 +115,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#innerClasses()
    */
+  @Override
   public ClassDoc[] innerClasses()
   {
     if (!Configuration.isFilterActive()) {
@@ -121,6 +128,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#interfaces()
    */
+  @Override
   public ClassDoc[] interfaces()
   {
     if (!Configuration.isFilterActive()) {
@@ -133,6 +141,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#subclassOf(com.sun.javadoc.ClassDoc)
    */
+  @Override
   public boolean subclassOf(ClassDoc arg0)
   {
     return classDoc.subclassOf(arg0);
@@ -141,6 +150,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#innerClasses(boolean)
    */
+  @Override
   public ClassDoc[] innerClasses(boolean arg0)
   {
     // TODO: Filter inner classes as well
@@ -150,6 +160,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#constructors()
    */
+  @Override
   public ConstructorDoc[] constructors()
   {
     if (!Configuration.isFilterActive()) {
@@ -162,6 +173,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#constructors(boolean)
    */
+  @Override
   public ConstructorDoc[] constructors(boolean arg0)
   {
     if (!Configuration.isFilterActive()) {
@@ -174,6 +186,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#fields()
    */
+  @Override
   public FieldDoc[] fields()
   {
     if (!Configuration.isFilterActive()) {
@@ -186,6 +199,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#serializableFields()
    */
+  @Override
   public FieldDoc[] serializableFields()
   {
     if (!Configuration.isFilterActive()) {
@@ -198,6 +212,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#fields(boolean)
    */
+  @Override
   public FieldDoc[] fields(boolean arg0)
   {
     if (!Configuration.isFilterActive()) {
@@ -210,6 +225,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#methods()
    */
+  @Override
   public MethodDoc[] methods()
   {
     if (!Configuration.isFilterActive()) {
@@ -222,6 +238,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#serializationMethods()
    */
+  @Override
   public MethodDoc[] serializationMethods()
   {
     if (!Configuration.isFilterActive()) {
@@ -234,6 +251,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#methods(boolean)
    */
+  @Override
   public MethodDoc[] methods(boolean arg0)
   {
     if (!Configuration.isFilterActive()) {
@@ -246,6 +264,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#importedPackages()
    */
+  @Override
   public PackageDoc[] importedPackages()
   {
     // Packages need not to be filtered
@@ -255,6 +274,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ClassDoc#findClass(java.lang.String)
    */
+  @Override
   public ClassDoc findClass(String arg0)
   {
     return classDoc.findClass(arg0);
@@ -263,6 +283,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ProgramElementDoc#modifierSpecifier()
    */
+  @Override
   public int modifierSpecifier()
   {
     return classDoc.modifierSpecifier();
@@ -271,6 +292,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ProgramElementDoc#isFinal()
    */
+  @Override
   public boolean isFinal()
   {
     return classDoc.isFinal();
@@ -279,6 +301,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ProgramElementDoc#isPackagePrivate()
    */
+  @Override
   public boolean isPackagePrivate()
   {
     return classDoc.isPackagePrivate();
@@ -287,6 +310,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ProgramElementDoc#isPrivate()
    */
+  @Override
   public boolean isPrivate()
   {
     return classDoc.isPrivate();
@@ -295,6 +319,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ProgramElementDoc#isProtected()
    */
+  @Override
   public boolean isProtected()
   {
     return classDoc.isProtected();
@@ -303,6 +328,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ProgramElementDoc#isPublic()
    */
+  @Override
   public boolean isPublic()
   {
     return classDoc.isPublic();
@@ -311,6 +337,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ProgramElementDoc#isStatic()
    */
+  @Override
   public boolean isStatic()
   {
     return classDoc.isStatic();
@@ -319,6 +346,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ProgramElementDoc#containingClass()
    */
+  @Override
   public ClassDoc containingClass()
   {
     return classDoc.containingClass();
@@ -327,6 +355,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ProgramElementDoc#containingPackage()
    */
+  @Override
   public PackageDoc containingPackage()
   {
     return classDoc.containingPackage();
@@ -335,6 +364,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ProgramElementDoc#modifiers()
    */
+  @Override
   public String modifiers()
   {
     return classDoc.modifiers();
@@ -343,6 +373,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.ProgramElementDoc#qualifiedName()
    */
+  @Override
   public String qualifiedName()
   {
     return classDoc.qualifiedName();
@@ -351,6 +382,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Type#asClassDoc()
    */
+  @Override
   public ClassDoc asClassDoc()
   {
     return classDoc.asClassDoc();
@@ -359,6 +391,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Type#dimension()
    */
+  @Override
   public String dimension()
   {
     return classDoc.dimension();
@@ -367,6 +400,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Type#qualifiedTypeName()
    */
+  @Override
   public String qualifiedTypeName()
   {
     return classDoc.qualifiedTypeName();
@@ -375,6 +409,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Type#typeName()
    */
+  @Override
   public String typeName()
   {
     return classDoc.typeName();
@@ -383,6 +418,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isClass()
    */
+  @Override
   public boolean isClass()
   {
     return classDoc.isClass();
@@ -391,6 +427,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isConstructor()
    */
+  @Override
   public boolean isConstructor()
   {
     return classDoc.isConstructor();
@@ -399,6 +436,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isError()
    */
+  @Override
   public boolean isError()
   {
     return classDoc.isError();
@@ -407,6 +445,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isException()
    */
+  @Override
   public boolean isException()
   {
     return classDoc.isException();
@@ -415,6 +454,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isField()
    */
+  @Override
   public boolean isField()
   {
     return classDoc.isField();
@@ -423,6 +463,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isIncluded()
    */
+  @Override
   public boolean isIncluded()
   {
     return classDoc.isIncluded();
@@ -431,6 +472,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isInterface()
    */
+  @Override
   public boolean isInterface()
   {
     return classDoc.isInterface();
@@ -439,6 +481,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isMethod()
    */
+  @Override
   public boolean isMethod()
   {
     return classDoc.isMethod();
@@ -447,6 +490,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isOrdinaryClass()
    */
+  @Override
   public boolean isOrdinaryClass()
   {
     return classDoc.isOrdinaryClass();
@@ -455,6 +499,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#seeTags()
    */
+  @Override
   public SeeTag[] seeTags()
   {
     return classDoc.seeTags();
@@ -463,6 +508,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#position()
    */
+  @Override
   public SourcePosition position()
   {
     return classDoc.position();
@@ -471,6 +517,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#firstSentenceTags()
    */
+  @Override
   public Tag[] firstSentenceTags()
   {
     return classDoc.firstSentenceTags();
@@ -479,6 +526,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#inlineTags()
    */
+  @Override
   public Tag[] inlineTags()
   {
     return classDoc.inlineTags();
@@ -487,6 +535,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#tags()
    */
+  @Override
   public Tag[] tags()
   {
     return classDoc.tags();
@@ -495,6 +544,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(Object arg0)
   {
     return classDoc.compareTo(arg0);
@@ -503,6 +553,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#commentText()
    */
+  @Override
   public String commentText()
   {
     return classDoc.commentText();
@@ -511,6 +562,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#getRawCommentText()
    */
+  @Override
   public String getRawCommentText()
   {
     return classDoc.getRawCommentText();
@@ -519,6 +571,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#name()
    */
+  @Override
   public String name()
   {
     return classDoc.name();
@@ -527,6 +580,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#setRawCommentText(java.lang.String)
    */
+  @Override
   public void setRawCommentText(String arg0)
   {
     classDoc.setRawCommentText(arg0);
@@ -535,6 +589,7 @@ public class FilteredClassDoc implements ClassDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#tags(java.lang.String)
    */
+  @Override
   public Tag[] tags(String arg0)
   {
     return classDoc.tags(arg0);

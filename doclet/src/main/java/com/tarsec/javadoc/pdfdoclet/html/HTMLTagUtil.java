@@ -23,7 +23,6 @@ public class HTMLTagUtil implements IConstants
   private static final Logger LOG = LoggerFactory.getLogger(HTMLTagUtil.class);
 
   private static int UNKNOWN = -1;
-  protected static String[] tags = HTMLTag.tags;
 
 
   /**
@@ -54,8 +53,8 @@ public class HTMLTagUtil implements IConstants
     }
     text = text.trim();
 
-    for (int i = 0; (i < tags.length) && (tagType == UNKNOWN); i++) {
-      if (text.equalsIgnoreCase(tags[i])) {
+    for (int i = 0; (i < HTMLTag.TAGS.size()) && (tagType == UNKNOWN); i++) {
+      if (text.equalsIgnoreCase(HTMLTag.TAGS.get(i))) {
         tagType = i;
       }
     }

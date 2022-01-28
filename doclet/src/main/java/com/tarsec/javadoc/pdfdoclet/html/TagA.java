@@ -53,6 +53,7 @@ public class TagA extends HTMLTag
      * 
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#openTagElements()
    */
+  @Override
   public Element[] openTagElements()
   {
 
@@ -93,6 +94,7 @@ public class TagA extends HTMLTag
      * 
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#toElement(java.lang.String)
    */
+  @Override
   public Element toElement(String text)
   {
     String addr = getAttribute("href");

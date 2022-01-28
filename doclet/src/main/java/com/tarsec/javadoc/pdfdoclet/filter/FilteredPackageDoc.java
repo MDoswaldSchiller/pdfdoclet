@@ -53,6 +53,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.PackageDoc#allClasses()
    */
+  @Override
   public ClassDoc[] allClasses()
   {
     if (!Configuration.isFilterActive()) {
@@ -64,6 +65,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.PackageDoc#errors()
    */
+  @Override
   public ClassDoc[] errors()
   {
     if (!Configuration.isFilterActive()) {
@@ -75,6 +77,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.PackageDoc#exceptions()
    */
+  @Override
   public ClassDoc[] exceptions()
   {
     if (!Configuration.isFilterActive()) {
@@ -86,6 +89,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.PackageDoc#interfaces()
    */
+  @Override
   public ClassDoc[] interfaces()
   {
     if (!Configuration.isFilterActive()) {
@@ -97,6 +101,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.PackageDoc#ordinaryClasses()
    */
+  @Override
   public ClassDoc[] ordinaryClasses()
   {
     if (!Configuration.isFilterActive()) {
@@ -108,6 +113,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.PackageDoc#allClasses(boolean)
    */
+  @Override
   public ClassDoc[] allClasses(boolean arg0)
   {
     if (!Configuration.isFilterActive()) {
@@ -119,6 +125,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.PackageDoc#findClass(java.lang.String)
    */
+  @Override
   public ClassDoc findClass(String arg0)
   {
     return packageDoc.findClass(arg0);
@@ -127,6 +134,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isClass()
    */
+  @Override
   public boolean isClass()
   {
     return packageDoc.isClass();
@@ -135,6 +143,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isConstructor()
    */
+  @Override
   public boolean isConstructor()
   {
     return packageDoc.isConstructor();
@@ -143,6 +152,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isError()
    */
+  @Override
   public boolean isError()
   {
     return packageDoc.isError();
@@ -151,6 +161,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isException()
    */
+  @Override
   public boolean isException()
   {
     return packageDoc.isException();
@@ -159,6 +170,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isField()
    */
+  @Override
   public boolean isField()
   {
     return packageDoc.isField();
@@ -167,6 +179,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isIncluded()
    */
+  @Override
   public boolean isIncluded()
   {
     return packageDoc.isIncluded();
@@ -175,6 +188,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isInterface()
    */
+  @Override
   public boolean isInterface()
   {
     return packageDoc.isInterface();
@@ -183,6 +197,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isMethod()
    */
+  @Override
   public boolean isMethod()
   {
     return packageDoc.isMethod();
@@ -191,6 +206,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#isOrdinaryClass()
    */
+  @Override
   public boolean isOrdinaryClass()
   {
     return packageDoc.isOrdinaryClass();
@@ -199,6 +215,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#seeTags()
    */
+  @Override
   public SeeTag[] seeTags()
   {
     return packageDoc.seeTags();
@@ -207,6 +224,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#position()
    */
+  @Override
   public SourcePosition position()
   {
     return packageDoc.position();
@@ -215,6 +233,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#firstSentenceTags()
    */
+  @Override
   public Tag[] firstSentenceTags()
   {
     return packageDoc.firstSentenceTags();
@@ -223,6 +242,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#inlineTags()
    */
+  @Override
   public Tag[] inlineTags()
   {
     return packageDoc.inlineTags();
@@ -231,6 +251,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#tags()
    */
+  @Override
   public Tag[] tags()
   {
     return packageDoc.tags();
@@ -239,6 +260,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
+  @Override
   public int compareTo(Object arg0)
   {
     return packageDoc.compareTo(arg0);
@@ -247,6 +269,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#commentText()
    */
+  @Override
   public String commentText()
   {
     return packageDoc.commentText();
@@ -255,6 +278,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#getRawCommentText()
    */
+  @Override
   public String getRawCommentText()
   {
     return packageDoc.getRawCommentText();
@@ -263,6 +287,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#name()
    */
+  @Override
   public String name()
   {
     return packageDoc.name();
@@ -271,6 +296,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#setRawCommentText(java.lang.String)
    */
+  @Override
   public void setRawCommentText(String arg0)
   {
     packageDoc.setRawCommentText(arg0);
@@ -279,6 +305,7 @@ public class FilteredPackageDoc implements PackageDoc
   /* (non-Javadoc)
      * @see com.sun.javadoc.Doc#tags(java.lang.String)
    */
+  @Override
   public Tag[] tags(String arg0)
   {
     return packageDoc.tags(arg0);

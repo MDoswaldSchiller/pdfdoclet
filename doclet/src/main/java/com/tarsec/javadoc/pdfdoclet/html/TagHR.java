@@ -27,6 +27,7 @@ public class TagHR extends HTMLTag
     }
   }
 
+  @Override
   public Element[] openTagElements()
   {
     float height = Math.min(HTMLTagUtil.parseFloat(getAttribute("size"), 2.0f), 100f);

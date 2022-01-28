@@ -28,6 +28,7 @@ public class TagLI extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#toElement(java.lang.String)
    */
+  @Override
   public Element toElement(String text)
   {
     listEntry.add(new Chunk(Util.stripLineFeeds(text), getFont()));
@@ -38,6 +39,7 @@ public class TagLI extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#addNestedTagContent(com.lowagie.text.Element[])
    */
+  @Override
   public void addNestedTagContent(Element[] content)
   {
     for (int i = 0; i < content.length; i++) {
@@ -45,6 +47,7 @@ public class TagLI extends HTMLTag
     }
   }
 
+  @Override
   public Element[] closeTagElements()
   {
     listEntry.setLeading(getFont().size() + (float) 1.0);

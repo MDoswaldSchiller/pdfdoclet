@@ -16,15 +16,12 @@ public class TagFactory
 {
   private static final Logger LOG = LoggerFactory.getLogger(TagFactory.class);
 
-  protected static String[] tags = HTMLTag.tags;
-
   /**
    * Creates a HTML tag object of the given type.
    *
    * @param parent The parent HTML tag. Can be null if the HTML tag to be
    * created does not have a parent tag (i.e. is not a nested tag).
    * @param type The type for the HTML tag to be created.
-   * @param node The DOM node of the HTML tag to be created.
    * @return A HTML tag object or null if none could be created.
    */
   public static HTMLTag createTag(HTMLTag parent, int type)

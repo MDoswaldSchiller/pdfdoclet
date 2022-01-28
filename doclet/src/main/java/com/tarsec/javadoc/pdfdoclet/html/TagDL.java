@@ -30,6 +30,7 @@ public class TagDL extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#openTagElements()
    */
+  @Override
   public Element[] openTagElements()
   {
     Element[] elements = new Element[2];
@@ -44,6 +45,7 @@ public class TagDL extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#closeTagElements()
    */
+  @Override
   public Element[] closeTagElements()
   {
     Element[] elements = new Element[2];

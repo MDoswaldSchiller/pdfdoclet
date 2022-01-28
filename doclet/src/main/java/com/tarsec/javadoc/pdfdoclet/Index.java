@@ -236,6 +236,7 @@ public class Index implements IConstants, Comparator
    * @param o2 The second entry for the comparison.
    * @return A value defining the order.
    */
+  @Override
   public int compare(Object o1, Object o2)
   {
     return ((String) o1).compareToIgnoreCase((String) o2);
@@ -255,6 +256,7 @@ public class Index implements IConstants, Comparator
      * @param o2 The second entry for the comparison.
      * @return A value defining the order.
      */
+    @Override
     public int compare(Object o1, Object o2)
     {
       Integer int1 = (Integer) o1;

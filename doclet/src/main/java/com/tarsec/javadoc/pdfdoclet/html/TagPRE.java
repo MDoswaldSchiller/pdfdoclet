@@ -55,6 +55,7 @@ public class TagPRE extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#toElement(java.lang.String)
    */
+  @Override
   public Element toElement(String text)
   {
     cellPara.add(text);
@@ -65,6 +66,7 @@ public class TagPRE extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#addNestedTagContent(com.lowagie.text.Element[])
    */
+  @Override
   public void addNestedTagContent(Element[] content)
   {
     for (int i = 0; i < content.length; i++) {
@@ -77,6 +79,7 @@ public class TagPRE extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#closeTagElements()
    */
+  @Override
   public Element[] closeTagElements()
   {
     Element[] elements = new Element[2];
@@ -91,6 +94,7 @@ public class TagPRE extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#openTagElements()
    */
+  @Override
   public Element[] openTagElements()
   {
     Element[] elements = new Element[3];
@@ -106,6 +110,7 @@ public class TagPRE extends HTMLTag
      *  (non-Javadoc)
      * @see com.tarsec.javadoc.pdfdoclet.html.HTMLTag#isPre()
    */
+  @Override
   public boolean isPre()
   {
     return true;

@@ -5,9 +5,6 @@ package com.tarsec.javadoc.pdfdoclet.html;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Hashtable;
-
-
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
@@ -20,6 +17,8 @@ import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
 import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import java.util.HashMap;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,8 +38,7 @@ public abstract class HTMLTag implements IConstants
    *
    * @see com.tarsec.javadoc.pdfdoclet.IConstants IConstants} interface.
    */
-  protected static String[] tags
-      = {
+  protected static final java.util.List<String> TAGS = java.util.List.of(
         "body",
         "p",
         "br",
@@ -78,8 +76,8 @@ public abstract class HTMLTag implements IConstants
         "dl",
         "dt",
         "dd",
-        "strong"};
-  private Hashtable attributes = new Hashtable();
+        "strong");
+  private Map attributes = new HashMap();
   protected HTMLTag parent = null;
 
   // List of String or (nested) HTMLTag objects
