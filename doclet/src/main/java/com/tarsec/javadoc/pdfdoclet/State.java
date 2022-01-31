@@ -3,12 +3,10 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import java.io.File;
-
-
-import com.lowagie.text.pdf.PdfOutline;
+import com.itextpdf.text.pdf.PdfOutline;
 import com.sun.javadoc.Doc;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
+import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

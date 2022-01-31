@@ -4,9 +4,9 @@
 package com.tarsec.javadoc.pdfdoclet.html;
 
 
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Element;
-import com.lowagie.text.ListItem;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.ListItem;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
 
 /**
@@ -50,7 +50,7 @@ public class TagLI extends HTMLTag
   @Override
   public Element[] closeTagElements()
   {
-    listEntry.setLeading(getFont().size() + (float) 1.0);
+    listEntry.setLeading(getFont().getSize() + (float) 1.0);
     Element[] entries = new Element[1];
     entries[0] = listEntry;
     return entries;

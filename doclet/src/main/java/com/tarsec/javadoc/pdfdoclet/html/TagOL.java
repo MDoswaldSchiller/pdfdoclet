@@ -4,11 +4,11 @@
 package com.tarsec.javadoc.pdfdoclet.html;
 
 
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Element;
-import com.lowagie.text.List;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.RomanList;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.List;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.RomanList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

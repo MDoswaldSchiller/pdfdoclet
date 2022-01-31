@@ -3,14 +3,12 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import java.awt.Color;
-
-
-import com.lowagie.text.Element;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.tarsec.javadoc.pdfdoclet.elements.CustomPdfPTable;
 
 /**
@@ -45,7 +43,7 @@ public class TagPRE extends HTMLTag
     colorTitleCell.setPaddingLeft(10);
     colorTitleCell.setPaddingRight(10);
     colorTitleCell.setBorderWidth(1);
-    colorTitleCell.setBorderColor(Color.gray);
+    colorTitleCell.setBorderColor(BaseColor.GRAY);
     colorTitleCell.setBackgroundColor(COLOR_LIGHTER_GRAY);
     colorTitleCell.addElement(cellPara);
     mainTable.addCell(colorTitleCell);
@@ -84,7 +82,7 @@ public class TagPRE extends HTMLTag
   {
     Element[] elements = new Element[2];
     Paragraph empty = createParagraph("");
-    empty.setLeading(getFont().size() + (float) 1.0);
+    empty.setLeading(getFont().getSize() + (float) 1.0);
     elements[0] = createParagraph(" ");
     elements[1] = createParagraph("");
     return elements;
@@ -99,7 +97,7 @@ public class TagPRE extends HTMLTag
   {
     Element[] elements = new Element[3];
     Paragraph empty = createParagraph("");
-    empty.setLeading(getFont().size() + (float) 1.0);
+    empty.setLeading(getFont().getSize() + (float) 1.0);
     elements[0] = createParagraph(" ");
     elements[1] = createParagraph("");
     elements[2] = mainTable;

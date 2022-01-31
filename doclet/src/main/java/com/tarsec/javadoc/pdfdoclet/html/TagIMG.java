@@ -3,16 +3,14 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Rectangle;
+import com.tarsec.javadoc.pdfdoclet.Configuration;
+import com.tarsec.javadoc.pdfdoclet.util.Util;
 import java.awt.Toolkit;
 import java.io.FileNotFoundException;
 import java.net.URL;
-
-
-import com.lowagie.text.Element;
-import com.lowagie.text.Image;
-import com.lowagie.text.Rectangle;
-import com.tarsec.javadoc.pdfdoclet.Configuration;
-import com.tarsec.javadoc.pdfdoclet.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,9 +69,9 @@ public class TagIMG extends HTMLTag
         img.scaleAbsoluteWidth(w);
       }
 
-      float maxW = size.width() - 100;
+      float maxW = size.getWidth() - 100;
 
-      if (img.plainWidth() > maxW) {
+      if (img.getPlainWidth() > maxW) {
         img.scaleAbsoluteWidth(maxW);
       }
 
@@ -85,9 +83,9 @@ public class TagIMG extends HTMLTag
         img.scaleAbsoluteHeight(h);
       }
 
-      float maxH = size.height() - 100;
+      float maxH = size.getHeight() - 100;
 
-      if (img.plainHeight() > maxH) {
+      if (img.getPlainHeight() > maxH) {
         img.scaleAbsoluteHeight(maxH);
       }
       /*

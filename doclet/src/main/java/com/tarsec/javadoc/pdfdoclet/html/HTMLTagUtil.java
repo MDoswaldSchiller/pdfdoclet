@@ -3,12 +3,10 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import java.awt.Color;
-import java.util.HashMap;
-
-
-import com.lowagie.text.Element;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Element;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -133,19 +131,19 @@ public class HTMLTagUtil implements IConstants
    * Returns the Color instance for the given HTML color string. The string can
    * be a color name or sRGB value ("#FF0000" for red, etc.)
    */
-  public static Color getColor(String htmlColorString)
+  public static BaseColor getColor(String htmlColorString)
   {
     if (htmlColorString == null || htmlColorString.length() == 0) {
       return null;
     }
 
-    Color color = (Color) colorMap.get(htmlColorString.toLowerCase());
+    BaseColor color = colorMap.get(htmlColorString.toLowerCase());
     if (color == null) {
       if (htmlColorString.startsWith("#")) {
         htmlColorString = htmlColorString.substring(1);
       }
       try {
-        color = new Color(Integer.parseInt(htmlColorString, 16));
+        color = new BaseColor(Integer.parseInt(htmlColorString, 16));
       }
       catch (NumberFormatException e) {
         LOG.debug("Bad HTML color value " + htmlColorString, e);
@@ -156,150 +154,149 @@ public class HTMLTagUtil implements IConstants
     return color;
   }
 
-  private static HashMap colorMap;
+  private static final Map<String,BaseColor> colorMap;
 
   static {
-    colorMap = new HashMap();
-
-    /* The 16 official HTML 4.0 colors */
-    colorMap.put("aqua", new Color(0x00FFFF));
-    colorMap.put("black", new Color(0x000000));
-    colorMap.put("blue", new Color(0x0000FF));
-    colorMap.put("fuchsia", new Color(0xFF00FF));
-    colorMap.put("gray", new Color(0x808080));
-    colorMap.put("green", new Color(0x008000));
-    colorMap.put("lime", new Color(0x00FF00));
-    colorMap.put("maroon", new Color(0x800000));
-    colorMap.put("navy", new Color(0x000080));
-    colorMap.put("olive", new Color(0x808000));
-    colorMap.put("purple", new Color(0x800080));
-    colorMap.put("red", new Color(0xFF0000));
-    colorMap.put("silver", new Color(0xC0C0C0));
-    colorMap.put("teal", new Color(0x008080));
-    colorMap.put("white", new Color(0xFFFFFF));
-    colorMap.put("yellow", new Color(0xFFFF00));
+    colorMap = Map.ofEntries(
+        Map.entry("aqua", new BaseColor(0x00FFFF)),
+        Map.entry("black", new BaseColor(0x000000)),
+        Map.entry("blue", new BaseColor(0x0000FF)),
+        Map.entry("fuchsia", new BaseColor(0xFF00FF)),
+        Map.entry("gray", new BaseColor(0x808080)),
+        Map.entry("green", new BaseColor(0x008000)),
+        Map.entry("lime", new BaseColor(0x00FF00)),
+        Map.entry("maroon", new BaseColor(0x800000)),
+        Map.entry("navy", new BaseColor(0x000080)),
+        Map.entry("olive", new BaseColor(0x808000)),
+        Map.entry("purple", new BaseColor(0x800080)),
+        Map.entry("red", new BaseColor(0xFF0000)),
+        Map.entry("silver", new BaseColor(0xC0C0C0)),
+        Map.entry("teal", new BaseColor(0x008080)),
+        Map.entry("white", new BaseColor(0xFFFFFF)),
+        Map.entry("yellow", new BaseColor(0xFFFF00)),
 
     /* Others that seem to be a more-or-less standard */
-    colorMap.put("aliceblue", new Color(0xf0f8ff));
-    colorMap.put("antiquewhite", new Color(0xfaebd7));
-    colorMap.put("aquamarine", new Color(0x7fffd4));
-    colorMap.put("azure", new Color(0xf0ffff));
-    colorMap.put("beige", new Color(0xf5f5dc));
-    colorMap.put("bisque", new Color(0xffe4c4));
-    colorMap.put("blanchedalmond", new Color(0xffebcd));
-    colorMap.put("blueviolet", new Color(0x8a2be2));
-    colorMap.put("burlywood", new Color(0xdeb887));
-    colorMap.put("cadetblue", new Color(0x5f9ea0));
-    colorMap.put("chartreuse", new Color(0x7fff00));
-    colorMap.put("chocolate", new Color(0xd2691e));
-    colorMap.put("coral", new Color(0xff7f50));
-    colorMap.put("cornflowerblue", new Color(0x6495ed));
-    colorMap.put("cornsilk", new Color(0xfff8dc));
-    colorMap.put("crimson", new Color(0xdc143c));
-    colorMap.put("darkblue", new Color(0x00008b));
-    colorMap.put("darkcyan", new Color(0x008b8b));
-    colorMap.put("darkgoldenrod", new Color(0xb8860b));
-    colorMap.put("darkgray", new Color(0xa9a9a9));
-    colorMap.put("darkgreen", new Color(0x006400));
-    colorMap.put("darkkhaki", new Color(0xbdb76b));
-    colorMap.put("darkmagenta", new Color(0x8b008b));
-    colorMap.put("darkolivegreen", new Color(0x556b2f));
-    colorMap.put("darkorange", new Color(0xff8c00));
-    colorMap.put("darkorchid", new Color(0x9932cc));
-    colorMap.put("darkred", new Color(0x8b0000));
-    colorMap.put("darksalmon", new Color(0xe9967a));
-    colorMap.put("darkseagreen", new Color(0x8fbc8f));
-    colorMap.put("darkslateblue", new Color(0x483d8b));
-    colorMap.put("darkslategray", new Color(0x2f4f4f));
-    colorMap.put("darkturquoise", new Color(0x00ced1));
-    colorMap.put("darkviolet", new Color(0x9400d3));
-    colorMap.put("deeppink", new Color(0xff1493));
-    colorMap.put("deepskyblue", new Color(0x00bfff));
-    colorMap.put("dimgray", new Color(0x696969));
-    colorMap.put("dodgerblue", new Color(0x1e90ff));
-    colorMap.put("firebrick", new Color(0xb22222));
-    colorMap.put("floralwhite", new Color(0xfffaf0));
-    colorMap.put("forestgreen", new Color(0x228b22));
-    colorMap.put("gainsboro", new Color(0xdcdcdc));
-    colorMap.put("ghostwhite", new Color(0xf8f8ff));
-    colorMap.put("gold", new Color(0xffd700));
-    colorMap.put("goldenrod", new Color(0xdaa520));
-    colorMap.put("greenyellow", new Color(0xadff2f));
-    colorMap.put("honeydew", new Color(0xf0fff0));
-    colorMap.put("hotpink", new Color(0xff69b4));
-    colorMap.put("indianred", new Color(0xcd5c5c));
-    colorMap.put("indigo", new Color(0x4b0082));
-    colorMap.put("ivory", new Color(0xfffff0));
-    colorMap.put("khaki", new Color(0xf0e68c));
-    colorMap.put("lavender", new Color(0xe6e6fa));
-    colorMap.put("lavenderblush", new Color(0xfff0f5));
-    colorMap.put("lawngreen", new Color(0x7cfc00));
-    colorMap.put("lemonchiffon", new Color(0xfffacd));
-    colorMap.put("lightblue", new Color(0xadd8e6));
-    colorMap.put("lightcoral", new Color(0xf08080));
-    colorMap.put("lightcyan", new Color(0xe0ffff));
-    colorMap.put("lightgoldenrodyellow", new Color(0xfafad2));
-    colorMap.put("lightgreen", new Color(0x90ee90));
-    colorMap.put("lightgrey", new Color(0xd3d3d3));
-    colorMap.put("lightpink", new Color(0xffb6c1));
-    colorMap.put("lightsalmon", new Color(0xffa07a));
-    colorMap.put("lightseagreen", new Color(0x20b2aa));
-    colorMap.put("lightskyblue", new Color(0x87cefa));
-    colorMap.put("lightslategray", new Color(0x778899));
-    colorMap.put("lightsteelblue", new Color(0xb0c4de));
-    colorMap.put("lightyellow", new Color(0xffffe0));
-    colorMap.put("limegreen", new Color(0x32cd32));
-    colorMap.put("linen", new Color(0xfaf0e6));
-    colorMap.put("mediumaquamarine", new Color(0x66cdaa));
-    colorMap.put("mediumblue", new Color(0x0000cd));
-    colorMap.put("mediumorchid", new Color(0xba55d3));
-    colorMap.put("mediumpurple", new Color(0x9370db));
-    colorMap.put("mediumseagreen", new Color(0x3cb371));
-    colorMap.put("mediumslateblue", new Color(0x7b68ee));
-    colorMap.put("mediumspringgreen", new Color(0x00fa9a));
-    colorMap.put("mediumturquoise", new Color(0x48d1cc));
-    colorMap.put("mediumvioletred", new Color(0xc71585));
-    colorMap.put("midnightblue", new Color(0x191970));
-    colorMap.put("mintcream", new Color(0xf5fffa));
-    colorMap.put("mistyrose", new Color(0xffe4e1));
-    colorMap.put("moccasin", new Color(0xffe4b5));
-    colorMap.put("navajowhite", new Color(0xffdead));
-    colorMap.put("oldlace", new Color(0xfdf5e6));
-    colorMap.put("olivedrab", new Color(0x6b8e23));
-    colorMap.put("orange", new Color(0xffa500));
-    colorMap.put("orangered", new Color(0xff4500));
-    colorMap.put("orchid", new Color(0xda70d6));
-    colorMap.put("palegoldenrod", new Color(0xeee8aa));
-    colorMap.put("palegreen", new Color(0x98fb98));
-    colorMap.put("paleturquoise", new Color(0xafeeee));
-    colorMap.put("palevioletred", new Color(0xdb7093));
-    colorMap.put("papayawhip", new Color(0xffefd5));
-    colorMap.put("peachpuff", new Color(0xffdab9));
-    colorMap.put("peru", new Color(0xcd853f));
-    colorMap.put("pink", new Color(0xffc0cb));
-    colorMap.put("plum", new Color(0xdda0dd));
-    colorMap.put("powderblue", new Color(0xb0e0e6));
-    colorMap.put("rosybrown", new Color(0xbc8f8f));
-    colorMap.put("royalblue", new Color(0x4169e1));
-    colorMap.put("saddlebrown", new Color(0x8b4513));
-    colorMap.put("salmon", new Color(0xfa8072));
-    colorMap.put("sandybrown", new Color(0xf4a460));
-    colorMap.put("seagreen", new Color(0x2e8b57));
-    colorMap.put("seashell", new Color(0xfff5ee));
-    colorMap.put("sienna", new Color(0xa0522d));
-    colorMap.put("skyblue", new Color(0x87ceeb));
-    colorMap.put("slateblue", new Color(0x6a5acd));
-    colorMap.put("slategray", new Color(0x708090));
-    colorMap.put("snow", new Color(0xfffafa));
-    colorMap.put("springgreen", new Color(0x00ff7f));
-    colorMap.put("steelblue", new Color(0x4682b4));
-    colorMap.put("tan", new Color(0xd2b48c));
-    colorMap.put("thistle", new Color(0xd8bfd8));
-    colorMap.put("tomato", new Color(0xff6347));
-    colorMap.put("turquoise", new Color(0x40e0d0));
-    colorMap.put("violet", new Color(0xee82ee));
-    colorMap.put("wheat", new Color(0xf5deb3));
-    colorMap.put("whitesmoke", new Color(0xf5f5f5));
-    colorMap.put("yellowgreen", new Color(0x9acd32));
+        Map.entry("aliceblue", new BaseColor(0xf0f8ff)),
+        Map.entry("antiquewhite", new BaseColor(0xfaebd7)),
+        Map.entry("aquamarine", new BaseColor(0x7fffd4)),
+        Map.entry("azure", new BaseColor(0xf0ffff)),
+        Map.entry("beige", new BaseColor(0xf5f5dc)),
+        Map.entry("bisque", new BaseColor(0xffe4c4)),
+        Map.entry("blanchedalmond", new BaseColor(0xffebcd)),
+        Map.entry("blueviolet", new BaseColor(0x8a2be2)),
+        Map.entry("burlywood", new BaseColor(0xdeb887)),
+        Map.entry("cadetblue", new BaseColor(0x5f9ea0)),
+        Map.entry("chartreuse", new BaseColor(0x7fff00)),
+        Map.entry("chocolate", new BaseColor(0xd2691e)),
+        Map.entry("coral", new BaseColor(0xff7f50)),
+        Map.entry("cornflowerblue", new BaseColor(0x6495ed)),
+        Map.entry("cornsilk", new BaseColor(0xfff8dc)),
+        Map.entry("crimson", new BaseColor(0xdc143c)),
+        Map.entry("darkblue", new BaseColor(0x00008b)),
+        Map.entry("darkcyan", new BaseColor(0x008b8b)),
+        Map.entry("darkgoldenrod", new BaseColor(0xb8860b)),
+        Map.entry("darkgray", new BaseColor(0xa9a9a9)),
+        Map.entry("darkgreen", new BaseColor(0x006400)),
+        Map.entry("darkkhaki", new BaseColor(0xbdb76b)),
+        Map.entry("darkmagenta", new BaseColor(0x8b008b)),
+        Map.entry("darkolivegreen", new BaseColor(0x556b2f)),
+        Map.entry("darkorange", new BaseColor(0xff8c00)),
+        Map.entry("darkorchid", new BaseColor(0x9932cc)),
+        Map.entry("darkred", new BaseColor(0x8b0000)),
+        Map.entry("darksalmon", new BaseColor(0xe9967a)),
+        Map.entry("darkseagreen", new BaseColor(0x8fbc8f)),
+        Map.entry("darkslateblue", new BaseColor(0x483d8b)),
+        Map.entry("darkslategray", new BaseColor(0x2f4f4f)),
+        Map.entry("darkturquoise", new BaseColor(0x00ced1)),
+        Map.entry("darkviolet", new BaseColor(0x9400d3)),
+        Map.entry("deeppink", new BaseColor(0xff1493)),
+        Map.entry("deepskyblue", new BaseColor(0x00bfff)),
+        Map.entry("dimgray", new BaseColor(0x696969)),
+        Map.entry("dodgerblue", new BaseColor(0x1e90ff)),
+        Map.entry("firebrick", new BaseColor(0xb22222)),
+        Map.entry("floralwhite", new BaseColor(0xfffaf0)),
+        Map.entry("forestgreen", new BaseColor(0x228b22)),
+        Map.entry("gainsboro", new BaseColor(0xdcdcdc)),
+        Map.entry("ghostwhite", new BaseColor(0xf8f8ff)),
+        Map.entry("gold", new BaseColor(0xffd700)),
+        Map.entry("goldenrod", new BaseColor(0xdaa520)),
+        Map.entry("greenyellow", new BaseColor(0xadff2f)),
+        Map.entry("honeydew", new BaseColor(0xf0fff0)),
+        Map.entry("hotpink", new BaseColor(0xff69b4)),
+        Map.entry("indianred", new BaseColor(0xcd5c5c)),
+        Map.entry("indigo", new BaseColor(0x4b0082)),
+        Map.entry("ivory", new BaseColor(0xfffff0)),
+        Map.entry("khaki", new BaseColor(0xf0e68c)),
+        Map.entry("lavender", new BaseColor(0xe6e6fa)),
+        Map.entry("lavenderblush", new BaseColor(0xfff0f5)),
+        Map.entry("lawngreen", new BaseColor(0x7cfc00)),
+        Map.entry("lemonchiffon", new BaseColor(0xfffacd)),
+        Map.entry("lightblue", new BaseColor(0xadd8e6)),
+        Map.entry("lightcoral", new BaseColor(0xf08080)),
+        Map.entry("lightcyan", new BaseColor(0xe0ffff)),
+        Map.entry("lightgoldenrodyellow", new BaseColor(0xfafad2)),
+        Map.entry("lightgreen", new BaseColor(0x90ee90)),
+        Map.entry("lightgrey", new BaseColor(0xd3d3d3)),
+        Map.entry("lightpink", new BaseColor(0xffb6c1)),
+        Map.entry("lightsalmon", new BaseColor(0xffa07a)),
+        Map.entry("lightseagreen", new BaseColor(0x20b2aa)),
+        Map.entry("lightskyblue", new BaseColor(0x87cefa)),
+        Map.entry("lightslategray", new BaseColor(0x778899)),
+        Map.entry("lightsteelblue", new BaseColor(0xb0c4de)),
+        Map.entry("lightyellow", new BaseColor(0xffffe0)),
+        Map.entry("limegreen", new BaseColor(0x32cd32)),
+        Map.entry("linen", new BaseColor(0xfaf0e6)),
+        Map.entry("mediumaquamarine", new BaseColor(0x66cdaa)),
+        Map.entry("mediumblue", new BaseColor(0x0000cd)),
+        Map.entry("mediumorchid", new BaseColor(0xba55d3)),
+        Map.entry("mediumpurple", new BaseColor(0x9370db)),
+        Map.entry("mediumseagreen", new BaseColor(0x3cb371)),
+        Map.entry("mediumslateblue", new BaseColor(0x7b68ee)),
+        Map.entry("mediumspringgreen", new BaseColor(0x00fa9a)),
+        Map.entry("mediumturquoise", new BaseColor(0x48d1cc)),
+        Map.entry("mediumvioletred", new BaseColor(0xc71585)),
+        Map.entry("midnightblue", new BaseColor(0x191970)),
+        Map.entry("mintcream", new BaseColor(0xf5fffa)),
+        Map.entry("mistyrose", new BaseColor(0xffe4e1)),
+        Map.entry("moccasin", new BaseColor(0xffe4b5)),
+        Map.entry("navajowhite", new BaseColor(0xffdead)),
+        Map.entry("oldlace", new BaseColor(0xfdf5e6)),
+        Map.entry("olivedrab", new BaseColor(0x6b8e23)),
+        Map.entry("orange", new BaseColor(0xffa500)),
+        Map.entry("orangered", new BaseColor(0xff4500)),
+        Map.entry("orchid", new BaseColor(0xda70d6)),
+        Map.entry("palegoldenrod", new BaseColor(0xeee8aa)),
+        Map.entry("palegreen", new BaseColor(0x98fb98)),
+        Map.entry("paleturquoise", new BaseColor(0xafeeee)),
+        Map.entry("palevioletred", new BaseColor(0xdb7093)),
+        Map.entry("papayawhip", new BaseColor(0xffefd5)),
+        Map.entry("peachpuff", new BaseColor(0xffdab9)),
+        Map.entry("peru", new BaseColor(0xcd853f)),
+        Map.entry("pink", new BaseColor(0xffc0cb)),
+        Map.entry("plum", new BaseColor(0xdda0dd)),
+        Map.entry("powderblue", new BaseColor(0xb0e0e6)),
+        Map.entry("rosybrown", new BaseColor(0xbc8f8f)),
+        Map.entry("royalblue", new BaseColor(0x4169e1)),
+        Map.entry("saddlebrown", new BaseColor(0x8b4513)),
+        Map.entry("salmon", new BaseColor(0xfa8072)),
+        Map.entry("sandybrown", new BaseColor(0xf4a460)),
+        Map.entry("seagreen", new BaseColor(0x2e8b57)),
+        Map.entry("seashell", new BaseColor(0xfff5ee)),
+        Map.entry("sienna", new BaseColor(0xa0522d)),
+        Map.entry("skyblue", new BaseColor(0x87ceeb)),
+        Map.entry("slateblue", new BaseColor(0x6a5acd)),
+        Map.entry("slategray", new BaseColor(0x708090)),
+        Map.entry("snow", new BaseColor(0xfffafa)),
+        Map.entry("springgreen", new BaseColor(0x00ff7f)),
+        Map.entry("steelblue", new BaseColor(0x4682b4)),
+        Map.entry("tan", new BaseColor(0xd2b48c)),
+        Map.entry("thistle", new BaseColor(0xd8bfd8)),
+        Map.entry("tomato", new BaseColor(0xff6347)),
+        Map.entry("turquoise", new BaseColor(0x40e0d0)),
+        Map.entry("violet", new BaseColor(0xee82ee)),
+        Map.entry("wheat", new BaseColor(0xf5deb3)),
+        Map.entry("whitesmoke", new BaseColor(0xf5f5f5)),
+        Map.entry("yellowgreen", new BaseColor(0x9acd32))
+    );
   }
 }

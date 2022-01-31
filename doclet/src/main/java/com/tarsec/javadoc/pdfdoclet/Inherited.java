@@ -3,12 +3,13 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Document;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.FieldDoc;
 import com.sun.javadoc.MethodDoc;
@@ -16,7 +17,6 @@ import com.tarsec.javadoc.pdfdoclet.elements.CellBorderPadding;
 import com.tarsec.javadoc.pdfdoclet.elements.CustomPdfPCell;
 import com.tarsec.javadoc.pdfdoclet.elements.CustomPdfPTable;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
-import java.awt.Color;
 import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +67,7 @@ public class Inherited
     spacingCell.addElement(new Chunk(" "));
     spacingCell.setFixedHeight((float) 4.0);
     spacingCell.setBorder(Rectangle.BOTTOM + Rectangle.LEFT + Rectangle.RIGHT);
-    spacingCell.setBorderColor(Color.gray);
+    spacingCell.setBorderColor(BaseColor.GRAY);
 
     if ((fields.length > 0) && (show == SHOW_FIELDS)) {
       pdfDocument.add(new Paragraph((float) 6.0, " "));

@@ -1,11 +1,10 @@
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import java.awt.Color;
-
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Element;
-import com.lowagie.text.Graphic;
-import com.lowagie.text.Paragraph;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 
 public class TagHR extends HTMLTag
 {
@@ -19,7 +18,7 @@ public class TagHR extends HTMLTag
   private static class HRParagraph extends Paragraph
   {
 
-    private HRParagraph(Graphic hr)
+    private HRParagraph(Element hr)
     {
       super();
       add(Chunk.NEWLINE);
@@ -32,7 +31,7 @@ public class TagHR extends HTMLTag
   {
     float height = Math.min(HTMLTagUtil.parseFloat(getAttribute("size"), 2.0f), 100f);
     float width;
-    Color color = null;
+    BaseColor color = null;
 
     String widthStr = getAttribute("width");
     if (widthStr == null || !widthStr.endsWith("%")) {
@@ -52,15 +51,17 @@ public class TagHR extends HTMLTag
     }
 
     // XXX new versions of iText support an "align" value here
-    Graphic graphic = new Graphic();
-    graphic.setHorizontalLine(height, width, color);
-
+    LineSeparator lineSeparator = new LineSeparator();
+    lineSeparator.setLineWidth(height);
+    lineSeparator.setPercentage(width);
+    lineSeparator.setLineColor(color);
+    
     /*
          * The returned elements here are added to Paragraph instances.
          * Since PdfPTable cannot be used this way, we need to put it
          * inside a special Paragraph instance in order for it to work.
      */
-    return new Element[]{new HRParagraph(graphic)};
+    return new Element[]{new HRParagraph(lineSeparator)};
   }
 
 }

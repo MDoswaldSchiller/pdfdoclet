@@ -3,13 +3,13 @@
  */
 package com.tarsec.javadoc.pdfdoclet.elements;
 
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfPCell;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
-import java.awt.Color;
 
 /**
  * Customized version(s) of PdfPCell.
@@ -36,7 +36,7 @@ public class CustomPdfPCell extends PdfPCell implements IConstants
     super.setBorder(Rectangle.TOP + Rectangle.LEFT + Rectangle.BOTTOM
                     + Rectangle.RIGHT);
     super.setBorderWidth(1);
-    super.setBorderColor(Color.gray);
+    super.setBorderColor(BaseColor.GRAY);
   }
 
   /**
@@ -45,7 +45,7 @@ public class CustomPdfPCell extends PdfPCell implements IConstants
    * @param paragraph The text for the title.
    * @param backgroundColor Color of the cell
    */
-  public CustomPdfPCell(Paragraph paragraph, Color backgroundColor)
+  public CustomPdfPCell(Paragraph paragraph, BaseColor backgroundColor)
   {
     super(paragraph);
     super.setPaddingTop((float) 0.0);
@@ -56,7 +56,7 @@ public class CustomPdfPCell extends PdfPCell implements IConstants
     super.setBorder(Rectangle.TOP + Rectangle.LEFT + Rectangle.BOTTOM
                     + Rectangle.RIGHT);
     super.setBorderWidth(1);
-    super.setBorderColor(Color.gray);
+    super.setBorderColor(BaseColor.GRAY);
   }
 
   /**
@@ -68,7 +68,7 @@ public class CustomPdfPCell extends PdfPCell implements IConstants
    * @param borderColor The color of the border
    */
   public CustomPdfPCell(int border, Phrase phrase,
-                        int borderWidth, Color borderColor)
+                        int borderWidth, BaseColor borderColor)
   {
 
     super(phrase);

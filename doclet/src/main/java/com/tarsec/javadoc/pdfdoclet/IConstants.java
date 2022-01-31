@@ -3,7 +3,7 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import java.awt.Color;
+import com.itextpdf.text.BaseColor;
 
 /**
  * Holder for constants and definitions.
@@ -199,12 +199,12 @@ public interface IConstants
   public final static int UNDERLINE = 8;
   public final static int STRIKETHROUGH = 16;
 
-  public final static Color COLOR_BLACK = new Color(0, 0, 0);
-  public final static Color COLOR_LIGHT_GRAY = new Color(0xEF, 0xEF, 0XEF);
-  public final static Color COLOR_LIGHTER_GRAY = new Color(0xF4, 0xF4, 0XF4);
-  public final static Color COLOR_SUMMARY_HEADER = new Color(0xCC, 0xCC, 0xFF);
-  public final static Color COLOR_INHERITED_SUMMARY = new Color(0xF0, 0xF0, 0xFF);
-  public final static Color COLOR_LINK = new Color(0, 0, 240);
+  public final static BaseColor COLOR_BLACK = BaseColor.BLACK;
+  public final static BaseColor COLOR_LIGHT_GRAY = new BaseColor(0xEF, 0xEF, 0XEF);
+  public final static BaseColor COLOR_LIGHTER_GRAY = new BaseColor(0xF4, 0xF4, 0XF4);
+  public final static BaseColor COLOR_SUMMARY_HEADER = new BaseColor(0xCC, 0xCC, 0xFF);
+  public final static BaseColor COLOR_INHERITED_SUMMARY = new BaseColor(0xF0, 0xF0, 0xFF);
+  public final static BaseColor COLOR_LINK = new BaseColor(0, 0, 240);
 
   public final static int HEADER_DEFAULT = 0;
   public final static int HEADER_API = 1;

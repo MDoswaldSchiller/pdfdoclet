@@ -3,8 +3,8 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import com.lowagie.text.Element;
-import com.lowagie.text.pdf.PdfPCell;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
 
@@ -112,7 +112,7 @@ public class TagTD extends HTMLTag
       cell.setNoWrap(true);
     }
     if (getType() == TAG_TH) {
-      cell.setMarkupAttribute(HEADER_INDICATOR_ATTR, "true");
+      //cell.setMarkupAttribute(HEADER_INDICATOR_ATTR, "true");
     }
 
     return cell;

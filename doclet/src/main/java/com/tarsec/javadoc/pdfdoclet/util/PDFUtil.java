@@ -3,18 +3,19 @@
  */
 package com.tarsec.javadoc.pdfdoclet.util;
 
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.Graphic;
-import com.lowagie.text.List;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfImportedPage;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.List;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfImportedPage;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.Parameter;
@@ -499,9 +500,12 @@ public class PDFUtil implements IConstants
   {
     PDFDocument.instance().add(new Paragraph((float) 12.0, " "));
     PDFDocument.instance().add(new Paragraph((float) 1.0, " "));
-    Graphic graphic = new Graphic();
-    graphic.setHorizontalLine(1f, 100f);
-    PDFDocument.instance().add(graphic);
+    
+    LineSeparator lineSeparator = new LineSeparator();
+    lineSeparator.setLineWidth(1);
+    lineSeparator.setPercentage(100);
+    
+    PDFDocument.instance().add(lineSeparator);
   }
 
   /**
@@ -510,7 +514,7 @@ public class PDFUtil implements IConstants
    * @param objs The elements
    */
   public static void printPdfElements( Element[] objs)
-      throws com.lowagie.text.DocumentException
+      throws DocumentException
   {
 
     for (int i = 0; i < objs.length; i++) {

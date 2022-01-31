@@ -4,11 +4,11 @@
 package com.tarsec.javadoc.pdfdoclet.html;
 
 
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.List;
-import com.lowagie.text.Paragraph;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.List;
+import com.itextpdf.text.Paragraph;
 
 /**
  * Implements an Unordered-List Tag (OL)
@@ -47,7 +47,7 @@ public class TagUL extends HTMLTag
   @Override
   public Element[] openTagElements()
   {
-    Font symbolFont = new Font(Font.UNDEFINED, getFont().size());
+    Font symbolFont = new Font(Font.FontFamily.UNDEFINED, getFont().getSize());
     list.setListSymbol(new Chunk(BULLET, symbolFont));
     list.setIndentationLeft(12);
 

@@ -4,7 +4,7 @@
 package com.tarsec.javadoc.pdfdoclet.html;
 
 
-import com.lowagie.text.Element;
+import com.itextpdf.text.Element;
 
 /**
  * Implements the CENTER tag.

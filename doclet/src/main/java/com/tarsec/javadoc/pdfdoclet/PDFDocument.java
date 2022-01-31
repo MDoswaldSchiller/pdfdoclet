@@ -3,12 +3,11 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Graphic;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,14 +109,6 @@ public class PDFDocument implements IConstants
   public static void add(Paragraph label) throws DocumentException
   {
     pdfDocument.add(label);
-  }
-
-  /**
-   * Conveniency method
-   */
-  public static void add(Graphic graphic) throws DocumentException
-  {
-    pdfDocument.add(graphic);
   }
 
   /**

@@ -3,21 +3,10 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
-
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Element;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.PackageDoc;
 import com.sun.javadoc.RootDoc;
@@ -27,6 +16,15 @@ import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -263,7 +261,7 @@ public class PDFDoclet implements IConstants
     titleChunk.setLocalDestination(packageName);
     if (State.getCurrentFile() != null) {
       String packageAnchor = Destinations.createAnchorDestination(State.getCurrentFile(), null);
-      titlePara.add(PDFUtil.createAnchor(packageAnchor, titleChunk.font()));
+      titlePara.add(PDFUtil.createAnchor(packageAnchor, titleChunk.getFont()));
     }
     titlePara.add(titleChunk);
     PDFDocument.add(titlePara);

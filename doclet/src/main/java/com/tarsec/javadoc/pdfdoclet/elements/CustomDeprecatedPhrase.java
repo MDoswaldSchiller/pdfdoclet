@@ -4,9 +4,9 @@
 package com.tarsec.javadoc.pdfdoclet.elements;
 
 
-import com.lowagie.text.Element;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.sun.javadoc.Doc;
 import com.sun.javadoc.Tag;
 import com.tarsec.javadoc.pdfdoclet.IConstants;

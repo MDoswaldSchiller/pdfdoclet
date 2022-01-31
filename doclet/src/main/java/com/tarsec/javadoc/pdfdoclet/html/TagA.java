@@ -3,19 +3,13 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfAction;
-import com.lowagie.text.pdf.PdfName;
-import com.lowagie.text.pdf.PdfString;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfAction;
+import com.itextpdf.text.pdf.PdfName;
+import com.itextpdf.text.pdf.PdfString;
 import com.tarsec.javadoc.pdfdoclet.Bookmarks;
 import com.tarsec.javadoc.pdfdoclet.Configuration;
 import com.tarsec.javadoc.pdfdoclet.Destinations;
@@ -23,6 +17,10 @@ import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,8 +110,7 @@ public class TagA extends HTMLTag
       boolean plainText = addr.startsWith("locallinkplain");
       String dest = addr.substring(addr.indexOf(':') + 1).trim();
       isCode = !plainText; // so getFont() adjusts the font correctly
-      return new LinkPhrase(dest, text, Math.max(9, (int) getFont()
-                                                 .size()), plainText);
+      return new LinkPhrase(dest, text, Math.max(9, (int) getFont().getSize()), plainText);
     }
     else if (addr.equalsIgnoreCase("newpage")) {
       return super.toElement(text);

@@ -3,8 +3,8 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import com.lowagie.text.Element;
-import com.lowagie.text.pdf.PdfPCell;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.pdf.PdfPCell;
 
 /**
  * Implements the table row tag.
@@ -53,7 +53,7 @@ public class TagTR extends HTMLTag
   {
     Element[] objs = super.toPdfObjects();
     if (objs != null && objs.length > 0 && objs[0] instanceof PdfPCell) {
-      ((PdfPCell) objs[0]).setMarkupAttribute(ROW_START_ATTR, "1");
+      //((PdfPCell) objs[0]).setMarkupAttribute(ROW_START_ATTR, "1");
     }
     return objs;
   }

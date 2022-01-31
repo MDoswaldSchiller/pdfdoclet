@@ -3,6 +3,11 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
+import com.sun.javadoc.RootDoc;
+import com.tarsec.javadoc.pdfdoclet.util.Util;
+import com.tarsec.javadoc.pdfdoclet.util.Version;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -11,17 +16,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
-
-
-import sun.tools.java.ClassPath;
-
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Rectangle;
-import com.sun.javadoc.RootDoc;
-import com.tarsec.javadoc.pdfdoclet.util.Util;
-import com.tarsec.javadoc.pdfdoclet.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.tools.java.ClassPath;
 
 /**
  * Handles the PDFDoclet configuration properties.
@@ -355,7 +352,7 @@ public class Configuration implements IConstants
 
     if (Configuration.getProperty(ARG_PAGE_ORIENTATION, "normal").equals(ARG_VAL_LANDSCAPE)) {
       // Switch vertical and horizontal dimensions
-      Rectangle landscape = new Rectangle(size.height(), size.width());
+      Rectangle landscape = new Rectangle(size.getHeight(), size.getWidth());
       size = landscape;
     }
 

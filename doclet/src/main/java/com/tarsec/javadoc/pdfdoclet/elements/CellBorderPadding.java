@@ -3,11 +3,11 @@
  */
 package com.tarsec.javadoc.pdfdoclet.elements;
 
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfPCell;
-import java.awt.Color;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
 
 /**
  * Customized version(s) of PdfPCell with a border of with 1 (gray) and a
@@ -30,7 +30,7 @@ public class CellBorderPadding extends PdfPCell
                     + Rectangle.RIGHT);
     super.setPadding(6);
     super.setBorderWidth(1);
-    super.setBorderColor(Color.gray);
+    super.setBorderColor(BaseColor.GRAY);
   }
 
   /**
@@ -44,7 +44,7 @@ public class CellBorderPadding extends PdfPCell
     super.setBorder(Rectangle.TOP + Rectangle.LEFT + Rectangle.RIGHT);
     super.setPadding(6);
     super.setBorderWidth(1);
-    super.setBorderColor(Color.gray);
+    super.setBorderColor(BaseColor.GRAY);
   }
 
 }

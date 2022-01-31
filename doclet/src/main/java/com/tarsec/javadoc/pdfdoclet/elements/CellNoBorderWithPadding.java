@@ -4,11 +4,11 @@
 package com.tarsec.javadoc.pdfdoclet.elements;
 
 
-import com.lowagie.text.List;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.List;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 
 /**
  * Customized version(s) of PdfPCell without a border but with a given padding.

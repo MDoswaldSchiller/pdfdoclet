@@ -3,16 +3,17 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import com.lowagie.text.Chunk;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.List;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.List;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.ConstructorDoc;
 import com.sun.javadoc.FieldDoc;
@@ -26,7 +27,6 @@ import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
-import java.awt.Color;
 import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -510,8 +510,7 @@ public class Summary implements IConstants
       declarationParagraph.add(returnType);
       declarationParagraph.add(new Chunk(" ", Fonts.getFont(COURIER, 9)));
     }
-    PdfPCell cell = new CustomPdfPCell(Rectangle.RIGHT,
-                                       declarationParagraph, 1, Color.gray);
+    PdfPCell cell = new CustomPdfPCell(Rectangle.RIGHT, declarationParagraph, 1, BaseColor.GRAY);
     cell.setPaddingTop((float) 4.0);
     cell.setVerticalAlignment(PdfPCell.ALIGN_TOP);
 

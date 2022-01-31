@@ -3,26 +3,24 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
+import com.itextpdf.text.Element;
+import com.itextpdf.text.List;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.tarsec.javadoc.pdfdoclet.IConstants;
+import com.tarsec.javadoc.pdfdoclet.State;
+import com.tarsec.javadoc.pdfdoclet.util.Util;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
-
-import com.lowagie.text.Element;
-import com.lowagie.text.List;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfPTable;
-import com.tarsec.javadoc.pdfdoclet.IConstants;
-import com.tarsec.javadoc.pdfdoclet.State;
-import com.tarsec.javadoc.pdfdoclet.util.Util;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Wrapper for the 3rd-party HTML parser. The purpose of this class is to

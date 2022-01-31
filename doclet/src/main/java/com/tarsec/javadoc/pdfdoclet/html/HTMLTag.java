@@ -3,20 +3,20 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.List;
-import com.lowagie.text.ListItem;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.List;
+import com.itextpdf.text.ListItem;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
 import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -338,7 +338,7 @@ public abstract class HTMLTag implements IConstants
   public float getLeading()
   {
     Font font = getFont();
-    float leading = (float) font.size() + (float) 1.0;
+    float leading = (float) font.getSize() + (float) 1.0;
     return leading;
   }
 
@@ -450,7 +450,7 @@ public abstract class HTMLTag implements IConstants
       style = ITALIC;
     }
 
-    Color color = null;
+    BaseColor color = null;
 
     if (isLink) {
       style = style + LINK;

@@ -4,8 +4,8 @@
 package com.tarsec.javadoc.pdfdoclet.html;
 
 
-import com.lowagie.text.Element;
-import com.lowagie.text.Paragraph;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
 
 /**
  * Implements a &lt;p&gt; tag

@@ -4,7 +4,7 @@
 package com.tarsec.javadoc.pdfdoclet.elements;
 
 
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPTable;
 
 /**
  * Customized version(s) of PdfPTable.

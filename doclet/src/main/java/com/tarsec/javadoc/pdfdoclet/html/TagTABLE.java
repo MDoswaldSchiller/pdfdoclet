@@ -3,16 +3,14 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import java.util.Properties;
-
-
-import com.lowagie.text.Element;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.tarsec.javadoc.pdfdoclet.elements.TableParagraph;
+import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,7 +77,7 @@ public class TagTABLE extends HTMLTag
    */
   private boolean cellHasAttribute(PdfPCell cell, String attr)
   {
-    Properties props = cell.getMarkupAttributes();
+    Properties props = null;//cell.getMarkupAttributes();
     return (props == null) ? false : props.containsKey(attr);
   }
 
@@ -182,9 +180,9 @@ public class TagTABLE extends HTMLTag
       }
 
       for (int i = 0; i < row.length; i++) {
-        row[i].setBorderWidth(table.getDefaultCell().borderWidth());
-        row[i].setBorderColor(table.getDefaultCell().borderColor());
-        row[i].setBorder(table.getDefaultCell().border());
+        row[i].setBorderWidth(table.getDefaultCell().getBorderWidth());
+        row[i].setBorderColor(table.getDefaultCell().getBorderColor());
+        row[i].setBorder(table.getDefaultCell().getBorder());
         row[i].setPadding(table.getDefaultCell().getPaddingLeft());
         table.addCell(row[i]);
       }
@@ -263,7 +261,7 @@ public class TagTABLE extends HTMLTag
 
     int getNextColumnIndex()
     {
-      return this.currentRowIdx;
+      return this.currentColIdx;
     }
   }
 }

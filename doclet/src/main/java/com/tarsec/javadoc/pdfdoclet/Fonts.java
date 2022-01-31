@@ -3,15 +3,13 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import java.awt.Color;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.pdf.BaseFont;
+import com.tarsec.javadoc.pdfdoclet.util.Util;
 import java.io.File;
 import java.util.Properties;
-
-
-import com.lowagie.text.Font;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.pdf.BaseFont;
-import com.tarsec.javadoc.pdfdoclet.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,7 +102,7 @@ public class Fonts implements IConstants
     String lookup = String.valueOf(faceType);
     String fontFile = fontTable.getProperty(lookup);
     int fontStyle = Font.NORMAL;
-    Color color = COLOR_BLACK;
+    BaseColor color = COLOR_BLACK;
 
     if ((style & LINK) != 0) {
       fontStyle += Font.UNDERLINE;

@@ -5,21 +5,19 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.zip.CRC32;
-
-
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Font;
-import com.lowagie.text.Phrase;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Phrase;
 import com.sun.javadoc.ConstructorDoc;
 import com.sun.javadoc.ExecutableMemberDoc;
 import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.ProgramElementDoc;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Properties;
+import java.util.zip.CRC32;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

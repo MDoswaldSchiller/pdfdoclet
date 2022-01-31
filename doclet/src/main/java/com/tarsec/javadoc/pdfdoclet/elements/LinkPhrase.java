@@ -3,17 +3,15 @@
  */
 package com.tarsec.javadoc.pdfdoclet.elements;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
-
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Font;
-import com.lowagie.text.Phrase;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Phrase;
 import com.tarsec.javadoc.pdfdoclet.Configuration;
 import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 /**
  * Chunk with internal hyperlink, if possible. For instance, if the target is
@@ -89,7 +87,7 @@ public class LinkPhrase extends Phrase implements IConstants
   {
     super("");
     Font newFont = null;
-    float size = font.size();
+    float size = font.getSize();
     if (size == 0) {
       size = 9;
     }
@@ -101,14 +99,14 @@ public class LinkPhrase extends Phrase implements IConstants
     destination = normalizeDestination(destination);
 
     if (Destinations.isValid(destination)) {
-      if (font.family() == Font.TIMES_ROMAN) {
+      if (font.getFamily() == Font.FontFamily.TIMES_ROMAN) {
         newFont = Fonts.getFont(TIMES_ROMAN, LINK, (int) size);
       }
       else {
         newFont = Fonts.getFont(COURIER, LINK, (int) size);
       }
     }
-    else if (font.family() == Font.TIMES_ROMAN) {
+    else if (font.getFamily()== Font.FontFamily.TIMES_ROMAN) {
       newFont = Fonts.getFont(TIMES_ROMAN, (int) size);
     }
     else {

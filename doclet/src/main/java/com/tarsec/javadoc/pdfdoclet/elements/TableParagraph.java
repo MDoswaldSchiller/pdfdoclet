@@ -3,8 +3,8 @@
  */
 package com.tarsec.javadoc.pdfdoclet.elements;
 
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
 
 /**
  * A Paragraph that contains a single PdfPTable instance (or at least starts

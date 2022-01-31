@@ -5,15 +5,11 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import java.util.Hashtable;
-import java.util.Vector;
-
-
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Element;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.PackageDoc;
 import com.sun.javadoc.Tag;
@@ -22,6 +18,8 @@ import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import java.util.Hashtable;
+import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,7 +73,7 @@ public class Classes implements IConstants
 
     Paragraph titlePara = new Paragraph((float) 16.0, "");
     String classFileAnchor = Destinations.createAnchorDestination(State.getCurrentFile(), null);
-    titlePara.add(PDFUtil.createAnchor(classFileAnchor, titlePara.font()));
+    titlePara.add(PDFUtil.createAnchor(classFileAnchor, titlePara.getFont()));
     titlePara.add(linkPhrase);
 
     PDFDocument.instance().add(titlePara);

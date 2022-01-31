@@ -3,8 +3,8 @@
  */
 package com.tarsec.javadoc.pdfdoclet.html;
 
-import com.lowagie.text.Element;
-import com.lowagie.text.pdf.PdfPCell;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.pdf.PdfPCell;
 
 /**
  * Implements the THEAD tag.
@@ -35,7 +35,7 @@ public class TagTHEAD extends HTMLTag
       if (elements[i] instanceof PdfPCell) {
         PdfPCell cell = (PdfPCell) elements[i];
         /* Mark cell as a header */
-        cell.setMarkupAttribute(TagTD.HEADER_INDICATOR_ATTR, "true");
+        //cell.setMarkupAttribute(TagTD.HEADER_INDICATOR_ATTR, "true");
         super.addNestedTagContent(new Element[]{cell});
       }
     }

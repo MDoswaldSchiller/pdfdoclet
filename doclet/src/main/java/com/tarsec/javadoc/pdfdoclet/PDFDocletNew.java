@@ -4,10 +4,10 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Document;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.sun.source.doctree.DocCommentTree;
 import com.sun.source.doctree.DocTree;
 import com.sun.source.util.DocTrees;
@@ -189,7 +189,7 @@ public class PDFDocletNew implements Doclet
     State.setContinued(true);
 
     String packageText = getPackageComment(docTrees, packageDoc);
-    com.lowagie.text.Element[] objs = HtmlParserWrapper.createPdfObjects(packageText);
+    com.itextpdf.text.Element[] objs = HtmlParserWrapper.createPdfObjects(packageText);
 
     if (objs.length == 0) {
       String packageDesc = Util.stripLineFeeds(packageText);
