@@ -5,6 +5,7 @@ package com.tarsec.javadoc.pdfdoclet;
 
 
 import com.itextpdf.text.Chunk;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -33,7 +34,7 @@ public class Implementors implements IConstants
    * @param names The names (classes or interfaces)
    * @throws Exception
    */
-  public static void print(String title, String[] names) throws Exception
+  public static void print(String title, String[] names) throws DocumentException
   {
     float[] widths = {(float) 6.0, (float) 94.0};
     PdfPTable table = new PdfPTable(widths);

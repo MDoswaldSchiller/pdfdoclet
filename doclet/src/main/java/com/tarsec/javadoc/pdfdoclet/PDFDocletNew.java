@@ -11,10 +11,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.sun.source.doctree.DocCommentTree;
 import com.sun.source.doctree.DocTree;
 import com.sun.source.util.DocTrees;
+import com.tarsec.javadoc.pdfdoclet.builder.ParagraphBuilderFactory;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
-import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import com.tarsec.javadoc.pdfdoclet.util.Utils;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -58,6 +59,8 @@ public class PDFDocletNew implements Doclet
 
   // Stores list of inner classes
   private Map innerClassesList = new HashMap();
+  
+  private ParagraphBuilderFactory factory;
 
   
   @Override
@@ -81,7 +84,8 @@ public class PDFDocletNew implements Doclet
   @Override
   public boolean run(DocletEnvironment environment)
   {
-    System.err.println("0000");
+    factory = new ParagraphBuilderFactory(environment);
+    
     DocTrees docTrees = environment.getDocTrees();
 
     PdfWriter pdfWriter = null;
@@ -105,7 +109,6 @@ public class PDFDocletNew implements Doclet
       pdfDocument.newPage();
 
       // Print javadoc overview
-      System.err.println("1111");
       reporter.print(Diagnostic.Kind.NOTE, "Print Overview...");
       State.setCurrentHeaderType(IConstants.HEADER_OVERVIEW);
       //Overview.print(root);
@@ -114,13 +117,11 @@ public class PDFDocletNew implements Doclet
 
       reporter.print(Diagnostic.Kind.NOTE, "Print types...");
       List<TypeElement> types = getTypes(environment);
-      System.err.println("222");
       reporter.print(Diagnostic.Kind.NOTE, "Number of types: " + types.size());
 
       // Iterate through all single, separately specified classes
       reporter.print(Diagnostic.Kind.NOTE, "Iterating through single classes...");
-      Map<PackageElement, List<TypeElement>> packageToTypeMap = types.stream().collect(Collectors.groupingBy(this::getPackage));
-      System.err.println("333");
+      Map<PackageElement, List<TypeElement>> packageToTypeMap = types.stream().collect(Collectors.groupingBy(Utils::getPackage));
 
       // At this point we have a collection of packages. For each package,
       // we have a list of all classes that should be processed.
@@ -136,7 +137,6 @@ public class PDFDocletNew implements Doclet
         List<TypeElement> pkgList = entry.getValue();
 
         State.increasePackageChapter();
-        System.err.println("444");
         printPackage(pdfDocument, pkgDoc, pkgList, docTrees);
       }
 
@@ -155,8 +155,9 @@ public class PDFDocletNew implements Doclet
       return false;
     }
     finally {
+      pdfDocument.close();
       pdfWriter.flush();
-      //pdfWriter.close();
+      pdfWriter.close();
     }
 
     return true;
@@ -214,7 +215,7 @@ public class PDFDocletNew implements Doclet
 
     State.increasePackageSection();
 
-    printClasses(JavadocUtil.createSorted(types), packageDoc);
+    printClasses(Utils.createSorted(types), packageDoc);
   }
   
   
@@ -261,7 +262,11 @@ public class PDFDocletNew implements Doclet
     else {
       LOG.debug("Print class: " + doc.getSimpleName());
     }
-   // Classes.printClass(doc, packageDoc);
+    
+    factory.createClassParagraph(doc).appendTo(PDFDocument.instance());
+   
+    
+   
 
     List<? extends Element> innerClasses = doc.getEnclosedElements();
     
@@ -302,19 +307,7 @@ public class PDFDocletNew implements Doclet
 
   private Map<PackageElement, List<TypeElement>> createPackageToTypeMap(List<TypeElement> types)
   {
-    return types.stream().collect(Collectors.groupingBy(this::getPackage));
-  }
-
-  private PackageElement getPackage(TypeElement type)
-  {
-    Element packageElement = type;
-
-    do {
-      packageElement = packageElement.getEnclosingElement();
-    }
-    while (!(packageElement instanceof PackageElement) && packageElement != null);
-
-    return (PackageElement) packageElement;
+    return types.stream().collect(Collectors.groupingBy(Utils::getPackage));
   }
 
   private Document createPdfDocument()

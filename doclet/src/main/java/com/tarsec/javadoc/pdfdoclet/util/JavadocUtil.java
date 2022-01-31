@@ -22,12 +22,9 @@ import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
 import com.tarsec.javadoc.pdfdoclet.State;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.StringTokenizer;
 import javax.lang.model.element.TypeElement;
 import org.slf4j.Logger;
@@ -323,6 +320,24 @@ public class JavadocUtil implements IConstants
 
     return name;
   }
+  
+    public static String getQualifiedNameIfNecessary(TypeElement classDoc)
+  {
+    String name = classDoc.getSimpleName().toString();
+    boolean isExternal = true;
+
+    for (int i = 0; (i < PACKAGE_PREFIXES.length) && isExternal; i++) {
+      if (classDoc.getQualifiedName().toString().startsWith(PACKAGE_PREFIXES[i])) {
+        isExternal = false;
+      }
+    }
+
+    if (isExternal) {
+      name = classDoc.getQualifiedName().toString();
+    }
+
+    return name;
+  }
 
   /**
    * Utility method which returns only the first sentence of a given text
@@ -404,6 +419,44 @@ public class JavadocUtil implements IConstants
     else {
       info = info + "interface ";
     }
+
+    return info;
+  }
+  
+  public static String getClassModifiers(TypeElement classDoc)
+  {
+    String info = "";
+
+//    if (classDoc.isPublic()) {
+//      info = "public ";
+//    }
+//
+//    if (classDoc.isPrivate()) {
+//      info = "private ";
+//    }
+//
+//    if (classDoc.isProtected()) {
+//      info = "protected ";
+//    }
+//
+//    if (!classDoc.isInterface()) {
+//      if (classDoc.isStatic()) {
+//        info = info + "static ";
+//      }
+//
+//      if (classDoc.isFinal()) {
+//        info = info + "final ";
+//      }
+//
+//      if (classDoc.isAbstract()) {
+//        info = info + "abstract ";
+//      }
+//
+//      info = info + "class ";
+//    }
+//    else {
+//      info = info + "interface ";
+//    }
 
     return info;
   }
@@ -579,14 +632,6 @@ public class JavadocUtil implements IConstants
     }
   }
   
-  
-  public static List<TypeElement> createSorted(List<TypeElement> original)
-  {
-    List<TypeElement> sorted = new ArrayList<>(original.size());
-    sorted.sort(Comparator.comparing(t -> t.getSimpleName().toString(), String.CASE_INSENSITIVE_ORDER));
-    return sorted;
-  }
-  
 
   /**
    * Utility method for concatening ClassDoc tables.
@@ -748,4 +793,5 @@ public class JavadocUtil implements IConstants
 
     return result;
   }
+
 }

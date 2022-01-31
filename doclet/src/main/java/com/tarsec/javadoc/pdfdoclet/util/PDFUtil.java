@@ -496,7 +496,7 @@ public class PDFUtil implements IConstants
    *
    * @throws Exception
    */
-  public static void printLine() throws Exception
+  public static void printLine() throws DocumentException
   {
     PDFDocument.instance().add(new Paragraph((float) 12.0, " "));
     PDFDocument.instance().add(new Paragraph((float) 1.0, " "));

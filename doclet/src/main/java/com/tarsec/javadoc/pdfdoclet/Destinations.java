@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.zip.CRC32;
+import javax.lang.model.element.TypeElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,6 +191,46 @@ public class Destinations implements IConstants
     return phrase;
   }
 
+  
+  public static Phrase createDestination(String label, TypeElement doc, Font font)
+  {
+    boolean multiPart = false;
+    Chunk chunk = null;
+    boolean canHaveParms = false;
+    if (doc instanceof ConstructorDoc
+        || doc instanceof MethodDoc) {
+      canHaveParms = true;
+      LOG.debug("is method or constructor.");
+    }
+
+    if (canHaveParms) {
+      multiPart = true;
+      LOG.debug("Create multi-part link.");
+    }
+    chunk = new Chunk(label, font);
+    Phrase phrase = new Phrase(chunk);
+
+    String destination = doc.getQualifiedName().toString();
+    LOG.debug("Create destination 1: " + destination);
+    phrase.add(PDFUtil.createAnchor(destination));
+    if (multiPart) {
+      ExecutableMemberDoc execDoc = (ExecutableMemberDoc) doc;
+      String destinationTwo = destination + "()";
+      LOG.debug("Create destination 2: " + destinationTwo);
+      phrase.add(PDFUtil.createAnchor(destinationTwo));
+
+      String destinationThree = destination + execDoc.signature();
+      LOG.debug("Create destination 3: " + destinationThree);
+      phrase.add(PDFUtil.createAnchor(destinationThree));
+
+      String destinationFour = destination + execDoc.flatSignature();
+      LOG.debug("Create destination 4: " + destinationFour);
+      phrase.add(PDFUtil.createAnchor(destinationFour));
+    }
+
+    return phrase;
+  }
+  
   /**
    * Creates a link to a destination in the document. This method does nothing
    * if the given destination is invalid.
