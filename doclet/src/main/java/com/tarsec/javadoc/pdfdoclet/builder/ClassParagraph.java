@@ -14,14 +14,20 @@ import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Utils;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Name;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.ElementFilter;
 import javax.lang.model.util.Types;
 import jdk.javadoc.doclet.DocletEnvironment;
 import org.slf4j.Logger;
@@ -34,9 +40,9 @@ import static com.tarsec.javadoc.pdfdoclet.IConstants.*;
  */
 public class ClassParagraph
 {
+
   private static final Logger LOG = LoggerFactory.getLogger(ClassParagraph.class);
-  
-  
+
   private final DocletEnvironment environment;
   private final TypeElement classElement;
 
@@ -45,7 +51,7 @@ public class ClassParagraph
     this.environment = Objects.requireNonNull(environment);
     this.classElement = Objects.requireNonNull(classElement);
   }
-  
+
   public void appendTo(Document pdfDocument) throws DocumentException
   {
     LOG.debug(">");
@@ -54,125 +60,17 @@ public class ClassParagraph
     pdfDocument.newPage();
     State.increasePackageSection();
 
-    State.setCurrentClass(classElement.getQualifiedName());
-    //State.setCurrentDoc(classElement);
     LOG.info("..> " + State.getCurrentClass());
 
-    // Simulate javadoc HTML layout
-    // package (small) and class (large) name header
-    PackageElement pktElement = Utils.getPackage(classElement);
-    Paragraph namePara = new Paragraph(pktElement.getQualifiedName().toString(),
-                                       Fonts.getFont(TIMES_ROMAN, BOLD, 16));
-    pdfDocument.add(namePara);
+    addTypeHeader(pdfDocument);
+    addTypeHierarchy(pdfDocument);
 
-    Phrase linkPhrase = null;
+    Set<TypeElement> interfacesList = getAllImplementedInterfaces();
+
+    // Now, for classes only, print implemented interfaces and known subclasses
     if (!isInterface()) {
-      linkPhrase = Destinations.createDestination("Class "
-                                                  + classElement.getSimpleName(), classElement,
-                                                  Fonts.getFont(TIMES_ROMAN, BOLD, 16));
-    }
-    else {
-      linkPhrase = Destinations.createDestination("Interface "
-                                                  + classElement.getSimpleName(), classElement,
-                                                  Fonts.getFont(TIMES_ROMAN, BOLD, 16));
-    }
-
-    Paragraph titlePara = new Paragraph((float) 16.0, "");
-    String classFileAnchor = Destinations.createAnchorDestination(State.getCurrentFile(), null);
-    titlePara.add(PDFUtil.createAnchor(classFileAnchor, titlePara.getFont()));
-    titlePara.add(linkPhrase);
-
-    PDFDocument.instance().add(titlePara);
-
-    // class derivation tree - build list first
-    Map<TypeElement,TypeElement> parentMap = new HashMap<>();
-    TypeElement currentTreeClass = classElement;
-    TypeElement superClass = null;
-    TypeElement subClass = null;
-
-    List<TypeElement> interfacesList = new ArrayList<>();
-
-    while ((superClass = (TypeElement)typeUtils.asElement(currentTreeClass.getSuperclass())) != null) {
-      if (!isInterface()) {
-        // Store interfaces implemented by superclasses
-        // because the current class also implements all
-        // interfaces of its superclass (by inheritance)
-        for (TypeMirror iface : superClass.getInterfaces()) {
-          interfacesList.add((TypeElement)typeUtils.asElement(iface));
-        }
-      }
-
-      parentMap.put(superClass, currentTreeClass);
-      currentTreeClass = superClass;
-    }
-
-    // First line of derivation tree must NOT be printed, if it's
-    // the only line, and it's an interface (not a class). This is
-    // because a class ALWAYS has a superclass (if only java.lang.Object),
-    // but an interface does not necessarily have a super instance.
-    boolean firstLine = true;
-
-    if (isInterface() && (parentMap.get(currentTreeClass) == null)) {
-      firstLine = false;
-    }
-
-    // top-level-class
-    String blanks = "";
-
-    if (firstLine) {
-      PDFDocument.add(new Paragraph((float) 24.0,
-                                    currentTreeClass.getQualifiedName().toString(), Fonts.getFont(COURIER, 10)));
-    }
-
-    while ((subClass = (TypeElement) parentMap.get(currentTreeClass)) != null) {
-      blanks = blanks + "   ";
-      PDFDocument.add(new Paragraph((float) 10.0, blanks + "|",
-                                    Fonts.getFont(COURIER, 10)));
-
-      if (parentMap.get(subClass) == null) {
-        // it's last in list, so use bold font
-        PDFDocument.add(new Paragraph((float) 8.0,
-                                      blanks + "+-" + subClass.getQualifiedName(),
-                                      Fonts.getFont(COURIER, BOLD, 10)));
-      }
-      else {
-        // If it's not last, it's a superclass. Create link to
-        // it, if it's in same API.
-        Paragraph newLine = new Paragraph((float) 8.0);
-        newLine.add(new Chunk(blanks + "+-", Fonts.getFont(COURIER, 10)));
-        newLine.add(new LinkPhrase(
-            subClass.getQualifiedName().toString(), null, 10, false));
-        PDFDocument.add(newLine);
-      }
-
-      currentTreeClass = subClass;
-    }
-
-
-    // Now, for classes only, print implemented interfaces
-    // and known subclasses
-    if (!isInterface()) {
-      List<? extends TypeMirror> interfaces = classElement.getInterfaces();
-
-      // List All Implemented Interfaces
-      for (TypeMirror ifaceMirror : classElement.getInterfaces()) {
-        interfacesList.add((TypeElement)typeUtils.asElement(ifaceMirror));
-      }
-
-      String[] interfacesNames = new String[interfacesList.size()];
-      for (int i = 0; i < interfacesNames.length; i++) {
-        interfacesNames[i] = interfacesList.get(i).getQualifiedName().toString();
-      }
-      if (interfacesNames.length > 0) {
-        Implementors.print("All Implemented Interfaces:", interfacesNames);
-      }
-
-      // Known subclasses
-//      String[] knownSubclasses = ImplementorsInformation.getDirectSubclasses(State.getCurrentClass().toString());
-//
-//      if ((knownSubclasses != null) && (knownSubclasses.length > 0)) {
-//        Implementors.print("Direct Known Subclasses:", knownSubclasses);
-//      }
+      listAllImplementedInterfaces(pdfDocument);
+      listAllDirectSubclasses(pdfDocument);
     }
     else {
       // For interfaces, print superinterfaces and all subinterfaces
@@ -228,7 +126,6 @@ public class ClassParagraph
 //
 //      PDFDocument.add(classDeprecatedParagraph);
 //    }
-
     info = Utils.getClassModifiers(classElement);
 
     Paragraph infoParagraph = new Paragraph((float) 20, info,
@@ -254,8 +151,8 @@ public class ClassParagraph
       // so there could be more than one entry we're currently processing
       // an interface.
       for (int i = 0; i < superClassOrInterface.size(); i++) {
-        TypeElement typeElement = (TypeElement)typeUtils.asElement(superClassOrInterface.get(i));
-        
+        TypeElement typeElement = (TypeElement) typeUtils.asElement(superClassOrInterface.get(i));
+
         if (typeElement != null) {
           String superClassName = Utils.getQualifiedNameIfNecessary(typeElement);
           extendsPara.add(new LinkPhrase(typeElement.getQualifiedName().toString(), superClassName, 12, true));
@@ -271,10 +168,10 @@ public class ClassParagraph
 
     if (!isInterface() && !classElement.getInterfaces().isEmpty()) {
       //implements
-      String[] interfacesNames = new String[interfacesList.size()];
+      List<String> interfacesNames = new ArrayList<>();
 
-      for (int i = 0; i < interfacesNames.length; i++) {
-        interfacesNames[i] = interfacesList.get(i).getQualifiedName().toString();
+      for (TypeElement iface : interfacesList) {
+        interfacesNames.add(iface.getQualifiedName().toString());
       }
 
       Paragraph extendsPara = new Paragraph((float) 14.0);
@@ -282,13 +179,12 @@ public class ClassParagraph
 
       Paragraph descPg = new Paragraph((float) 24.0);
 
-      for (int i = 0; i < interfacesNames.length; i++) {
-        String subclassName = Utils.getQualifiedNameIfNecessary(interfacesNames[i]);
-        Phrase subclassPhrase = new LinkPhrase(interfacesNames[i],
-                                               subclassName, 12, true);
+      for (int i = 0; i < interfacesNames.size(); i++) {
+        String subclassName = Utils.getQualifiedNameIfNecessary(interfacesNames.get(i));
+        Phrase subclassPhrase = new LinkPhrase(interfacesNames.get(i), subclassName, 12, true);
         descPg.add(subclassPhrase);
 
-        if (i < (interfacesNames.length - 1)) {
+        if (i < (interfacesNames.size() - 1)) {
           descPg.add(new Chunk(", ", Fonts.getFont(COURIER, 10)));
         }
       }
@@ -329,10 +225,146 @@ public class ClassParagraph
 //    // Some empty space...
 //    PDFDocument.add(new Paragraph((float) 6.0, " "));
 //    Members.printMembers(classDoc);
+    LOG.debug("<");
+  }
 
-    LOG.debug("<");    
+  private Set<TypeElement> getAllImplementedInterfaces()
+  {
+    Set<TypeElement> interfacesList = new HashSet<>();
+    TypeElement currentTreeClass = classElement;
+
+    do {
+      // Store interfaces implemented by superclasses
+      // because the current class also implements all
+      // interfaces of its superclass (by inheritance)
+      for (TypeMirror iface : currentTreeClass.getInterfaces()) {
+        interfacesList.add((TypeElement)environment.getTypeUtils().asElement(iface));
+      }
+    }
+    while ((currentTreeClass = (TypeElement) environment.getTypeUtils().asElement(currentTreeClass.getSuperclass())) != null);
+
+    return interfacesList;
+  }
+
+  
+
+  private void addTypeHeader(Document pdfDocument) throws DocumentException
+  {
+    // Simulate javadoc HTML layout
+    // package (small) and class (large) name header
+    PackageElement pktElement = Utils.getPackage(classElement);
+    Paragraph namePara = new Paragraph(pktElement.getQualifiedName().toString(), Fonts.getFont(TIMES_ROMAN, BOLD, 12));
+    pdfDocument.add(namePara);
+    Phrase linkPhrase = null;
+    if (!isInterface()) {
+      linkPhrase = Destinations.createDestination("Class " + classElement.getSimpleName(), classElement,
+                                                  Fonts.getFont(TIMES_ROMAN, BOLD, 16));
+    }
+    else {
+      linkPhrase = Destinations.createDestination("Interface " + classElement.getSimpleName(), classElement,
+                                                  Fonts.getFont(TIMES_ROMAN, BOLD, 16));
+    }
+
+    Paragraph titlePara = new Paragraph((float) 16.0, "");
+    String classFileAnchor = Destinations.createAnchorDestination(State.getCurrentFile(), null);
+    titlePara.add(PDFUtil.createAnchor(classFileAnchor, titlePara.getFont()));
+    titlePara.add(linkPhrase);
+
+    pdfDocument.add(titlePara);
   }
   
+  private void addTypeHierarchy(Document pdfDocument) throws DocumentException
+  {
+    // class derivation tree - build list first
+    Map<TypeElement, TypeElement> parentMap = new HashMap<>();
+
+    TypeElement currentTreeClass = classElement;
+    TypeElement superClass = null;
+    TypeElement subClass = null;
+
+    while ((superClass = (TypeElement) environment.getTypeUtils().asElement(currentTreeClass.getSuperclass())) != null) {
+      parentMap.put(superClass, currentTreeClass);
+      currentTreeClass = superClass;
+    }
+    // First line of derivation tree must NOT be printed, if it's
+    // the only line, and it's an interface (not a class). This is
+    // because a class ALWAYS has a superclass (if only java.lang.Object),
+    // but an interface does not necessarily have a super instance.
+    boolean firstLine = true;
+    if (isInterface() && (parentMap.get(currentTreeClass) == null)) {
+      firstLine = false;
+    }
+    // top-level-class
+    String blanks = "";
+    if (firstLine) {
+      pdfDocument.add(new Paragraph((float) 24.0, currentTreeClass.getQualifiedName().toString(), Fonts.getFont(COURIER, 10)));
+    }
+    while ((subClass = (TypeElement) parentMap.get(currentTreeClass)) != null) {
+      blanks = blanks + "   ";
+      pdfDocument.add(new Paragraph((float) 10.0, blanks + "|", Fonts.getFont(COURIER, 10)));
+
+      if (parentMap.get(subClass) == null) {
+        // it's last in list, so use bold font
+        pdfDocument.add(new Paragraph((float) 8.0,
+                                      blanks + "+-" + subClass.getQualifiedName(),
+                                      Fonts.getFont(COURIER, BOLD, 10)));
+      }
+      else {
+        // If it's not last, it's a superclass. Create link to
+        // it, if it's in same API.
+        Paragraph newLine = new Paragraph((float) 8.0);
+        newLine.add(new Chunk(blanks + "+-", Fonts.getFont(COURIER, 10)));
+        newLine.add(new LinkPhrase(subClass.getQualifiedName().toString(), null, 10, false));
+        pdfDocument.add(newLine);
+      }
+
+      currentTreeClass = subClass;
+    }
+  }
+
+  private void listAllImplementedInterfaces(Document pdfDocument) throws DocumentException
+  {
+    Set<TypeElement> interfaces = getAllImplementedInterfaces();
+    
+    if (!interfaces.isEmpty()) {
+      List<String> interfaceList = interfaces.stream()
+          .map(type -> type.getQualifiedName().toString())
+          .collect(Collectors.toList());
+      PDFDocument.add(Implementors.create("All Implemented Interfaces:", interfaceList));
+    }    
+  }
+  
+  private void listAllDirectSubclasses(Document pdfDocument)throws DocumentException
+  {
+    // Known subclasses
+    Set<TypeElement> subClasses = getAllDirectSubclasses();
+    
+    if (!subClasses.isEmpty()) {
+      List<String> interfaceList = subClasses.stream()
+          .map(type -> type.getQualifiedName().toString())
+          .collect(Collectors.toList());
+      PDFDocument.add(Implementors.create("Direct Known Subclasses:", interfaceList));
+      
+    }
+  }
+  
+  private Set<TypeElement> getAllDirectSubclasses()
+  {
+    return ElementFilter.typesIn(environment.getSpecifiedElements())
+        .stream()
+        .filter(this::isDirectSubclass)
+        .sorted(Comparator.comparing(t -> t.getSimpleName().toString()))
+        .collect(Collectors.toSet());
+  }
+  
+  private boolean isDirectSubclass(TypeElement type)
+  {
+    Name superclassName = ((TypeElement)environment.getTypeUtils().asElement(type.getSuperclass())).getQualifiedName();
+    return classElement.getQualifiedName().contentEquals(superclassName);
+  }
+  
+  
+
   private boolean isInterface()
   {
     return classElement.getKind() == ElementKind.INTERFACE;

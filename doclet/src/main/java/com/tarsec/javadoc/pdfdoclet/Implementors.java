@@ -14,8 +14,7 @@ import com.tarsec.javadoc.pdfdoclet.elements.CellNoBorderNoPadding;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Collection;
 
 /**
  * Prints the implementor info.
@@ -25,8 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class Implementors implements IConstants
 {
-  private static final Logger LOG = LoggerFactory.getLogger(Implementors.class);
-
   /**
    * Prints all known subclasses or implementing classes.
    *
@@ -34,7 +31,7 @@ public class Implementors implements IConstants
    * @param names The names (classes or interfaces)
    * @throws Exception
    */
-  public static void print(String title, String[] names) throws DocumentException
+  public static PdfPTable create(String title, Collection<String> names) throws DocumentException
   {
     float[] widths = {(float) 6.0, (float) 94.0};
     PdfPTable table = new PdfPTable(widths);
@@ -51,22 +48,24 @@ public class Implementors implements IConstants
 
     PdfPCell leftCell = PDFUtil.createElementCell(5, new Phrase(""));
     Paragraph descPg = new Paragraph((float) 24.0);
+    int count = 0;
 
-    for (int i = names.length - 1; i > -1; i--) {
-      String subclassName = Utils.getQualifiedNameIfNecessary(names[i]);
-      Phrase subclassPhrase = new LinkPhrase(names[i], subclassName, 10, true);
-      descPg.add(subclassPhrase);
-
-      if (i > 0) {
+    for (String name : names) {
+      if (count > 0) {
         descPg.add(new Chunk(", ", Fonts.getFont(COURIER, BOLD, 10)));
       }
+      count++;
+    
+      String subclassName = Utils.getQualifiedNameIfNecessary(name);
+      Phrase subclassPhrase = new LinkPhrase(name, subclassName, 10, true);
+      descPg.add(subclassPhrase);
     }
 
     table.addCell(leftCell);
     table.addCell(new CellNoBorderNoPadding(descPg));
 
     table.addCell(spacingCell);
-    PDFDocument.instance().add(table);
+    return table;
   }
 
 }

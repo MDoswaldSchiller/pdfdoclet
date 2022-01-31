@@ -19,6 +19,7 @@ import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -161,14 +162,14 @@ public class Classes implements IConstants
         interfacesNames[i] = ((ClassDoc) interfacesList.elementAt(i)).qualifiedTypeName();
       }
       if (interfacesNames.length > 0) {
-        Implementors.print("All Implemented Interfaces:", interfacesNames);
+        PDFDocument.add(Implementors.create("All Implemented Interfaces:", List.of(interfacesNames)));
       }
 
       // Known subclasses
       String[] knownSubclasses = ImplementorsInformation.getDirectSubclasses(State.getCurrentClass().toString());
 
       if ((knownSubclasses != null) && (knownSubclasses.length > 0)) {
-        Implementors.print("Direct Known Subclasses:", knownSubclasses);
+        PDFDocument.add(Implementors.create("Direct Known Subclasses:", List.of(knownSubclasses)));
       }
     }
     else {
@@ -178,7 +179,7 @@ public class Classes implements IConstants
 
       if ((knownSuperInterfaces != null)
           && (knownSuperInterfaces.length > 0)) {
-        Implementors.print("All Superinterfaces:", knownSuperInterfaces);
+        PDFDocument.add(Implementors.create("All Superinterfaces:", List.of(knownSuperInterfaces)));
       }
 
       // Known sub-interfaces
@@ -186,7 +187,7 @@ public class Classes implements IConstants
 
       if ((knownSubInterfaces != null)
           && (knownSubInterfaces.length > 0)) {
-        Implementors.print("All Subinterfaces:", knownSubInterfaces);
+        PDFDocument.add(Implementors.create("All Subinterfaces:", List.of(knownSubInterfaces)));
       }
 
       // Known Implementing Classes
@@ -194,7 +195,7 @@ public class Classes implements IConstants
 
       if ((knownImplementingClasses != null)
           && (knownImplementingClasses.length > 0)) {
-        Implementors.print("All Known Implementing Classes:", knownImplementingClasses);
+        PDFDocument.add(Implementors.create("All Known Implementing Classes:", List.of(knownImplementingClasses)));
       }
     }
 
