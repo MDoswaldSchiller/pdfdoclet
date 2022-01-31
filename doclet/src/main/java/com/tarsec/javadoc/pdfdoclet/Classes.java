@@ -50,7 +50,7 @@ public class Classes implements IConstants
     State.increasePackageSection();
 
     State.setCurrentClass(classDoc.qualifiedName());
-    State.setCurrentDoc(classDoc);
+//    State.setCurrentDoc(classDoc);
     LOG.info("..> " + State.getCurrentClass());
 
     // Simulate javadoc HTML layout

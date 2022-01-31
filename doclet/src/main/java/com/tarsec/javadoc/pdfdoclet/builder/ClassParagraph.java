@@ -8,11 +8,9 @@ import com.itextpdf.text.Phrase;
 import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.Implementors;
-import com.tarsec.javadoc.pdfdoclet.ImplementorsInformation;
 import com.tarsec.javadoc.pdfdoclet.PDFDocument;
 import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
-import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Utils;
 import java.util.ArrayList;
@@ -170,37 +168,37 @@ public class ClassParagraph
       }
 
       // Known subclasses
-      String[] knownSubclasses = ImplementorsInformation.getDirectSubclasses(State.getCurrentClass().toString());
-
-      if ((knownSubclasses != null) && (knownSubclasses.length > 0)) {
-        Implementors.print("Direct Known Subclasses:", knownSubclasses);
-      }
+//      String[] knownSubclasses = ImplementorsInformation.getDirectSubclasses(State.getCurrentClass().toString());
+//
+//      if ((knownSubclasses != null) && (knownSubclasses.length > 0)) {
+//        Implementors.print("Direct Known Subclasses:", knownSubclasses);
+//      }
     }
     else {
       // For interfaces, print superinterfaces and all subinterfaces
       // Known super-interfaces
-      String[] knownSuperInterfaces = ImplementorsInformation.getKnownSuperclasses(State.getCurrentClass().toString());
-
-      if ((knownSuperInterfaces != null)
-          && (knownSuperInterfaces.length > 0)) {
-        Implementors.print("All Superinterfaces:", knownSuperInterfaces);
-      }
-
-      // Known sub-interfaces
-      String[] knownSubInterfaces = ImplementorsInformation.getKnownSubclasses(State.getCurrentClass().toString());
-
-      if ((knownSubInterfaces != null)
-          && (knownSubInterfaces.length > 0)) {
-        Implementors.print("All Subinterfaces:", knownSubInterfaces);
-      }
-
-      // Known Implementing Classes
-      String[] knownImplementingClasses = ImplementorsInformation.getImplementingClasses(State.getCurrentClass().toString());
-
-      if ((knownImplementingClasses != null)
-          && (knownImplementingClasses.length > 0)) {
-        Implementors.print("All Known Implementing Classes:", knownImplementingClasses);
-      }
+//      String[] knownSuperInterfaces = ImplementorsInformation.getKnownSuperclasses(State.getCurrentClass().toString());
+//
+//      if ((knownSuperInterfaces != null)
+//          && (knownSuperInterfaces.length > 0)) {
+//        Implementors.print("All Superinterfaces:", knownSuperInterfaces);
+//      }
+//
+//      // Known sub-interfaces
+//      String[] knownSubInterfaces = ImplementorsInformation.getKnownSubclasses(State.getCurrentClass().toString());
+//
+//      if ((knownSubInterfaces != null)
+//          && (knownSubInterfaces.length > 0)) {
+//        Implementors.print("All Subinterfaces:", knownSubInterfaces);
+//      }
+//
+//      // Known Implementing Classes
+//      String[] knownImplementingClasses = ImplementorsInformation.getImplementingClasses(State.getCurrentClass().toString());
+//
+//      if ((knownImplementingClasses != null)
+//          && (knownImplementingClasses.length > 0)) {
+//        Implementors.print("All Known Implementing Classes:", knownImplementingClasses);
+//      }
     }
 
     // Horizontal line
@@ -231,7 +229,7 @@ public class ClassParagraph
 //      PDFDocument.add(classDeprecatedParagraph);
 //    }
 
-    info = JavadocUtil.getClassModifiers(classElement);
+    info = Utils.getClassModifiers(classElement);
 
     Paragraph infoParagraph = new Paragraph((float) 20, info,
                                             Fonts.getFont(TIMES_ROMAN, 12));
@@ -258,11 +256,13 @@ public class ClassParagraph
       for (int i = 0; i < superClassOrInterface.size(); i++) {
         TypeElement typeElement = (TypeElement)typeUtils.asElement(superClassOrInterface.get(i));
         
-        String superClassName = JavadocUtil.getQualifiedNameIfNecessary(typeElement);
-        extendsPara.add(new LinkPhrase(typeElement.getQualifiedName().toString(), superClassName, 12, true));
-        // Add a comma if there are more interfaces to come
-        if (i + 1 < superClassOrInterface.size()) {
-          extendsPara.add(new Chunk(", "));
+        if (typeElement != null) {
+          String superClassName = Utils.getQualifiedNameIfNecessary(typeElement);
+          extendsPara.add(new LinkPhrase(typeElement.getQualifiedName().toString(), superClassName, 12, true));
+          // Add a comma if there are more interfaces to come
+          if (i + 1 < superClassOrInterface.size()) {
+            extendsPara.add(new Chunk(", "));
+          }
         }
       }
 
@@ -283,7 +283,7 @@ public class ClassParagraph
       Paragraph descPg = new Paragraph((float) 24.0);
 
       for (int i = 0; i < interfacesNames.length; i++) {
-        String subclassName = JavadocUtil.getQualifiedNameIfNecessary(interfacesNames[i]);
+        String subclassName = Utils.getQualifiedNameIfNecessary(interfacesNames[i]);
         Phrase subclassPhrase = new LinkPhrase(interfacesNames[i],
                                                subclassName, 12, true);
         descPg.add(subclassPhrase);

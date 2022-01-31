@@ -242,7 +242,7 @@ public class PDFDoclet implements IConstants
     LOG.debug(">");
 
     State.setCurrentPackage(packageDoc.name());
-    State.setCurrentDoc(packageDoc);
+//    State.setCurrentDoc(packageDoc);
 
     PDFDocument.newPage();
 

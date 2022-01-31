@@ -212,7 +212,7 @@ public class Members implements IConstants
     String name = commentDoc.name();
 
     State.setCurrentMember(State.getCurrentClass() + "." + name);
-    State.setCurrentDoc(commentDoc);
+//    State.setCurrentDoc(commentDoc);
 
     LOG.info("....> " + State.getCurrentMember());
 

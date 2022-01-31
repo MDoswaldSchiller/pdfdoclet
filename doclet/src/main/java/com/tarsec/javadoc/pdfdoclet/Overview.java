@@ -46,7 +46,7 @@ public class Overview implements IConstants
     }
 
     State.setOverview(true);
-    State.setCurrentDoc(rootDoc);
+//    State.setCurrentDoc(rootDoc);
 
     PDFDocument.newPage();
 

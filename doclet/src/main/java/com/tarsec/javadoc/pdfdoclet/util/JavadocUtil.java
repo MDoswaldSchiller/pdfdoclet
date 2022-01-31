@@ -26,7 +26,6 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
-import javax.lang.model.element.TypeElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -320,24 +319,6 @@ public class JavadocUtil implements IConstants
 
     return name;
   }
-  
-    public static String getQualifiedNameIfNecessary(TypeElement classDoc)
-  {
-    String name = classDoc.getSimpleName().toString();
-    boolean isExternal = true;
-
-    for (int i = 0; (i < PACKAGE_PREFIXES.length) && isExternal; i++) {
-      if (classDoc.getQualifiedName().toString().startsWith(PACKAGE_PREFIXES[i])) {
-        isExternal = false;
-      }
-    }
-
-    if (isExternal) {
-      name = classDoc.getQualifiedName().toString();
-    }
-
-    return name;
-  }
 
   /**
    * Utility method which returns only the first sentence of a given text
@@ -423,44 +404,6 @@ public class JavadocUtil implements IConstants
     return info;
   }
   
-  public static String getClassModifiers(TypeElement classDoc)
-  {
-    String info = "";
-
-//    if (classDoc.isPublic()) {
-//      info = "public ";
-//    }
-//
-//    if (classDoc.isPrivate()) {
-//      info = "private ";
-//    }
-//
-//    if (classDoc.isProtected()) {
-//      info = "protected ";
-//    }
-//
-//    if (!classDoc.isInterface()) {
-//      if (classDoc.isStatic()) {
-//        info = info + "static ";
-//      }
-//
-//      if (classDoc.isFinal()) {
-//        info = info + "final ";
-//      }
-//
-//      if (classDoc.isAbstract()) {
-//        info = info + "abstract ";
-//      }
-//
-//      info = info + "class ";
-//    }
-//    else {
-//      info = info + "interface ";
-//    }
-
-    return info;
-  }
-
   /**
    * Returns a text String with the modifiers of a given method.
    *

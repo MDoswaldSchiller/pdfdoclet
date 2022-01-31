@@ -12,8 +12,8 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.tarsec.javadoc.pdfdoclet.elements.CellNoBorderNoPadding;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
-import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
+import com.tarsec.javadoc.pdfdoclet.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +53,7 @@ public class Implementors implements IConstants
     Paragraph descPg = new Paragraph((float) 24.0);
 
     for (int i = names.length - 1; i > -1; i--) {
-      String subclassName = JavadocUtil.getQualifiedNameIfNecessary(names[i]);
+      String subclassName = Utils.getQualifiedNameIfNecessary(names[i]);
       Phrase subclassPhrase = new LinkPhrase(names[i], subclassName, 10, true);
       descPg.add(subclassPhrase);
 

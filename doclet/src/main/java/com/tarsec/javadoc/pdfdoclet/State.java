@@ -4,8 +4,6 @@
 package com.tarsec.javadoc.pdfdoclet;
 
 import com.itextpdf.text.pdf.PdfOutline;
-import com.sun.javadoc.Doc;
-import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,7 +101,7 @@ public class State
   /**
    * Current Doc
    */
-  public static Doc currentDoc = null;
+  //public static Doc currentDoc = null;
 
   /**
    * Current File
@@ -293,24 +291,24 @@ public class State
     }
   }
 
-  /**
-   * Returns the currently processed Doc.
-   *
-   * @return The currently processed Doc (or null).
-   */
-  public static Doc getCurrentDoc()
-  {
-    return currentDoc;
-  }
-
-  /**
-   * Sets the currently processed Doc.
-   */
-  public static void setCurrentDoc(Doc doc)
-  {
-    currentDoc = doc;
-    setCurrentFile(JavadocUtil.getSourceFile(doc));
-  }
+//  /**
+//   * Returns the currently processed Doc.
+//   *
+//   * @return The currently processed Doc (or null).
+//   */
+//  public static Doc getCurrentDoc()
+//  {
+//    return currentDoc;
+//  }
+//
+//  /**
+//   * Sets the currently processed Doc.
+//   */
+//  public static void setCurrentDoc(Doc doc)
+//  {
+//    currentDoc = doc;
+//    setCurrentFile(JavadocUtil.getSourceFile(doc));
+//  }
 
   /**
    * Returns the currently processed File.

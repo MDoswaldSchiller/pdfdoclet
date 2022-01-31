@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.zip.CRC32;
+import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -197,8 +198,7 @@ public class Destinations implements IConstants
     boolean multiPart = false;
     Chunk chunk = null;
     boolean canHaveParms = false;
-    if (doc instanceof ConstructorDoc
-        || doc instanceof MethodDoc) {
+    if (doc.getKind() == ElementKind.CONSTRUCTOR || doc.getKind() == ElementKind.METHOD) {
       canHaveParms = true;
       LOG.debug("is method or constructor.");
     }

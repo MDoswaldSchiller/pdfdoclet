@@ -106,7 +106,7 @@ public class Appendices implements IConstants
   {
 
     File file = info.file;
-    State.setCurrentDoc(null);
+//    State.setCurrentDoc(null);
     State.setCurrentPackage(null);
     State.setCurrentFile(file);
     State.increasePackageChapter();
