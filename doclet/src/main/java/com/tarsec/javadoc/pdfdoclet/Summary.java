@@ -3,10 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import java.awt.Color;
-import java.util.Arrays;
-
-
 import com.lowagie.text.Chunk;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
@@ -30,6 +26,8 @@ import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
+import java.awt.Color;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,19 +113,21 @@ public class Summary implements IConstants
     }
 
     // Now show inherited fields
+    Inherited inherited = new Inherited(PDFDocument.instance());
+    
     if (Configuration.isShowInheritedSummaryActive()) {
       if (!classDoc.isInterface()) {
         // Print fields inherited from the superclass
         if (classDoc.superclass() != null) {
-          Inherited.print(classDoc.superclass(), SHOW_FIELDS);
+          inherited.print(classDoc.superclass(), SHOW_FIELDS);
         }
         // Print fields inherited from any interfaces
         if (classDoc.interfaces() != null) {
           ClassDoc[] interfaces = classDoc.interfaces();
           for (int no = 0; no < interfaces.length; no++) {
             String interfaceName = interfaces[no].qualifiedName();
-            if (Inherited.ifClassMustBePrinted(interfaceName)) {
-              Inherited.print(interfaces[no], SHOW_FIELDS);
+            if (inherited.ifClassMustBePrinted(interfaceName)) {
+              inherited.print(interfaces[no], SHOW_FIELDS);
             }
           }
         }
@@ -139,8 +139,8 @@ public class Summary implements IConstants
           // so iterate through the entire array.
           for (int i = 0; i < interf.length; i++) {
             String interfaceName = interf[i].qualifiedName();
-            if (Inherited.ifClassMustBePrinted(interfaceName)) {
-              Inherited.print(interf[i], SHOW_FIELDS);
+            if (inherited.ifClassMustBePrinted(interfaceName)) {
+              inherited.print(interf[i], SHOW_FIELDS);
             }
           }
         }
@@ -210,8 +210,8 @@ public class Summary implements IConstants
       if (!classDoc.isInterface()) {
         if (classDoc.superclass() != null) {
           String className = classDoc.superclass().qualifiedName();
-          if (Inherited.ifClassMustBePrinted(className)) {
-            Inherited.print(classDoc.superclass(), SHOW_METHODS);
+          if (inherited.ifClassMustBePrinted(className)) {
+            inherited.print(classDoc.superclass(), SHOW_METHODS);
           }
         }
         // Print methods inherited from any interfaces
@@ -219,8 +219,8 @@ public class Summary implements IConstants
           ClassDoc[] interfaces = classDoc.interfaces();
           for (int no = 0; no < interfaces.length; no++) {
             String className = interfaces[no].qualifiedName();
-            if (Inherited.ifClassMustBePrinted(className)) {
-              Inherited.print(interfaces[no], SHOW_METHODS);
+            if (inherited.ifClassMustBePrinted(className)) {
+              inherited.print(interfaces[no], SHOW_METHODS);
             }
           }
         }
@@ -232,8 +232,8 @@ public class Summary implements IConstants
           // so iterate through the entire array.
           for (int i = 0; i < interf.length; i++) {
             String interfaceName = interf[i].qualifiedName();
-            if (Inherited.ifClassMustBePrinted(interfaceName)) {
-              Inherited.print(interf[i], SHOW_METHODS);
+            if (inherited.ifClassMustBePrinted(interfaceName)) {
+              inherited.print(interf[i], SHOW_METHODS);
             }
           }
         }

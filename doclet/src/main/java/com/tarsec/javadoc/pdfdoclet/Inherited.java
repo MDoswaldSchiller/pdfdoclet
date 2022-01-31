@@ -3,11 +3,8 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import java.awt.Color;
-import java.util.Arrays;
-
-
 import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
@@ -19,8 +16,11 @@ import com.tarsec.javadoc.pdfdoclet.elements.CellBorderPadding;
 import com.tarsec.javadoc.pdfdoclet.elements.CustomPdfPCell;
 import com.tarsec.javadoc.pdfdoclet.elements.CustomPdfPTable;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
+import java.awt.Color;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import static com.tarsec.javadoc.pdfdoclet.IConstants.*;
 
 /**
  * Prints the inherited tables.
@@ -28,19 +28,25 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 1.1 $
  * @author Marcel Schoen
  */
-public class Inherited implements IConstants
+public class Inherited
 {
   private static final Logger LOG = LoggerFactory.getLogger(Inherited.class);
 
+  private final Document pdfDocument;
+
+  public Inherited(Document pdfDocument)
+  {
+    this.pdfDocument = pdfDocument;
+  }
+  
   /**
    * Prints inherited methods and fields from superclasses
    *
-   * @param cls class source to get inherited fields and methods for.
+   * @param supercls class source to get inherited fields and methods for.
    * @param show SHOW_METHODS or SHOW_FIELDS
    * @throws Exception
    */
-  public static void print(ClassDoc supercls, int show)
-      throws Exception
+  public void print(ClassDoc supercls, int show) throws Exception
   {
     String type;
 
@@ -64,7 +70,7 @@ public class Inherited implements IConstants
     spacingCell.setBorderColor(Color.gray);
 
     if ((fields.length > 0) && (show == SHOW_FIELDS)) {
-      PDFDocument.instance().add(new Paragraph((float) 6.0, " "));
+      pdfDocument.add(new Paragraph((float) 6.0, " "));
 
       PdfPTable table = new PdfPTable(1);
       table.setWidthPercentage((float) 100);
@@ -96,7 +102,7 @@ public class Inherited implements IConstants
       table.addCell(contentCell);
       table.addCell(spacingCell);
 
-      PDFDocument.instance().add(table);
+      pdfDocument.add(table);
     }
 
     MethodDoc[] meth = supercls.methods();
@@ -105,7 +111,7 @@ public class Inherited implements IConstants
     LOG.debug("Methods: " + meth.length);
 
     if ((meth.length > 0) && (show == SHOW_METHODS)) {
-      PDFDocument.instance().add(new Paragraph((float) 6.0, " "));
+      pdfDocument.add(new Paragraph((float) 6.0, " "));
 
       PdfPTable table = new CustomPdfPTable();
 
@@ -140,7 +146,7 @@ public class Inherited implements IConstants
       table.addCell(contentCell);
       table.addCell(spacingCell);
 
-      PDFDocument.instance().add(table);
+      pdfDocument.add(table);
     }
 
     // Print inherited interfaces / class methods and fields recursively
@@ -153,7 +159,7 @@ public class Inherited implements IConstants
     if (supersupercls != null) {
       String className = supersupercls.qualifiedName();
       if (ifClassMustBePrinted(className)) {
-        Inherited.print(supersupercls, show);
+        print(supersupercls, show);
       }
     }
 
@@ -163,7 +169,7 @@ public class Inherited implements IConstants
       supersupercls = interfaces[i];
       String className = supersupercls.qualifiedName();
       if (ifClassMustBePrinted(className)) {
-        Inherited.print(supersupercls, show);
+        print(supersupercls, show);
       }
     }
   }
