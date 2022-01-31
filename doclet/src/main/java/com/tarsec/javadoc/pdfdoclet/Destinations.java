@@ -151,8 +151,7 @@ public class Destinations implements IConstants
    * @param font The font for the label.
    * @return The Phrase with the destination in it.
    */
-  public static Phrase createDestination(String label, ProgramElementDoc doc,
-                                         Font font)
+  public static Phrase createDestination(String label, ProgramElementDoc doc, Font font)
   {
     boolean multiPart = false;
     Chunk chunk = null;

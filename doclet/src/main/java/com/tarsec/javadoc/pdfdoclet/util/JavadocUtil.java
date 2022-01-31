@@ -3,13 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet.util;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.StringTokenizer;
-
-
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.ConstructorDoc;
 import com.sun.javadoc.Doc;
@@ -28,6 +21,15 @@ import com.tarsec.javadoc.pdfdoclet.Configuration;
 import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
 import com.tarsec.javadoc.pdfdoclet.State;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.StringTokenizer;
+import javax.lang.model.element.TypeElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -576,6 +578,15 @@ public class JavadocUtil implements IConstants
       return original;
     }
   }
+  
+  
+  public static List<TypeElement> createSorted(List<TypeElement> original)
+  {
+    List<TypeElement> sorted = new ArrayList<>(original.size());
+    sorted.sort(Comparator.comparing(t -> t.getSimpleName().toString(), String.CASE_INSENSITIVE_ORDER));
+    return sorted;
+  }
+  
 
   /**
    * Utility method for concatening ClassDoc tables.
@@ -616,18 +627,18 @@ public class JavadocUtil implements IConstants
     return result + dimension;
   }
 
-  public static String findSuperClassWithMethod(String method)
-  {
-    LOG.debug("Method: " + method);
-    String result = State.currentClass;
-    Doc doc = State.getCurrentDoc();
-    if (doc instanceof ClassDoc) {
-      ClassDoc classDoc = (ClassDoc) doc;
-      result = findMethodInClass(classDoc, method);
-    }
-    LOG.debug("Result: " + result);
-    return result;
-  }
+//  public static String findSuperClassWithMethod(String method)
+//  {
+//    LOG.debug("Method: " + method);
+//    String result = State.getCurrentClass().toString();
+//    Doc doc = State.getCurrentDoc();
+//    if (doc instanceof ClassDoc) {
+//      ClassDoc classDoc = (ClassDoc) doc;
+//      result = findMethodInClass(classDoc, method);
+//    }
+//    LOG.debug("Result: " + result);
+//    return result;
+//  }
 
   /**
    * Recursively looks for a superclass with a certain method.

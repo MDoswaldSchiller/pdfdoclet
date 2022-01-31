@@ -246,10 +246,10 @@ public class PDFDoclet implements IConstants
 
     PDFDocument.newPage();
 
-    String packageName = State.getCurrentPackage();
+    String packageName = State.getCurrentPackage().toString();
 
     // Text "package"
-    State.setCurrentClass("");
+    //State.setCurrentClass("");
 
     Paragraph label = new Paragraph((float) 22.0, LB_PACKAGE,
                                     Fonts.getFont(TIMES_ROMAN, BOLD, 18));
@@ -336,7 +336,7 @@ public class PDFDoclet implements IConstants
     else {
       LOG.debug("Print class: " + doc.name());
     }
-    Classes.printClass(doc, packageDoc);
+    //Classes.printClass(doc, packageDoc);
 
     ClassDoc[] innerClasses = doc.innerClasses();
     if (innerClasses != null && innerClasses.length > 0) {

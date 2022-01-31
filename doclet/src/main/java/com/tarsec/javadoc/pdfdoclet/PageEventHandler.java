@@ -289,7 +289,7 @@ public class PageEventHandler
   {
     LOG.debug(">");
     if (text.equalsIgnoreCase("$SHORTCLASS")) {
-      String name = State.getCurrentClass();
+      String name = State.getCurrentClass().toString();
 
       if (name.indexOf(".") != -1) {
         name = name.substring(name.lastIndexOf(".") + 1, name.length());
@@ -299,11 +299,11 @@ public class PageEventHandler
     }
 
     if (text.equalsIgnoreCase("$CLASS")) {
-      return State.getCurrentClass();
+      return State.getCurrentClass().toString();
     }
 
     if (text.equalsIgnoreCase("$PACKAGE")) {
-      return State.getCurrentPackage();
+      return State.getCurrentPackage().toString();
     }
 
     LOG.debug("<");

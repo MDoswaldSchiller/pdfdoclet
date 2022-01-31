@@ -64,12 +64,12 @@ public class Index implements IConstants, Comparator
    * @param memberName The fully qualified name of the member of the current
    * class.
    */
-  public void addToMemberList(String memberName)
+  public void addToMemberList(CharSequence memberName)
   {
     LOG.debug(">");
     // Separate name of unqualified member only
-    String memberShortName = memberName.substring(memberName.lastIndexOf(
-        ".") + 1, memberName.length());
+    String nameAsString = memberName.toString();
+    String memberShortName = nameAsString.substring(nameAsString.lastIndexOf(".") + 1, memberName.length());
     addPageNoForMember(memberShortName);
     memberList.put(memberShortName, memberShortName);
     LOG.debug("<");

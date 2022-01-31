@@ -83,22 +83,22 @@ public class State
   /**
    * Name of current package
    */
-  public static String currentPackage = "";
+  public static CharSequence currentPackage = "";
 
   /**
    * Name of current class
    */
-  public static String currentClass = "";
+  public static CharSequence currentClass = "";
 
   /**
    * Name of current member
    */
-  public static String currentMember = "";
+  public static CharSequence currentMember = "";
 
   /**
    * Name of current method
    */
-  public static String currentMethod = "";
+  public static CharSequence currentMethod = "";
 
   /**
    * Current Doc
@@ -396,7 +396,7 @@ public class State
    *
    * @return The name of the current class.
    */
-  public static String getCurrentClass()
+  public static CharSequence getCurrentClass()
   {
     LOG.debug("Get current class: " + currentClass);
     return currentClass;
@@ -407,7 +407,7 @@ public class State
    *
    * @param value The name of the class.
    */
-  public static void setCurrentClass(String value)
+  public static void setCurrentClass(CharSequence value)
   {
     LOG.debug("Set current class to " + value);
     currentClass = value;
@@ -419,7 +419,7 @@ public class State
    *
    * @return The name of the current package.
    */
-  public static String getCurrentPackage()
+  public static CharSequence getCurrentPackage()
   {
     LOG.debug("Get current package: " + currentPackage);
     return currentPackage;
@@ -430,7 +430,7 @@ public class State
    *
    * @param value The name of the package.
    */
-  public static void setCurrentPackage(String value)
+  public static void setCurrentPackage(CharSequence value)
   {
     LOG.debug("Set current package to " + value);
     currentPackage = value;
@@ -442,7 +442,7 @@ public class State
    *
    * @return The name of the current member.
    */
-  public static String getCurrentMember()
+  public static CharSequence getCurrentMember()
   {
     LOG.debug("Get current member: " + currentMember);
     return currentMember;
@@ -453,7 +453,7 @@ public class State
    *
    * @param value The name of the member.
    */
-  public static void setCurrentMember(String value)
+  public static void setCurrentMember(CharSequence value)
   {
     LOG.debug("Set current member to " + value);
     currentMember = value;
@@ -465,7 +465,7 @@ public class State
    *
    * @return The name of the current method.
    */
-  public static String getCurrentMethod()
+  public static CharSequence getCurrentMethod()
   {
     return currentMethod;
   }
@@ -475,7 +475,7 @@ public class State
    *
    * @param value The name of the method.
    */
-  public static void setCurrentMethod(String value)
+  public static void setCurrentMethod(CharSequence value)
   {
     currentMethod = value;
   }

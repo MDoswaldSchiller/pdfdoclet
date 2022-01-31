@@ -165,7 +165,7 @@ public class Classes implements IConstants
       }
 
       // Known subclasses
-      String[] knownSubclasses = ImplementorsInformation.getDirectSubclasses(State.getCurrentClass());
+      String[] knownSubclasses = ImplementorsInformation.getDirectSubclasses(State.getCurrentClass().toString());
 
       if ((knownSubclasses != null) && (knownSubclasses.length > 0)) {
         Implementors.print("Direct Known Subclasses:", knownSubclasses);
@@ -174,7 +174,7 @@ public class Classes implements IConstants
     else {
       // For interfaces, print superinterfaces and all subinterfaces
       // Known super-interfaces
-      String[] knownSuperInterfaces = ImplementorsInformation.getKnownSuperclasses(State.getCurrentClass());
+      String[] knownSuperInterfaces = ImplementorsInformation.getKnownSuperclasses(State.getCurrentClass().toString());
 
       if ((knownSuperInterfaces != null)
           && (knownSuperInterfaces.length > 0)) {
@@ -182,7 +182,7 @@ public class Classes implements IConstants
       }
 
       // Known sub-interfaces
-      String[] knownSubInterfaces = ImplementorsInformation.getKnownSubclasses(State.getCurrentClass());
+      String[] knownSubInterfaces = ImplementorsInformation.getKnownSubclasses(State.getCurrentClass().toString());
 
       if ((knownSubInterfaces != null)
           && (knownSubInterfaces.length > 0)) {
@@ -190,7 +190,7 @@ public class Classes implements IConstants
       }
 
       // Known Implementing Classes
-      String[] knownImplementingClasses = ImplementorsInformation.getImplementingClasses(State.getCurrentClass());
+      String[] knownImplementingClasses = ImplementorsInformation.getImplementingClasses(State.getCurrentClass().toString());
 
       if ((knownImplementingClasses != null)
           && (knownImplementingClasses.length > 0)) {

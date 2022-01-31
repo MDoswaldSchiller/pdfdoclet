@@ -12,6 +12,7 @@ import com.sun.source.doctree.DocCommentTree;
 import com.sun.source.doctree.DocTree;
 import com.sun.source.util.DocTrees;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
+import com.tarsec.javadoc.pdfdoclet.util.JavadocUtil;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
 import java.nio.file.Files;
@@ -19,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -35,6 +37,8 @@ import javax.tools.ToolProvider;
 import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.doclet.Reporter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import static com.tarsec.javadoc.pdfdoclet.IConstants.*;
 
 /**
@@ -43,6 +47,7 @@ import static com.tarsec.javadoc.pdfdoclet.IConstants.*;
  */
 public class PDFDocletNew implements Doclet
 {
+  private static final Logger LOG = LoggerFactory.getLogger(PDFDocletNew.class);
 
   /**
    * Reference to the PDF file.
@@ -51,6 +56,10 @@ public class PDFDocletNew implements Doclet
 
   private Reporter reporter;
 
+  // Stores list of inner classes
+  private Map innerClassesList = new HashMap();
+
+  
   @Override
   public String getName()
   {
@@ -146,7 +155,8 @@ public class PDFDocletNew implements Doclet
       return false;
     }
     finally {
-      pdfWriter.close();
+      pdfWriter.flush();
+      //pdfWriter.close();
     }
 
     return true;
@@ -204,7 +214,66 @@ public class PDFDocletNew implements Doclet
 
     State.increasePackageSection();
 
-    //printClasses(JavadocUtil.sort(types), packageDoc);
+    printClasses(JavadocUtil.createSorted(types), packageDoc);
+  }
+  
+  
+    /**
+   * Processes all classes of one Java package..
+   *
+   * @param classDocs The javadoc information list for the classes.
+   * @param packageDoc The javadoc information for the package which the classes
+   * belong to.
+   * @throws Exception
+   */
+  private void printClasses(List<TypeElement> classDocs, PackageElement packageDoc)
+      throws Exception
+  {
+    LOG.debug(">");
+    for (int i = 0; i < classDocs.size(); i++) {
+
+      // Avoid processing a class which has already been
+      // processed as an inner class
+      if (innerClassesList.get(classDocs.get(i)) == null) {
+        TypeElement doc = classDocs.get(i);
+        printClassWithInnerClasses(doc, packageDoc, false);
+      }
+    }
+    LOG.debug("<");
+  }
+  
+  /**
+   * This method prints the doc of a class and of all its inner classes. It
+   * calls itself recursively to make sure that also nested inner classes are
+   * printed correctly.
+   *
+   * @param classDoc The doc of the class to print.
+   * @param packageDoc The packagedoc of the containing package.
+   * @throws Exception If something failed.
+   */
+  private void printClassWithInnerClasses(TypeElement doc, PackageElement packageDoc, boolean isInnerClass)
+      throws Exception
+  {
+
+    if (isInnerClass) {
+      LOG.debug("Print inner class: " + doc.getSimpleName());
+    }
+    else {
+      LOG.debug("Print class: " + doc.getSimpleName());
+    }
+   // Classes.printClass(doc, packageDoc);
+
+    List<? extends Element> innerClasses = doc.getEnclosedElements();
+    
+    for (TypeElement type : ElementFilter.typesIn(doc.getEnclosedElements())) {
+      // Check if this inner class has not yet been handled
+      if (innerClassesList.get(type) == null) {
+        innerClassesList.put(type, "x");
+        State.setInnerClass(true);
+        printClassWithInnerClasses(type, packageDoc, true);
+        State.setInnerClass(false);
+      }
+    }
   }
 
   private String getPackageComment(DocTrees docTrees, PackageElement pkg)
