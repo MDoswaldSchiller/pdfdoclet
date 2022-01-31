@@ -3,15 +3,13 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import java.io.FileOutputStream;
-
-
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Graphic;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +34,11 @@ public class PDFDocument implements IConstants
    */
   private static PdfWriter pdfWriter = null;
 
+  public static void setInstance(Document pdfDocument)
+  {
+    PDFDocument.pdfDocument = pdfDocument;
+  }
+  
   /**
    * Creates the document instance and initializes it.
    */

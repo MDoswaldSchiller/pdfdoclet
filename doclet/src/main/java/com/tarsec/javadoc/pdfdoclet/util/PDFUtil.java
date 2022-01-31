@@ -3,11 +3,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.StringTokenizer;
-
-
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
@@ -31,6 +26,9 @@ import com.tarsec.javadoc.pdfdoclet.elements.CellNoBorderWithPadding;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.elements.TableParagraph;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.StringTokenizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -511,7 +509,7 @@ public class PDFUtil implements IConstants
    *
    * @param objs The elements
    */
-  public static void printPdfElements(Element[] objs)
+  public static void printPdfElements( Element[] objs)
       throws com.lowagie.text.DocumentException
   {
 

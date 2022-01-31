@@ -42,15 +42,15 @@
                 <!-- next create the versio info file -->
                 <filter token="VERSION" value="${pom.currentVersion}" />
                 <filter token="BUILD" value="${user.name}/${build.timestamp}" />
-                <filter token="COPYRIGHT" value="${pom.organization.name}" />
-                <filter token="NAME" value="${pom.name}" />
+                <filter token="COPYRIGHT" value="${project.organization.name}" />
+                <filter token="NAME" value="${project.name}" />
 
                 <echo
                   file="target/classes/com/tarsec/javadoc/pdfdoclet/util/version-info.properties">
                   copyright=Copyright by Marcel Schoen, Switzerland
                   version=${pdfdoclet.version}
                   build=${user.name}/${build.timestamp}
-                  name=${pom.name}
+                  name=${project.name}
                 </echo>
 
               </tasks>
@@ -77,7 +77,7 @@
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
+      <artifactId>slf4j-reload4j</artifactId>
       <version>1.7.35</version>
     </dependency>
 

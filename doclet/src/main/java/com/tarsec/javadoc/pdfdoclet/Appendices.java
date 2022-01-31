@@ -1,19 +1,17 @@
 package com.tarsec.javadoc.pdfdoclet;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Properties;
-
-
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
 import com.lowagie.text.Paragraph;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,14 +22,13 @@ public class Appendices implements IConstants
 {
   private static final Logger LOG = LoggerFactory.getLogger(Appendices.class);
 
-  private static ArrayList appendices = new ArrayList();
+  private static java.util.List<AppendixInfo> appendices = new ArrayList<>();
 
   /**
    * Initializes the appendix creation.
    */
   public static void initialize()
   {
-
     int prefixLen = ARG_APPENDIX_PREFIX.length();
     int suffixLen = ARG_APPENDIX_FILE_SUFFIX.length();
     Properties props = Configuration.getConfiguration();
@@ -47,7 +44,7 @@ public class Appendices implements IConstants
         String fileName = props.getProperty(key);
         // If the (pdf) filename contains page information, extract it
         String pages = "";
-        if (fileName.indexOf(",") != -1) {
+        if (fileName.contains(",")) {
           pages = fileName.substring(fileName.indexOf(",") + 1, fileName.length());
           fileName = fileName.substring(0, fileName.indexOf(","));
         }
@@ -146,7 +143,7 @@ public class Appendices implements IConstants
       PDFDocument.add(titleParagraph);
 
       Element[] objs = HtmlParserWrapper.createPdfObjects(html);
-      PDFUtil.printPdfElements(objs);
+      PDFUtil.printPdfElements( objs);
 
     }
 

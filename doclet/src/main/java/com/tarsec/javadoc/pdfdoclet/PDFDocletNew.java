@@ -30,6 +30,8 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.ElementFilter;
 import javax.tools.Diagnostic;
+import javax.tools.DocumentationTool;
+import javax.tools.ToolProvider;
 import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.doclet.Reporter;
@@ -72,20 +74,21 @@ public class PDFDocletNew implements Doclet
   {
     System.err.println("0000");
     DocTrees docTrees = environment.getDocTrees();
-    
+
     PdfWriter pdfWriter = null;
     Document pdfDocument = createPdfDocument();
 
+    PDFDocument.setInstance(pdfDocument);
+    
     try {
       pdfWriter = PdfWriter.getInstance(pdfDocument, Files.newOutputStream(pdfOutputFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING));
       pdfDocument.open();
 
       pdfWriter.setPageEvent(new PageEventHandler(pdfWriter));
 
-     // Bookmarks.init();
-
+      // Bookmarks.init();
       // Prepare index
-      Index index = new Index(pdfWriter, PDFDocument.instance());
+      Index index = new Index(pdfWriter, pdfDocument);
 
       reporter.print(Diagnostic.Kind.NOTE, "Prepare title page");
       TitlePage title = new TitlePage(pdfDocument);
@@ -115,14 +118,14 @@ public class PDFDocletNew implements Doclet
       reporter.print(Diagnostic.Kind.NOTE, "Size of package collection: " + packageToTypeMap.size());
 
       // Prepare alphabetically sorted list of all classes for bookmarks
-      Bookmarks.prepareBookmarkEntries(packageToTypeMap);
+      //Bookmarks.prepareBookmarkEntries(packageToTypeMap);
 
       // Now process all packages and classes
       reporter.print(Diagnostic.Kind.NOTE, "Iterating through package list...");
-      for (Map.Entry<PackageElement,List<TypeElement>> entry : packageToTypeMap.entrySet()) {
+      for (Map.Entry<PackageElement, List<TypeElement>> entry : packageToTypeMap.entrySet()) {
         PackageElement pkgDoc = entry.getKey();
         List<TypeElement> pkgList = entry.getValue();
-        
+
         State.increasePackageChapter();
         System.err.println("444");
         printPackage(pdfDocument, pkgDoc, pkgList, docTrees);
@@ -135,7 +138,7 @@ public class PDFDocletNew implements Doclet
       index.create();
 
       reporter.print(Diagnostic.Kind.NOTE, "Content completed, creating bookmark outline tree");
-      Bookmarks.createBookmarkOutline();
+      //Bookmarks.createBookmarkOutline();
     }
     catch (Exception ex) {
       reporter.print(Diagnostic.Kind.ERROR, ex.getMessage());
@@ -143,12 +146,12 @@ public class PDFDocletNew implements Doclet
       return false;
     }
     finally {
-     // pdfWriter.close();
+      pdfWriter.close();
     }
 
     return true;
   }
-  
+
   /**
    * Processes one Java package of the whole API.
    *
@@ -160,15 +163,14 @@ public class PDFDocletNew implements Doclet
     //State.setCurrentPackage(packageDoc.getSimpleName().toString());
     //State.setCurrentDoc(packageDoc);
 
-    PDFDocument.newPage();
+    pdfDocument.newPage();
 
     String packageName = packageDoc.getSimpleName().toString();
 
     // Text "package"
     //State.setCurrentClass("");
-
     Paragraph label = new Paragraph((float) 22.0, IConstants.LB_PACKAGE, Fonts.getFont(IConstants.TIMES_ROMAN, BOLD, 18));
-    PDFDocument.add(label);
+    pdfDocument.add(label);
 
     Paragraph titlePara = new Paragraph((float) 30.0, "");
     // Name of the package (large font)
@@ -217,8 +219,6 @@ public class PDFDocletNew implements Doclet
     }
     return "bla";
   }
-  
-  
 
   private List<TypeElement> getTypes(DocletEnvironment environment)
   {
@@ -238,10 +238,10 @@ public class PDFDocletNew implements Doclet
 
   private PackageElement getPackage(TypeElement type)
   {
-    Element packageElement;
+    Element packageElement = type;
 
     do {
-      packageElement = type.getEnclosingElement();
+      packageElement = packageElement.getEnclosingElement();
     }
     while (!(packageElement instanceof PackageElement) && packageElement != null);
 
@@ -253,7 +253,7 @@ public class PDFDocletNew implements Doclet
     Document pdfDocument = new Document();
     pdfDocument.setPageSize(Configuration.getPageSize());
     pdfDocument.setMargins(LEFT_MARGIN_WIDTH, RIGHT_MARGIN_WIDTH, TOP_MARGIN_WIDTH, BOTTOM_MARGIN_WIDTH);
-    pdfDocument.open();
+    //pdfDocument.open();
 
     return pdfDocument;
   }
@@ -335,5 +335,19 @@ public class PDFDocletNew implements Doclet
     {
       return hasArg ? parameters : "";
     }
+  }
+  
+  
+  public static void main(String... args)
+  {
+    String[] docletArgs = new String[]{
+        "-doclet", PDFDocletNew.class.getName(),
+        "-docletpath", "/home/mdo/Dev/MIS/Japi/1_general/trunk/schiller-general-layer/commons/commons-core/target/", 
+        "-sourcepath", "/home/mdo/Dev/MIS/Japi/1_general/trunk/schiller-general-layer/commons/commons-core/src/main/java/", 
+        "-classpath", "/home/mdo/.m2/repository/org/checkerframework/checker-qual/3.21.1/checker-qual-3.21.1.jar:/home/mdo/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-linux.jar",
+        "ch.schiller.japi.commons"
+    };
+    DocumentationTool docTool = ToolProvider.getSystemDocumentationTool();
+    docTool.run(System.in, System.out, System.err, docletArgs);
   }
 }
