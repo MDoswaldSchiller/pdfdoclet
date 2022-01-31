@@ -8,7 +8,6 @@ import com.itextpdf.text.Phrase;
 import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.Implementors;
-import com.tarsec.javadoc.pdfdoclet.PDFDocument;
 import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
@@ -21,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Name;
@@ -54,18 +54,14 @@ public class ClassParagraph
 
   public void appendTo(Document pdfDocument) throws DocumentException
   {
-    LOG.debug(">");
+    LOG.debug(">class: {}", classElement.getQualifiedName());
     Types typeUtils = environment.getTypeUtils();
 
     pdfDocument.newPage();
     State.increasePackageSection();
 
-    LOG.info("..> " + State.getCurrentClass());
-
     addTypeHeader(pdfDocument);
     addTypeHierarchy(pdfDocument);
-
-    Set<TypeElement> interfacesList = getAllImplementedInterfaces();
 
     // Now, for classes only, print implemented interfaces and known subclasses
     if (!isInterface()) {
@@ -75,28 +71,9 @@ public class ClassParagraph
     else {
       // For interfaces, print superinterfaces and all subinterfaces
       // Known super-interfaces
-//      String[] knownSuperInterfaces = ImplementorsInformation.getKnownSuperclasses(State.getCurrentClass().toString());
-//
-//      if ((knownSuperInterfaces != null)
-//          && (knownSuperInterfaces.length > 0)) {
-//        Implementors.print("All Superinterfaces:", knownSuperInterfaces);
-//      }
-//
-//      // Known sub-interfaces
-//      String[] knownSubInterfaces = ImplementorsInformation.getKnownSubclasses(State.getCurrentClass().toString());
-//
-//      if ((knownSubInterfaces != null)
-//          && (knownSubInterfaces.length > 0)) {
-//        Implementors.print("All Subinterfaces:", knownSubInterfaces);
-//      }
-//
-//      // Known Implementing Classes
-//      String[] knownImplementingClasses = ImplementorsInformation.getImplementingClasses(State.getCurrentClass().toString());
-//
-//      if ((knownImplementingClasses != null)
-//          && (knownImplementingClasses.length > 0)) {
-//        Implementors.print("All Known Implementing Classes:", knownImplementingClasses);
-//      }
+      listAllSuperInterfaces(pdfDocument);
+      listAllSubinterfaces(pdfDocument);
+      listAllImplementingClasses(pdfDocument);
     }
 
     // Horizontal line
@@ -128,73 +105,16 @@ public class ClassParagraph
 //    }
     info = Utils.getClassModifiers(classElement);
 
-    Paragraph infoParagraph = new Paragraph((float) 20, info,
-                                            Fonts.getFont(TIMES_ROMAN, 12));
-    infoParagraph.add(new Chunk(classElement.getSimpleName().toString(),
-                                Fonts.getFont(TIMES_ROMAN, BOLD, 12)));
+    Paragraph infoParagraph = new Paragraph((float) 20, info, Fonts.getFont(TIMES_ROMAN, 12));
+    infoParagraph.add(new Chunk(classElement.getSimpleName().toString(), Fonts.getFont(TIMES_ROMAN, BOLD, 12)));
     pdfDocument.add(infoParagraph);
 
     // extends ...
-    List<? extends TypeMirror> superClassOrInterface = null;
-
-    if (isInterface()) {
-      superClassOrInterface = classElement.getInterfaces();
-    }
-    else {
-      superClassOrInterface = List.of(classElement.getSuperclass());
-    }
-
-    if (superClassOrInterface != null) {
-      Paragraph extendsPara = new Paragraph((float) 14.0);
-      extendsPara.add(new Chunk("extends ", Fonts.getFont(TIMES_ROMAN, 12)));
-      // Contrary to classes, interfaces DO support multiple inheritance,
-      // so there could be more than one entry we're currently processing
-      // an interface.
-      for (int i = 0; i < superClassOrInterface.size(); i++) {
-        TypeElement typeElement = (TypeElement) typeUtils.asElement(superClassOrInterface.get(i));
-
-        if (typeElement != null) {
-          String superClassName = Utils.getQualifiedNameIfNecessary(typeElement);
-          extendsPara.add(new LinkPhrase(typeElement.getQualifiedName().toString(), superClassName, 12, true));
-          // Add a comma if there are more interfaces to come
-          if (i + 1 < superClassOrInterface.size()) {
-            extendsPara.add(new Chunk(", "));
-          }
-        }
-      }
-
-      pdfDocument.add(extendsPara);
-    }
-
-    if (!isInterface() && !classElement.getInterfaces().isEmpty()) {
-      //implements
-      List<String> interfacesNames = new ArrayList<>();
-
-      for (TypeElement iface : interfacesList) {
-        interfacesNames.add(iface.getQualifiedName().toString());
-      }
-
-      Paragraph extendsPara = new Paragraph((float) 14.0);
-      extendsPara.add(new Chunk("implements ", Fonts.getFont(TIMES_ROMAN, 12)));
-
-      Paragraph descPg = new Paragraph((float) 24.0);
-
-      for (int i = 0; i < interfacesNames.size(); i++) {
-        String subclassName = Utils.getQualifiedNameIfNecessary(interfacesNames.get(i));
-        Phrase subclassPhrase = new LinkPhrase(interfacesNames.get(i), subclassName, 12, true);
-        descPg.add(subclassPhrase);
-
-        if (i < (interfacesNames.size() - 1)) {
-          descPg.add(new Chunk(", ", Fonts.getFont(COURIER, 10)));
-        }
-      }
-
-      extendsPara.add(descPg);
-
-      pdfDocument.add(extendsPara);
-    }
-
+    addExtendsInfo(pdfDocument);
+    addImplementsInfo(pdfDocument);
+   
     pdfDocument.add(new Paragraph((float) 20.0, " "));
+    
 
     // Description
 //    String classText = JavadocUtil.getComment(classDoc);
@@ -273,6 +193,81 @@ public class ClassParagraph
     pdfDocument.add(titlePara);
   }
   
+  private void addExtendsInfo(Document pdfDocument) throws DocumentException
+  {
+    List<? extends TypeMirror> superClassOrInterface = null;
+
+    if (isInterface()) {
+      superClassOrInterface = classElement.getInterfaces();
+    }
+    else {
+      superClassOrInterface = List.of(classElement.getSuperclass());
+    }
+
+    if (!superClassOrInterface.isEmpty()) {
+      boolean hadTypes = false;
+      Paragraph extendsPara = new Paragraph((float) 14.0);
+      extendsPara.add(new Chunk("extends ", Fonts.getFont(TIMES_ROMAN, 12)));
+      
+      // Contrary to classes, interfaces DO support multiple inheritance,
+      // so there could be more than one entry we're currently processing
+      // an interface.
+      for (TypeMirror superType : superClassOrInterface) {
+        TypeElement typeElement = (TypeElement) environment.getTypeUtils().asElement(superType);
+
+        if (typeElement != null) {
+          if (hadTypes) {
+            extendsPara.add(new Chunk(", "));
+          }
+          hadTypes = true;
+          String superClassName = Utils.getQualifiedNameIfNecessary(typeElement);
+          extendsPara.add(new LinkPhrase(typeElement.getQualifiedName().toString(), superClassName, 12, true));
+        }
+      }
+
+      if (hadTypes) {
+        pdfDocument.add(extendsPara);
+      }
+    }
+  }
+  
+  private void addImplementsInfo(Document pdfDocument) throws DocumentException
+  {
+    if (!isInterface() && !classElement.getInterfaces().isEmpty()) {
+      //implements
+      List<String> interfacesNames = new ArrayList<>();
+
+      for (TypeMirror iface : classElement.getInterfaces()) {
+        interfacesNames.add(((TypeElement)environment.getTypeUtils().asElement(iface)).getQualifiedName().toString());
+      }
+
+      boolean hasEntries = false;
+      Paragraph implementsPara = new Paragraph((float) 14.0);
+      implementsPara.add(new Chunk("implements ", Fonts.getFont(TIMES_ROMAN, 12)));
+      
+
+      //Paragraph descPg = new Paragraph((float) 24.0);
+
+      for (int i = 0; i < interfacesNames.size(); i++) {
+        if (hasEntries) {
+          implementsPara.add(new Chunk(", "));
+        }
+        
+        hasEntries = true;
+        String subclassName = Utils.getQualifiedNameIfNecessary(interfacesNames.get(i));
+        Phrase subclassPhrase = new LinkPhrase(interfacesNames.get(i), subclassName, 12, true);
+        implementsPara.add(subclassPhrase);
+      }
+
+      //implementsPara.add(descPg);
+
+      if (hasEntries) {
+        pdfDocument.add(implementsPara);
+      }
+    }
+  }
+  
+  
   private void addTypeHierarchy(Document pdfDocument) throws DocumentException
   {
     // class derivation tree - build list first
@@ -330,40 +325,87 @@ public class ClassParagraph
       List<String> interfaceList = interfaces.stream()
           .map(type -> type.getQualifiedName().toString())
           .collect(Collectors.toList());
-      PDFDocument.add(Implementors.create("All Implemented Interfaces:", interfaceList));
+      pdfDocument.add(Implementors.create("All Implemented Interfaces:", interfaceList));
     }    
   }
+  
+  private void listAllSuperInterfaces(Document pdfDocument) throws DocumentException
+  {
+    Set<TypeElement> interfaces = getAllImplementedInterfaces();
+    
+    if (!interfaces.isEmpty()) {
+      List<String> interfaceList = interfaces.stream()
+          .map(type -> type.getQualifiedName().toString())
+          .collect(Collectors.toList());
+      pdfDocument.add(Implementors.create("All Superinterfaces:", interfaceList));
+    }    
+  }
+  
   
   private void listAllDirectSubclasses(Document pdfDocument)throws DocumentException
   {
     // Known subclasses
-    Set<TypeElement> subClasses = getAllDirectSubclasses();
+    Set<TypeElement> subClasses = listTypes(this::isDirectSubclass);
     
     if (!subClasses.isEmpty()) {
       List<String> interfaceList = subClasses.stream()
           .map(type -> type.getQualifiedName().toString())
           .collect(Collectors.toList());
-      PDFDocument.add(Implementors.create("Direct Known Subclasses:", interfaceList));
+      pdfDocument.add(Implementors.create("Direct Known Subclasses:", interfaceList));
       
     }
   }
   
-  private Set<TypeElement> getAllDirectSubclasses()
+  private void listAllSubinterfaces(Document pdfDocument) throws DocumentException
   {
-    return ElementFilter.typesIn(environment.getSpecifiedElements())
-        .stream()
-        .filter(this::isDirectSubclass)
+    Set<TypeElement> allSubClasses = listTypes(this::isSubType);
+    
+    if (!allSubClasses.isEmpty()) {
+      List<String> interfaceList = allSubClasses.stream()
+          .map(type -> type.getQualifiedName().toString())
+          .collect(Collectors.toList());
+      pdfDocument.add(Implementors.create("All Subinterfaces:", interfaceList));
+      
+    }
+  }  
+  
+  private void listAllImplementingClasses(Document pdfDocument) throws DocumentException
+  {
+    Set<TypeElement> allSubClasses = listTypes(this::isImplementingClass);
+    
+    if (!allSubClasses.isEmpty()) {
+      List<String> interfaceList = allSubClasses.stream()
+          .map(type -> type.getQualifiedName().toString())
+          .collect(Collectors.toList());
+      pdfDocument.add(Implementors.create("All Known Implementing Classes:", interfaceList));
+    }
+  }
+  
+  
+  private Set<TypeElement> listTypes(Predicate<TypeElement> filter)
+  {
+    return ElementFilter.typesIn(environment.getSpecifiedElements()).stream()
+        .filter(filter)
         .sorted(Comparator.comparing(t -> t.getSimpleName().toString()))
         .collect(Collectors.toSet());
-  }
+    
+  }  
   
   private boolean isDirectSubclass(TypeElement type)
   {
     Name superclassName = ((TypeElement)environment.getTypeUtils().asElement(type.getSuperclass())).getQualifiedName();
     return classElement.getQualifiedName().contentEquals(superclassName);
   }
+
+  private boolean isSubType(TypeElement type)
+  {
+    return environment.getTypeUtils().isSubtype(classElement.asType(), type.asType());
+  }
   
-  
+  private boolean isImplementingClass(TypeElement type)
+  {
+    return type.getKind() != ElementKind.INTERFACE && isSubType(type);
+  }
 
   private boolean isInterface()
   {
