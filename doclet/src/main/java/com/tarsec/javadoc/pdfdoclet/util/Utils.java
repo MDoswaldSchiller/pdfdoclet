@@ -7,7 +7,10 @@ package com.tarsec.javadoc.pdfdoclet.util;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 
@@ -38,41 +41,40 @@ public class Utils
   
   public static String getClassModifiers(TypeElement classDoc)
   {
-    String info = "";
-
+    StringBuilder info = new StringBuilder();
     
-//    if (classDoc.isPublic()) {
-//      info = "public ";
-//    }
-//
-//    if (classDoc.isPrivate()) {
-//      info = "private ";
-//    }
-//
-//    if (classDoc.isProtected()) {
-//      info = "protected ";
-//    }
-//
-//    if (!classDoc.isInterface()) {
-//      if (classDoc.isStatic()) {
-//        info = info + "static ";
-//      }
-//
-//      if (classDoc.isFinal()) {
-//        info = info + "final ";
-//      }
-//
-//      if (classDoc.isAbstract()) {
-//        info = info + "abstract ";
-//      }
-//
-//      info = info + "class ";
-//    }
-//    else {
-//      info = info + "interface ";
-//    }
+    Set<Modifier> modifiers = classDoc.getModifiers();
+    
+    if (modifiers.contains(Modifier.PUBLIC)) {
+      info.append("public ");
+    }
+    else if (modifiers.contains(Modifier.PRIVATE)) {
+      info.append("private ");
+    }
+    else if (modifiers.contains(Modifier.PROTECTED)) {
+      info.append("protected ");
+    }
+    
+    if (classDoc.getKind() == ElementKind.INTERFACE) {
+      info.append("interface ");
+    }
+    else {
+      if (modifiers.contains(Modifier.STATIC)) {
+        info.append("static ");
+      }
 
-    return info;
+      if (modifiers.contains(Modifier.FINAL)) {
+        info.append("final ");
+      }
+      
+      if (modifiers.contains(Modifier.ABSTRACT)) {
+        info.append("abstract ");
+      }
+
+      info.append("class ");
+    }
+
+    return info.toString();
   }
 
   public static String getQualifiedNameIfNecessary(TypeElement classDoc)

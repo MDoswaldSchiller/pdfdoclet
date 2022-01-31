@@ -80,36 +80,8 @@ public class ClassParagraph
     PDFUtil.printLine();
 
     // Class type / declaration
-    LOG.debug("Print class type / declaration");
-    String info = "";
-
-//    Tag[] deprecatedTags = classElement.tags(DOC_TAGS_DEPRECATED);
-//
-//    if (deprecatedTags.length > 0) {
-//      Paragraph classDeprecatedParagraph = new Paragraph((float) 20);
-//
-//      Chunk deprecatedClassText = new Chunk(LB_DEPRECATED_TAG,
-//                                            Fonts.getFont(TIMES_ROMAN, BOLD, 12));
-//      classDeprecatedParagraph.add(deprecatedClassText);
-//
-//      String depText = JavadocUtil.getComment(deprecatedTags[0].inlineTags());
-//      Element[] deprecatedInfoText = HtmlParserWrapper.createPdfObjects("<i>" + depText + "</i>");
-//      for (int n = 0; n < deprecatedInfoText.length; n++) {
-//        // Only phrases can be supported here (but no tables)
-//        if (deprecatedInfoText[n] instanceof Phrase) {
-//          classDeprecatedParagraph.add(deprecatedInfoText[n]);
-//        }
-//      }
-//
-//      PDFDocument.add(classDeprecatedParagraph);
-//    }
-    info = Utils.getClassModifiers(classElement);
-
-    Paragraph infoParagraph = new Paragraph((float) 20, info, Fonts.getFont(TIMES_ROMAN, 12));
-    infoParagraph.add(new Chunk(classElement.getSimpleName().toString(), Fonts.getFont(TIMES_ROMAN, BOLD, 12)));
-    pdfDocument.add(infoParagraph);
-
-    // extends ...
+    addDeprectionTagIfNeeded(pdfDocument);
+    addTypeNameAndModifiers(pdfDocument);
     addExtendsInfo(pdfDocument);
     addImplementsInfo(pdfDocument);
    
@@ -267,6 +239,39 @@ public class ClassParagraph
     }
   }
   
+  
+  private void addDeprectionTagIfNeeded(Document pdfDocument)
+  {
+//    Tag[] deprecatedTags = classElement.tags(DOC_TAGS_DEPRECATED);
+//
+//    if (deprecatedTags.length > 0) {
+//      Paragraph classDeprecatedParagraph = new Paragraph((float) 20);
+//
+//      Chunk deprecatedClassText = new Chunk(LB_DEPRECATED_TAG,
+//                                            Fonts.getFont(TIMES_ROMAN, BOLD, 12));
+//      classDeprecatedParagraph.add(deprecatedClassText);
+//
+//      String depText = JavadocUtil.getComment(deprecatedTags[0].inlineTags());
+//      Element[] deprecatedInfoText = HtmlParserWrapper.createPdfObjects("<i>" + depText + "</i>");
+//      for (int n = 0; n < deprecatedInfoText.length; n++) {
+//        // Only phrases can be supported here (but no tables)
+//        if (deprecatedInfoText[n] instanceof Phrase) {
+//          classDeprecatedParagraph.add(deprecatedInfoText[n]);
+//        }
+//      }
+//
+//      PDFDocument.add(classDeprecatedParagraph);
+//    }
+  }
+  
+  
+  private void addTypeNameAndModifiers(Document pdfDocument) throws DocumentException
+  {
+    String info = Utils.getClassModifiers(classElement);
+    Paragraph infoParagraph = new Paragraph((float) 20, info, Fonts.getFont(TIMES_ROMAN, 12));
+    infoParagraph.add(new Chunk(classElement.getSimpleName().toString(), Fonts.getFont(TIMES_ROMAN, BOLD, 12)));
+    pdfDocument.add(infoParagraph);
+  }
   
   private void addTypeHierarchy(Document pdfDocument) throws DocumentException
   {
