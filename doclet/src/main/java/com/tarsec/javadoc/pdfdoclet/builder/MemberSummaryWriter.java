@@ -9,6 +9,7 @@ import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
@@ -27,6 +28,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Utils;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.ElementFilter;
@@ -64,6 +66,10 @@ public class MemberSummaryWriter
       addFieldsSummary(type, fields);
     }
     
+    List<ExecutableElement> constructors = ElementFilter.constructorsIn(type.getEnclosedElements());
+    if (!constructors.isEmpty()) {
+      addConstructorsSummary(type, constructors);
+    }
 
     
   }
@@ -134,8 +140,81 @@ public class MemberSummaryWriter
     mainTable.addCell(innerTable);
   }
   
+  private void addConstructorsSummary(TypeElement type, List<ExecutableElement> constructors) throws DocumentException
+  {
+    LOG.debug("Print constructors summary");
+    constructors.sort(Comparator.comparing(field -> field.getSimpleName().toString()));
+    
+    PdfPTable fieldsTable = createSummaryTable("Constructor");
+    
+
+    for (ExecutableElement constructor : constructors) {
+      // test if field is deprecated
+      boolean isDeprecated = Utils.isDeprecated(environment.getDocTrees(), type) ||
+                             Utils.isDeprecated(environment.getDocTrees(), constructor);
+      Phrase deprecatedPhrase = null;
+
+      if (isDeprecated) {
+        //deprecatedPhrase = new CustomDeprecatedPhrase(field);
+      }
+
+      addConstructorRow(type, fieldsTable, constructor, isDeprecated, null/*deprecatedPhrase*/);
+    }
+
+    pdfDocument.add(fieldsTable);
+  }
   
   
+  private void addConstructorRow(TypeElement type, PdfPTable mainTable, ExecutableElement constructor, boolean isDeprecated, Phrase deprecatedPhrase) throws DocumentException
+  {
+    String name = type.getSimpleName().toString();
+    String modifier = Utils.getMemberModifiers(constructor);
+    String commentText = Utils.getFirstSentence(environment.getDocTrees(), constructor);
+    String destination = String.format("%s.%s", type.getQualifiedName(), constructor.getSimpleName());
+
+    Element[] objs = HtmlParserWrapper.createPdfObjects(commentText);
+
+    PdfPTable commentsTable = createColumnsAndDeprecated(objs, isDeprecated, deprecatedPhrase);
+
+    PdfPTable anotherinnertable = new PdfPTable(1);
+    anotherinnertable.setWidthPercentage(100f);
+    anotherinnertable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+
+    // Link to constructor
+    Font constructorFont = Fonts.getFont(COURIER, 9);
+    Phrase phrase = new Phrase("", constructorFont);
+    phrase.add(new LinkPhrase(destination, name, constructorFont));
+
+    phrase.add("(");
+    List<? extends VariableElement> parameters = constructor.getParameters();
+    for (int i = 0; i < parameters.size(); i++) {
+      phrase.add(getParameterTypePhrase(parameters.get(i), 9));
+      phrase.add(" ");
+      phrase.add(parameters.get(i).getSimpleName().toString());
+      if (i != (parameters.size() - 1)) {
+        phrase.add(", ");
+      }
+    }
+    phrase.add(")");
+
+    PdfPCell cell = PDFUtil.createElementCell(2, phrase);
+    cell.setPaddingLeft((float) 7.0);
+    anotherinnertable.addCell(cell);
+    anotherinnertable.addCell(commentsTable);
+
+    PdfPTable innerTable = addDeclaration(modifier, null);
+    innerTable.addCell(anotherinnertable);
+
+    mainTable.addCell(innerTable);
+  }
+  
+  
+  private LinkPhrase getParameterTypePhrase(VariableElement param, int fontSize)
+  {
+    String fullType = environment.getTypeUtils().asElement(param.asType()).toString();
+    String shortType = param.asType().toString();
+    return new LinkPhrase(fullType, shortType, fontSize, false);
+  }
   
   
     /**
