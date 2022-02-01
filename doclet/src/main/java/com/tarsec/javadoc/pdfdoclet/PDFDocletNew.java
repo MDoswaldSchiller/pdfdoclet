@@ -11,7 +11,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.sun.source.doctree.DocCommentTree;
 import com.sun.source.doctree.DocTree;
 import com.sun.source.util.DocTrees;
-import com.tarsec.javadoc.pdfdoclet.builder.ParagraphBuilderFactory;
+import com.tarsec.javadoc.pdfdoclet.builder.WriterFactory;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
@@ -60,7 +60,7 @@ public class PDFDocletNew implements Doclet
   // Stores list of inner classes
   private Map innerClassesList = new HashMap();
   
-  private ParagraphBuilderFactory factory;
+  private WriterFactory factory;
 
   
   @Override
@@ -84,7 +84,7 @@ public class PDFDocletNew implements Doclet
   @Override
   public boolean run(DocletEnvironment environment)
   {
-    factory = new ParagraphBuilderFactory(environment);
+    factory = new WriterFactory(environment);
     
     DocTrees docTrees = environment.getDocTrees();
 

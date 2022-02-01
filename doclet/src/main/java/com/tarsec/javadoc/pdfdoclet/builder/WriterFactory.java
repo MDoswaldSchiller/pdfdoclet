@@ -7,18 +7,18 @@ import jdk.javadoc.doclet.DocletEnvironment;
  *
  * @author mdo
  */
-public class ParagraphBuilderFactory
+public class WriterFactory
 {
   private final DocletEnvironment environment;
 
-  public ParagraphBuilderFactory(DocletEnvironment environment)
+  public WriterFactory(DocletEnvironment environment)
   {
     this.environment = environment;
   }
   
   
-  public ClassParagraph createClassParagraph(TypeElement classType)
+  public ClassWriter createClassParagraph(TypeElement classType)
   {
-    return new ClassParagraph(environment, classType);
+    return new ClassWriter(environment, classType);
   }
 }

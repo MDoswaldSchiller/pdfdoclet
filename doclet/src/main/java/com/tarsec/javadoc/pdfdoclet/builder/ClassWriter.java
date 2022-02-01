@@ -38,15 +38,15 @@ import static com.tarsec.javadoc.pdfdoclet.IConstants.*;
  *
  * @author mdo
  */
-public class ClassParagraph
+public class ClassWriter
 {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ClassParagraph.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ClassWriter.class);
 
   private final DocletEnvironment environment;
   private final TypeElement classElement;
 
-  public ClassParagraph(DocletEnvironment environment, TypeElement classElement)
+  public ClassWriter(DocletEnvironment environment, TypeElement classElement)
   {
     this.environment = Objects.requireNonNull(environment);
     this.classElement = Objects.requireNonNull(classElement);
