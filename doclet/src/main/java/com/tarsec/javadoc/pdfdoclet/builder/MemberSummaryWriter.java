@@ -28,6 +28,7 @@ import com.tarsec.javadoc.pdfdoclet.util.Utils;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
@@ -71,8 +72,13 @@ public class MemberSummaryWriter
       addConstructorsSummary(type, constructors);
     }
 
+    List<ExecutableElement> methods = ElementFilter.methodsIn(type.getEnclosedElements());
+    if (!methods.isEmpty()) {
+      addMethodsSummary(type, methods);
+    }
     
   }
+  
   
   private void addFieldsSummary(TypeElement type, List<VariableElement> fields) throws DocumentException
   {
@@ -92,13 +98,13 @@ public class MemberSummaryWriter
         //deprecatedPhrase = new CustomDeprecatedPhrase(field);
       }
 
-      addFieldRow(type, fieldsTable, field, field.getConstantValue(), isDeprecated, null/*deprecatedPhrase*/);
+      addFieldRow(type, fieldsTable, field, isDeprecated, null/*deprecatedPhrase*/);
     }
 
     pdfDocument.add(fieldsTable);
   }
   
-  private void addFieldRow(TypeElement type, PdfPTable mainTable, VariableElement field, Object constantValue, boolean isDeprecated, Phrase deprecatedPhrase) throws DocumentException
+  private void addFieldRow(TypeElement type, PdfPTable mainTable, VariableElement field, boolean isDeprecated, Phrase deprecatedPhrase) throws DocumentException
   {
     String name = field.getSimpleName().toString();
     String modifier = Utils.getMemberModifiers(field);
@@ -108,6 +114,7 @@ public class MemberSummaryWriter
     Element[] objs = HtmlParserWrapper.createPdfObjects(commentText);
 
     PdfPTable commentsTable = createColumnsAndDeprecated(objs, isDeprecated, deprecatedPhrase);
+    Object constantValue = field.getConstantValue();
 
     if (constantValue != null) {
       // Add 2nd comment line (left cell empty, right cell text)
@@ -143,11 +150,10 @@ public class MemberSummaryWriter
   private void addConstructorsSummary(TypeElement type, List<ExecutableElement> constructors) throws DocumentException
   {
     LOG.debug("Print constructors summary");
-    constructors.sort(Comparator.comparing(field -> field.getSimpleName().toString()));
+    constructors.sort(Comparator.comparing(constructor -> constructor.getSimpleName().toString()));
     
     PdfPTable fieldsTable = createSummaryTable("Constructor");
     
-
     for (ExecutableElement constructor : constructors) {
       // test if field is deprecated
       boolean isDeprecated = Utils.isDeprecated(environment.getDocTrees(), type) ||
@@ -209,11 +215,107 @@ public class MemberSummaryWriter
   }
   
   
+  private void addMethodsSummary(TypeElement type, List<ExecutableElement> methods) throws DocumentException
+  {
+    LOG.debug("Print methods summary");
+    methods.sort(Comparator.comparing(method -> method.getSimpleName().toString()));
+    
+    PdfPTable fieldsTable = createSummaryTable("Methods");
+    
+    for (ExecutableElement method : methods) {
+      // test if field is deprecated
+      boolean isDeprecated = Utils.isDeprecated(environment.getDocTrees(), type) ||
+                             Utils.isDeprecated(environment.getDocTrees(), method);
+      Phrase deprecatedPhrase = null;
+
+      if (isDeprecated) {
+        //deprecatedPhrase = new CustomDeprecatedPhrase(field);
+      }
+
+      addMethodRow(type, fieldsTable, method, isDeprecated, null/*deprecatedPhrase*/);
+    }
+
+    pdfDocument.add(fieldsTable);
+  }
+  
+  private void addMethodRow(TypeElement type, PdfPTable mainTable, ExecutableElement method, boolean isDeprecated, Phrase deprecatedPhrase) throws DocumentException
+  {
+    String name = method.getSimpleName().toString();
+    String modifier = Utils.getMemberModifiers(method);
+    String commentText = Utils.getFirstSentence(environment.getDocTrees(), method);
+    String destination = String.format("%s.%s.%s", type.getQualifiedName(), method.getSimpleName(), method.getParameters().stream().map(v -> v.asType().toString()).collect(Collectors.joining(".")));
+
+    PdfPTable rowTable = addDeclaration(modifier, getReturnType(method, 9));
+    
+    Element[] objs = HtmlParserWrapper.createPdfObjects(commentText);
+
+    PdfPTable commentsTable = createColumnsAndDeprecated(objs, isDeprecated, deprecatedPhrase);
+
+    PdfPTable rightColumnInnerTable = new PdfPTable(1);
+    rightColumnInnerTable.setWidthPercentage(100f);
+    rightColumnInnerTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+
+    // Link to method
+    Font methodFont = Fonts.getFont(COURIER, 9);
+    Phrase phrase = new Phrase("", methodFont);
+    phrase.add(new LinkPhrase(destination, name, methodFont));
+
+    phrase.add("(");
+    List<? extends VariableElement> parameters = method.getParameters();
+    for (int i = 0; i < parameters.size(); i++) {
+      phrase.add(getParameterTypePhrase(parameters.get(i), 9));
+      phrase.add(" ");
+      phrase.add(parameters.get(i).getSimpleName().toString());
+      if (i != (parameters.size() - 1)) {
+        phrase.add(", ");
+      }
+    }
+    phrase.add(")");
+
+    PdfPCell cell = PDFUtil.createElementCell(2, phrase);
+    cell.setPaddingLeft((float) 7.0);
+    rightColumnInnerTable.addCell(cell);
+    rightColumnInnerTable.addCell(commentsTable);
+
+   // Now fill in right column as well
+    rowTable.addCell(rightColumnInnerTable);
+
+    // And add inner table to main summary table as a new row
+    mainTable.addCell(rowTable);
+  }
+  
+  
+  
   private LinkPhrase getParameterTypePhrase(VariableElement param, int fontSize)
   {
-    String fullType = environment.getTypeUtils().asElement(param.asType()).toString();
+    System.out.println("Type: " + param.asType());
+    javax.lang.model.element.Element paramElement = environment.getTypeUtils().asElement(param.asType());
+    
+    String fullType = paramElement != null ? paramElement.toString() : param.asType().toString();
     String shortType = param.asType().toString();
     return new LinkPhrase(fullType, shortType, fontSize, false);
+  }
+  
+  public Phrase getReturnType(ExecutableElement method, int fontSize) throws DocumentException
+  {
+    Phrase returnPhrase = null;
+    String returnType = method.getReturnType().toString();
+
+    if (returnType != null && (returnType.trim().length() > 0)) {
+      javax.lang.model.element.Element returnClass = environment.getTypeUtils().asElement(method.getReceiverType());
+
+//      if (returnClass instanceof TypeElement) {
+//        returnType = JavadocUtil.getQualifiedNameIfNecessary(returnClass).trim();
+//        returnPhrase = new LinkPhrase(returnClass.qualifiedName(),
+//                                      returnType + dimension, fontSize, false);
+//      }
+//      else {
+        returnPhrase = new LinkPhrase(returnType,
+                                      returnType/* + dimension*/, fontSize, false);
+//      }
+    }
+
+    return returnPhrase;
   }
   
   
