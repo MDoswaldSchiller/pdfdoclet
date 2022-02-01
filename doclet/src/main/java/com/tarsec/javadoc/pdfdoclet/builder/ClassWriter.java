@@ -3,14 +3,18 @@ package com.tarsec.javadoc.pdfdoclet.builder;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.sun.source.doctree.DocCommentTree;
 import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.Implementors;
 import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
+import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
+import com.tarsec.javadoc.pdfdoclet.util.Util;
 import com.tarsec.javadoc.pdfdoclet.util.Utils;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -84,38 +88,14 @@ public class ClassWriter
     addTypeNameAndModifiers(pdfDocument);
     addExtendsInfo(pdfDocument);
     addImplementsInfo(pdfDocument);
-   
+
     pdfDocument.add(new Paragraph((float) 20.0, " "));
-    
+    addTypeDescription(pdfDocument);
+
+    // Some empty space...
+    pdfDocument.add(new Paragraph((float) 6.0, " "));
 
     // Description
-//    String classText = JavadocUtil.getComment(classDoc);
-//    Element[] objs = HtmlParserWrapper.createPdfObjects(classText);
-//
-//    if (objs.length == 0) {
-//      String desc = Util.stripLineFeeds(classText);
-//      PDFDocument.add(new Paragraph((float) 14.0, desc,
-//                                    Fonts.getFont(TIMES_ROMAN, 12)));
-//    }
-//    else {
-//      PDFUtil.printPdfElements(objs);
-//    }
-//
-//    TagLists.printClassTags(classDoc);
-//    // Horizontal line
-//    PDFUtil.printLine();
-//
-//    if (Configuration.isShowSummaryActive()) {
-//      Summary.printAll(classDoc);
-//      PDFUtil.printLine();
-//    }
-//
-//    float[] widths = {(float) 1.0, (float) 94.0};
-//    PdfPTable table = new PdfPTable(widths);
-//    table.setWidthPercentage((float) 100);
-//
-//    // Some empty space...
-//    PDFDocument.add(new Paragraph((float) 6.0, " "));
 //    Members.printMembers(classDoc);
     LOG.debug("<");
   }
@@ -130,15 +110,13 @@ public class ClassWriter
       // because the current class also implements all
       // interfaces of its superclass (by inheritance)
       for (TypeMirror iface : currentTreeClass.getInterfaces()) {
-        interfacesList.add((TypeElement)environment.getTypeUtils().asElement(iface));
+        interfacesList.add((TypeElement) environment.getTypeUtils().asElement(iface));
       }
     }
     while ((currentTreeClass = (TypeElement) environment.getTypeUtils().asElement(currentTreeClass.getSuperclass())) != null);
 
     return interfacesList;
   }
-
-  
 
   private void addTypeHeader(Document pdfDocument) throws DocumentException
   {
@@ -164,7 +142,7 @@ public class ClassWriter
 
     pdfDocument.add(titlePara);
   }
-  
+
   private void addExtendsInfo(Document pdfDocument) throws DocumentException
   {
     List<? extends TypeMirror> superClassOrInterface = null;
@@ -180,7 +158,7 @@ public class ClassWriter
       boolean hadTypes = false;
       Paragraph extendsPara = new Paragraph((float) 14.0);
       extendsPara.add(new Chunk("extends ", Fonts.getFont(TIMES_ROMAN, 12)));
-      
+
       // Contrary to classes, interfaces DO support multiple inheritance,
       // so there could be more than one entry we're currently processing
       // an interface.
@@ -202,7 +180,7 @@ public class ClassWriter
       }
     }
   }
-  
+
   private void addImplementsInfo(Document pdfDocument) throws DocumentException
   {
     if (!isInterface() && !classElement.getInterfaces().isEmpty()) {
@@ -210,21 +188,19 @@ public class ClassWriter
       List<String> interfacesNames = new ArrayList<>();
 
       for (TypeMirror iface : classElement.getInterfaces()) {
-        interfacesNames.add(((TypeElement)environment.getTypeUtils().asElement(iface)).getQualifiedName().toString());
+        interfacesNames.add(((TypeElement) environment.getTypeUtils().asElement(iface)).getQualifiedName().toString());
       }
 
       boolean hasEntries = false;
       Paragraph implementsPara = new Paragraph((float) 14.0);
       implementsPara.add(new Chunk("implements ", Fonts.getFont(TIMES_ROMAN, 12)));
-      
 
       //Paragraph descPg = new Paragraph((float) 24.0);
-
       for (int i = 0; i < interfacesNames.size(); i++) {
         if (hasEntries) {
           implementsPara.add(new Chunk(", "));
         }
-        
+
         hasEntries = true;
         String subclassName = Utils.getQualifiedNameIfNecessary(interfacesNames.get(i));
         Phrase subclassPhrase = new LinkPhrase(interfacesNames.get(i), subclassName, 12, true);
@@ -232,14 +208,12 @@ public class ClassWriter
       }
 
       //implementsPara.add(descPg);
-
       if (hasEntries) {
         pdfDocument.add(implementsPara);
       }
     }
   }
-  
-  
+
   private void addDeprectionTagIfNeeded(Document pdfDocument)
   {
 //    Tag[] deprecatedTags = classElement.tags(DOC_TAGS_DEPRECATED);
@@ -263,8 +237,7 @@ public class ClassWriter
 //      PDFDocument.add(classDeprecatedParagraph);
 //    }
   }
-  
-  
+
   private void addTypeNameAndModifiers(Document pdfDocument) throws DocumentException
   {
     String info = Utils.getClassModifiers(classElement);
@@ -272,7 +245,7 @@ public class ClassWriter
     infoParagraph.add(new Chunk(classElement.getSimpleName().toString(), Fonts.getFont(TIMES_ROMAN, BOLD, 12)));
     pdfDocument.add(infoParagraph);
   }
-  
+
   private void addTypeHierarchy(Document pdfDocument) throws DocumentException
   {
     // class derivation tree - build list first
@@ -325,59 +298,58 @@ public class ClassWriter
   private void listAllImplementedInterfaces(Document pdfDocument) throws DocumentException
   {
     Set<TypeElement> interfaces = getAllImplementedInterfaces();
-    
+
     if (!interfaces.isEmpty()) {
       List<String> interfaceList = interfaces.stream()
           .map(type -> type.getQualifiedName().toString())
           .collect(Collectors.toList());
       pdfDocument.add(Implementors.create("All Implemented Interfaces:", interfaceList));
-    }    
+    }
   }
-  
+
   private void listAllSuperInterfaces(Document pdfDocument) throws DocumentException
   {
     Set<TypeElement> interfaces = getAllImplementedInterfaces();
-    
+
     if (!interfaces.isEmpty()) {
       List<String> interfaceList = interfaces.stream()
           .map(type -> type.getQualifiedName().toString())
           .collect(Collectors.toList());
       pdfDocument.add(Implementors.create("All Superinterfaces:", interfaceList));
-    }    
+    }
   }
-  
-  
-  private void listAllDirectSubclasses(Document pdfDocument)throws DocumentException
+
+  private void listAllDirectSubclasses(Document pdfDocument) throws DocumentException
   {
     // Known subclasses
     Set<TypeElement> subClasses = listTypes(this::isDirectSubclass);
-    
+
     if (!subClasses.isEmpty()) {
       List<String> interfaceList = subClasses.stream()
           .map(type -> type.getQualifiedName().toString())
           .collect(Collectors.toList());
       pdfDocument.add(Implementors.create("Direct Known Subclasses:", interfaceList));
-      
+
     }
   }
-  
+
   private void listAllSubinterfaces(Document pdfDocument) throws DocumentException
   {
     Set<TypeElement> allSubClasses = listTypes(this::isSubType);
-    
+
     if (!allSubClasses.isEmpty()) {
       List<String> interfaceList = allSubClasses.stream()
           .map(type -> type.getQualifiedName().toString())
           .collect(Collectors.toList());
       pdfDocument.add(Implementors.create("All Subinterfaces:", interfaceList));
-      
+
     }
-  }  
-  
+  }
+
   private void listAllImplementingClasses(Document pdfDocument) throws DocumentException
   {
     Set<TypeElement> allSubClasses = listTypes(this::isImplementingClass);
-    
+
     if (!allSubClasses.isEmpty()) {
       List<String> interfaceList = allSubClasses.stream()
           .map(type -> type.getQualifiedName().toString())
@@ -385,20 +357,19 @@ public class ClassWriter
       pdfDocument.add(Implementors.create("All Known Implementing Classes:", interfaceList));
     }
   }
-  
-  
+
   private Set<TypeElement> listTypes(Predicate<TypeElement> filter)
   {
     return ElementFilter.typesIn(environment.getSpecifiedElements()).stream()
         .filter(filter)
         .sorted(Comparator.comparing(t -> t.getSimpleName().toString()))
         .collect(Collectors.toSet());
-    
-  }  
-  
+
+  }
+
   private boolean isDirectSubclass(TypeElement type)
   {
-    Name superclassName = ((TypeElement)environment.getTypeUtils().asElement(type.getSuperclass())).getQualifiedName();
+    Name superclassName = ((TypeElement) environment.getTypeUtils().asElement(type.getSuperclass())).getQualifiedName();
     return classElement.getQualifiedName().contentEquals(superclassName);
   }
 
@@ -406,7 +377,7 @@ public class ClassWriter
   {
     return environment.getTypeUtils().isSubtype(classElement.asType(), type.asType());
   }
-  
+
   private boolean isImplementingClass(TypeElement type)
   {
     return type.getKind() != ElementKind.INTERFACE && isSubType(type);
@@ -415,5 +386,36 @@ public class ClassWriter
   private boolean isInterface()
   {
     return classElement.getKind() == ElementKind.INTERFACE;
+  }
+
+  private void addTypeDescription(Document pdfDocument) throws DocumentException
+  {
+    DocCommentTree typeCommentTree = environment.getDocTrees().getDocCommentTree(classElement);
+    
+    if (typeCommentTree != null) {
+      String classText = typeCommentTree.toString();
+      Element[] objs = HtmlParserWrapper.createPdfObjects(classText);
+
+    if (objs.length == 0) {
+      String desc = Util.stripLineFeeds(classText);
+      pdfDocument.add(new Paragraph((float) 14.0, desc, Fonts.getFont(TIMES_ROMAN, 12)));
+    }
+    else {
+      PDFUtil.printPdfElements(objs);
+    }
+
+//    TagLists.printClassTags(classDoc);
+//    // Horizontal line
+//    PDFUtil.printLine();
+//
+//    if (Configuration.isShowSummaryActive()) {
+//      Summary.printAll(classDoc);
+//      PDFUtil.printLine();
+//    }
+//
+//    float[] widths = {(float) 1.0, (float) 94.0};
+//    PdfPTable table = new PdfPTable(widths);
+//    table.setWidthPercentage((float) 100);
+    }
   }
 }
