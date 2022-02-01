@@ -95,7 +95,10 @@ public class ClassWriter
     // Some empty space...
     pdfDocument.add(new Paragraph((float) 6.0, " "));
 
-    // Description
+    // 
+    MemberSummaryWriter memberWriter = new MemberSummaryWriter(environment, pdfDocument);
+    memberWriter.appendMemberTable(classElement);
+    
 //    Members.printMembers(classDoc);
     LOG.debug("<");
   }
@@ -240,7 +243,7 @@ public class ClassWriter
 
   private void addTypeNameAndModifiers(Document pdfDocument) throws DocumentException
   {
-    String info = Utils.getClassModifiers(classElement);
+    String info = Utils.getTypeModifiers(classElement);
     Paragraph infoParagraph = new Paragraph((float) 20, info, Fonts.getFont(TIMES_ROMAN, 12));
     infoParagraph.add(new Chunk(classElement.getSimpleName().toString(), Fonts.getFont(TIMES_ROMAN, BOLD, 12)));
     pdfDocument.add(infoParagraph);

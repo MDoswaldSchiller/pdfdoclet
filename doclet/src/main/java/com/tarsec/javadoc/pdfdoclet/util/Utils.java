@@ -4,6 +4,8 @@
  */
 package com.tarsec.javadoc.pdfdoclet.util;
 
+import com.sun.source.doctree.DocCommentTree;
+import com.sun.source.util.DocTrees;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -39,7 +41,7 @@ public class Utils
   }
   
   
-  public static String getClassModifiers(TypeElement classDoc)
+  public static String getTypeModifiers(Element classDoc)
   {
     StringBuilder info = new StringBuilder();
     
@@ -76,6 +78,38 @@ public class Utils
 
     return info.toString();
   }
+  
+  public static String getMemberModifiers(Element element)
+  {
+    StringBuilder info = new StringBuilder();
+    
+    Set<Modifier> modifiers = element.getModifiers();
+    
+    if (modifiers.contains(Modifier.PUBLIC)) {
+      info.append("public ");
+    }
+    else if (modifiers.contains(Modifier.PRIVATE)) {
+      info.append("private ");
+    }
+    else if (modifiers.contains(Modifier.PROTECTED)) {
+      info.append("protected ");
+    }
+    
+    if (modifiers.contains(Modifier.STATIC)) {
+      info.append("static ");
+    }
+
+    if (modifiers.contains(Modifier.FINAL)) {
+      info.append("final ");
+    }
+      
+    if (modifiers.contains(Modifier.ABSTRACT)) {
+      info.append("abstract ");
+    }
+
+    return info.toString();
+  }
+  
 
   public static String getQualifiedNameIfNecessary(TypeElement classDoc)
   {
@@ -128,4 +162,18 @@ public class Utils
     sorted.sort(Comparator.comparing(t -> t.getSimpleName().toString(), String.CASE_INSENSITIVE_ORDER));
     return sorted;
   }  
+  
+  
+  public static String getFirstSentence(DocTrees docTrees, Element element)
+  {
+    DocCommentTree docCommentTree = docTrees.getDocCommentTree(element);
+    return docCommentTree != null ? docCommentTree.getFirstSentence().toString(): "";
+  }
+  
+  public static boolean isDeprecated(DocTrees docTrees, Element element)
+  {
+    //TODO
+    
+    return false;
+  }
 }
