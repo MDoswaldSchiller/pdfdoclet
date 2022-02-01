@@ -34,7 +34,6 @@ public class MemberSummaryWriter extends AbstractSummaryWriter
       inheritedFieldsWriter.addInheritedFieldsInfo(type);
     }
     
-    
     List<ExecutableElement> constructors = ElementFilter.constructorsIn(type.getEnclosedElements());
     if (!constructors.isEmpty()) {
       ConstructorSummaryWriter constructorSummaryWriter = new ConstructorSummaryWriter(environment, pdfDocument);
@@ -45,6 +44,11 @@ public class MemberSummaryWriter extends AbstractSummaryWriter
     if (!methods.isEmpty()) {
       MethodSummaryWriter methodSummaryWriter = new MethodSummaryWriter(environment, pdfDocument);
       methodSummaryWriter.addMethodsSummary(type, methods);
+    }
+    
+    if (Configuration.isShowInheritedSummaryActive()) {
+      InheritedMethodsWriter inheritedMethodsWriter = new InheritedMethodsWriter(environment, pdfDocument);
+      inheritedMethodsWriter.addInheritedMethodsInfo(type);
     }
   }
 }
