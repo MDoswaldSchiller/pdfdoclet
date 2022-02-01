@@ -406,8 +406,8 @@ public class PDFDocletNew implements Doclet
         "-doclet", PDFDocletNew.class.getName(),
         "-docletpath", "/home/mdo/Dev/MIS/Japi/1_general/trunk/schiller-general-layer/commons/commons-core/target/", 
         "-sourcepath", "/home/mdo/Dev/MIS/Japi/1_general/trunk/schiller-general-layer/commons/commons-core/src/main/java/", 
-        "-classpath", "/home/mdo/.m2/repository/org/checkerframework/checker-qual/3.21.1/checker-qual-3.21.1.jar:/home/mdo/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-linux.jar",
-        "ch.schiller.japi.commons"
+        "-classpath", "/home/mdo/.m2/repository/org/slf4j/slf4j-api/1.7.35/slf4j-api-1.7.35.jar:/home/mdo/.m2/repository/org/checkerframework/checker-qual/3.21.1/checker-qual-3.21.1.jar:/home/mdo/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-linux.jar",
+        "ch.schiller.japi.commons.io"
     };
     DocumentationTool docTool = ToolProvider.getSystemDocumentationTool();
     docTool.run(System.in, System.out, System.err, docletArgs);

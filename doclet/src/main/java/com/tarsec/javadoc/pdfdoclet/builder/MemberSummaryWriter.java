@@ -2,6 +2,7 @@ package com.tarsec.javadoc.pdfdoclet.builder;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.tarsec.javadoc.pdfdoclet.Configuration;
 import java.util.List;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
@@ -27,6 +28,12 @@ public class MemberSummaryWriter extends AbstractSummaryWriter
       FieldSummaryWriter fieldSummaryWriter = new FieldSummaryWriter(environment, pdfDocument);
       fieldSummaryWriter.addFieldsSummary(type, fields);
     }
+    
+    if (Configuration.isShowInheritedSummaryActive()) {
+      InheritedFieldsWriter inheritedFieldsWriter = new InheritedFieldsWriter(environment, pdfDocument);
+      inheritedFieldsWriter.addInheritedFieldsInfo(type);
+    }
+    
     
     List<ExecutableElement> constructors = ElementFilter.constructorsIn(type.getEnclosedElements());
     if (!constructors.isEmpty()) {

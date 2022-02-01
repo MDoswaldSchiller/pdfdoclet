@@ -63,7 +63,7 @@ public class Configuration implements IConstants
   /**
    * Flag which determines if inherited summaries should be printed
    */
-  private static boolean isShowInheritedSummaryActive = false;
+  private static boolean isShowInheritedSummaryActive = true;
 
   /**
    * Flag which determines if inherited summaries of external classes should be
