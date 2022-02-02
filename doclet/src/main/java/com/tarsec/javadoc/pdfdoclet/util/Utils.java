@@ -170,6 +170,13 @@ public class Utils
     return docCommentTree != null ? docCommentTree.getFirstSentence().toString(): "";
   }
   
+  public static String getComment(DocTrees docTrees, Element element)
+  {
+    DocCommentTree docCommentTree = docTrees.getDocCommentTree(element);
+    return docCommentTree != null ? docCommentTree.getBody().toString() : "";
+  }
+  
+  
   public static boolean isDeprecated(DocTrees docTrees, Element element)
   {
     //TODO

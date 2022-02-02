@@ -21,7 +21,7 @@ public class MemberSummaryWriter extends AbstractSummaryWriter
     super(environment, pdfDocument);
   }
 
-  public void appendMemberTable(TypeElement type) throws DocumentException
+  public void appendMemberSummary(TypeElement type) throws DocumentException
   {
     List<VariableElement> fields = ElementFilter.fieldsIn(type.getEnclosedElements());
     if (!fields.isEmpty()) {

@@ -20,6 +20,7 @@ import java.util.Properties;
 import java.util.zip.CRC32;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -230,6 +231,19 @@ public class Destinations implements IConstants
 
     return phrase;
   }
+  
+  public static Phrase createFieldDestination(TypeElement type, VariableElement field, Font font)
+  {
+    Chunk chunk = new Chunk(field.getSimpleName().toString(), font);
+    Phrase phrase = new Phrase(chunk);
+
+    String destination = String.format("%s.%s", type.getQualifiedName(), field.getSimpleName());
+    LOG.debug("Create destination 1: " + destination);
+    phrase.add(PDFUtil.createAnchor(destination));
+
+    return phrase;
+  }
+  
   
   /**
    * Creates a link to a destination in the document. This method does nothing

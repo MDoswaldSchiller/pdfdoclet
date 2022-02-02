@@ -96,10 +96,12 @@ public class ClassWriter
     pdfDocument.add(new Paragraph((float) 6.0, " "));
 
     // 
-    MemberSummaryWriter memberWriter = new MemberSummaryWriter(environment, pdfDocument);
-    memberWriter.appendMemberTable(classElement);
+    MemberSummaryWriter memberSummaryWriter = new MemberSummaryWriter(environment, pdfDocument);
+    memberSummaryWriter.appendMemberSummary(classElement);
     
-//    Members.printMembers(classDoc);
+    MemberWriter memberWriter = new MemberWriter(environment, pdfDocument);
+    memberWriter.appendMemberDetails(classElement);
+    
     LOG.debug("<");
   }
 
