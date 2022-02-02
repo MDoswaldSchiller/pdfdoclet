@@ -305,11 +305,6 @@ public class PDFDocletNew implements Doclet
     return types;
   }
 
-  private Map<PackageElement, List<TypeElement>> createPackageToTypeMap(List<TypeElement> types)
-  {
-    return types.stream().collect(Collectors.groupingBy(Utils::getPackage));
-  }
-
   private Document createPdfDocument()
   {
     Document pdfDocument = new Document();
