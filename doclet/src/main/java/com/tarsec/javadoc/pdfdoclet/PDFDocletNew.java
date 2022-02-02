@@ -202,7 +202,7 @@ public class PDFDocletNew implements Doclet
 
     pdfDocument.newPage();
 
-    String packageName = packageDoc.getSimpleName().toString();
+    String packageName = packageDoc.getQualifiedName().toString();
 
     // Text "package"
     //State.setCurrentClass("");
