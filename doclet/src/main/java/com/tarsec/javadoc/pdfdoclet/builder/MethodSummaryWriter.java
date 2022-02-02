@@ -12,6 +12,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
@@ -19,7 +20,6 @@ import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Utils;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
@@ -70,7 +70,7 @@ public class MethodSummaryWriter extends AbstractSummaryWriter
     String name = method.getSimpleName().toString();
     String modifier = Utils.getMemberModifiers(method);
     String commentText = Utils.getFirstSentence(environment.getDocTrees(), method);
-    String destination = String.format("%s.%s.%s", type.getQualifiedName(), method.getSimpleName(), method.getParameters().stream().map(v -> v.asType().toString()).collect(Collectors.joining(".")));
+    String destination = Destinations.getMethodLinkQualifier(type, method);
 
     PdfPTable rowTable = addDeclaration(modifier, getReturnType(method, 9));
 

@@ -235,9 +235,18 @@ public class Destinations implements IConstants
   
   public static Phrase createMethodDestination(TypeElement type, ExecutableElement method, String caption, Font font)
   {
+    String linkDestination = getMethodLinkQualifier(type, method);
+    LOG.debug("Create destination 1: " + linkDestination);
+
     Chunk chunk = new Chunk(caption, font);
     Phrase phrase = new Phrase(chunk);
-
+    phrase.add(PDFUtil.createAnchor(linkDestination));
+    
+    return phrase;
+  }
+  
+  public static String getMethodLinkQualifier(TypeElement type, ExecutableElement method)
+  {
     StringBuilder destination = new StringBuilder();
     destination.append(type.getQualifiedName());
     destination.append('.');
@@ -248,22 +257,26 @@ public class Destinations implements IConstants
     }
     destination.append(']');
     
-    LOG.debug("Create destination 1: " + destination);
-    phrase.add(PDFUtil.createAnchor(destination.toString()));
-
-    return phrase;
+    return destination.toString();
   }
+  
+  
   
   public static Phrase createFieldDestination(TypeElement type, VariableElement field, Font font)
   {
     Chunk chunk = new Chunk(field.getSimpleName().toString(), font);
     Phrase phrase = new Phrase(chunk);
 
-    String destination = String.format("%s.%s", type.getQualifiedName(), field.getSimpleName());
+    String destination = getFieldLinkQualifier(type, field);
     LOG.debug("Create destination 1: " + destination);
     phrase.add(PDFUtil.createAnchor(destination));
 
     return phrase;
+  }
+  
+  public static String getFieldLinkQualifier(TypeElement type, VariableElement field)
+  {
+    return String.format("%s.%s", type.getQualifiedName(), field.getSimpleName());
   }
   
   

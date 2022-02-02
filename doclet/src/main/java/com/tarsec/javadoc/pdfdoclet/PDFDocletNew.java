@@ -29,8 +29,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.ElementFilter;
 import javax.tools.Diagnostic;
 import javax.tools.DocumentationTool;
@@ -79,11 +81,35 @@ public class PDFDocletNew implements Doclet
   public void init(Locale locale, Reporter reporter)
   {
     this.reporter = reporter;
+    try {
+      Configuration.start(new String[0][0]);
+    }
+    catch (Exception ex) {
+      ex.printStackTrace();
+    }
   }
+  
+  private void initValidDestinations(DocletEnvironment environment)
+  {
+    for (TypeElement type : ElementFilter.typesIn(environment.getIncludedElements())) {
+      for (ExecutableElement constructor : ElementFilter.constructorsIn(type.getEnclosedElements())) {
+        Destinations.addValidDestination(Destinations.getMethodLinkQualifier(type, constructor));
+      }
+      for (ExecutableElement method : ElementFilter.methodsIn(type.getEnclosedElements())) {
+        Destinations.addValidDestination(Destinations.getMethodLinkQualifier(type, method));
+      }
+      for (VariableElement field : ElementFilter.fieldsIn(type.getEnclosedElements())) {
+        Destinations.addValidDestination(Destinations.getFieldLinkQualifier(type, field));
+      }
+    }
+  }
+  
 
   @Override
   public boolean run(DocletEnvironment environment)
   {
+    initValidDestinations(environment);
+    
     factory = new WriterFactory(environment);
     
     DocTrees docTrees = environment.getDocTrees();
@@ -291,7 +317,7 @@ public class PDFDocletNew implements Doclet
     for (DocTree docTree : fullBody) {
       System.out.println("Type: " + docTree.getKind() + " -> " + docTree.toString());
     }
-    return "bla";
+    return "";
   }
 
   private List<TypeElement> getTypes(DocletEnvironment environment)

@@ -8,6 +8,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
@@ -63,7 +64,7 @@ public class FieldSummaryWriter extends AbstractSummaryWriter
     String name = field.getSimpleName().toString();
     String modifier = Utils.getMemberModifiers(field);
     String commentText = Utils.getFirstSentence(environment.getDocTrees(), field);
-    String destination = String.format("%s.%s", type.getQualifiedName(), field.getSimpleName());
+    String destination = Destinations.getFieldLinkQualifier(type, field);
 
     Element[] objs = HtmlParserWrapper.createPdfObjects(commentText);
 

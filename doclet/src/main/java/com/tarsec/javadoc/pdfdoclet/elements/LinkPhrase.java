@@ -98,7 +98,7 @@ public class LinkPhrase extends Phrase implements IConstants
 
     destination = normalizeDestination(destination);
 
-    if (Destinations.isValid(destination)) {
+    if (Configuration.isLinksCreationActive() && Destinations.isValid(destination)) {
       if (font.getFamily() == Font.FontFamily.TIMES_ROMAN) {
         newFont = Fonts.getFont(TIMES_ROMAN, LINK, (int) size);
       }
@@ -146,8 +146,7 @@ public class LinkPhrase extends Phrase implements IConstants
       label = destination;
     }
 
-    String createLinksProp = Configuration.getProperty(ARG_CREATE_LINKS, ARG_VAL_NO);
-    if (createLinksProp.equalsIgnoreCase(ARG_VAL_NO)) {
+    if (!Configuration.isLinksCreationActive()) {
       destination = null;
     }
 

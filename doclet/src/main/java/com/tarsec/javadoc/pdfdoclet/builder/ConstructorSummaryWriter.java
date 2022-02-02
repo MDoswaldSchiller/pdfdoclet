@@ -12,6 +12,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
@@ -71,35 +72,35 @@ public class ConstructorSummaryWriter extends AbstractSummaryWriter
     String name = type.getSimpleName().toString();
     String modifier = Utils.getMemberModifiers(constructor);
     String commentText = Utils.getFirstSentence(environment.getDocTrees(), constructor);
-    String destination = String.format("%s.%s", type.getQualifiedName(), constructor.getSimpleName());
+    String destination = Destinations.getMethodLinkQualifier(type, constructor);
 
     Element[] objs = HtmlParserWrapper.createPdfObjects(commentText);
 
     PdfPTable commentsTable = createColumnsAndDeprecated(objs, isDeprecated, deprecatedPhrase);
 
+    // Link to constructor
+    Font constructorFont = Fonts.getFont(COURIER, 9);
+    Phrase signaturePhrase = new Phrase("", constructorFont);
+    signaturePhrase.add(new LinkPhrase(destination, name, constructorFont));
+
+    signaturePhrase.add("(");
+    List<? extends VariableElement> parameters = constructor.getParameters();
+    for (int i = 0; i < parameters.size(); i++) {
+      signaturePhrase.add(getParameterTypePhrase(parameters.get(i), 9));
+      signaturePhrase.add(" ");
+      signaturePhrase.add(parameters.get(i).getSimpleName().toString());
+      if (i != (parameters.size() - 1)) {
+        signaturePhrase.add(", ");
+      }
+    }
+    signaturePhrase.add(")");
+
+    PdfPCell cell = PDFUtil.createElementCell(2, signaturePhrase);
+    cell.setPaddingLeft((float) 7.0);
+    
     PdfPTable anotherinnertable = new PdfPTable(1);
     anotherinnertable.setWidthPercentage(100f);
     anotherinnertable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-
-    // Link to constructor
-    Font constructorFont = Fonts.getFont(COURIER, 9);
-    Phrase phrase = new Phrase("", constructorFont);
-    phrase.add(new LinkPhrase(destination, name, constructorFont));
-
-    phrase.add("(");
-    List<? extends VariableElement> parameters = constructor.getParameters();
-    for (int i = 0; i < parameters.size(); i++) {
-      phrase.add(getParameterTypePhrase(parameters.get(i), 9));
-      phrase.add(" ");
-      phrase.add(parameters.get(i).getSimpleName().toString());
-      if (i != (parameters.size() - 1)) {
-        phrase.add(", ");
-      }
-    }
-    phrase.add(")");
-
-    PdfPCell cell = PDFUtil.createElementCell(2, phrase);
-    cell.setPaddingLeft((float) 7.0);
     anotherinnertable.addCell(cell);
     anotherinnertable.addCell(commentsTable);
 
@@ -108,8 +109,4 @@ public class ConstructorSummaryWriter extends AbstractSummaryWriter
 
     mainTable.addCell(innerTable);
   }
-    
-    
-
-  
 }

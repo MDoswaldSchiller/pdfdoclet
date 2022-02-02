@@ -365,7 +365,7 @@ public class PDFDoclet implements IConstants
 
       FilteredRootDoc root = new FilteredRootDoc(rootDoc);
 
-      Configuration.start(root);
+      Configuration.start(root.options());
       Filter.initialize();
       TagList.initialize();
       Appendices.initialize();

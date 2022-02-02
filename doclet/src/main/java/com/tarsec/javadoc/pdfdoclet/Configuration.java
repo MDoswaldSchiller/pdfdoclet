@@ -5,7 +5,6 @@ package com.tarsec.javadoc.pdfdoclet;
 
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
-import com.sun.javadoc.RootDoc;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
 import com.tarsec.javadoc.pdfdoclet.util.Version;
 import java.io.File;
@@ -366,10 +365,9 @@ public class Configuration implements IConstants
    * @param root The javadoc root object.
    * @return The name of the output file
    */
-  public static void start(RootDoc root) throws Exception
+  public static void start(String[][] options) throws Exception
   {
     String configFilename = null;
-    String[][] options = root.options();
 
     // If a config file was specified, process it first
     for (int i = 0; i < options.length; i++) {
