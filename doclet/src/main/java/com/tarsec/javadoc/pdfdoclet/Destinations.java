@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.zip.CRC32;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import org.slf4j.Logger;
@@ -228,6 +229,27 @@ public class Destinations implements IConstants
       LOG.debug("Create destination 4: " + destinationFour);
       phrase.add(PDFUtil.createAnchor(destinationFour));
     }
+
+    return phrase;
+  }
+  
+  public static Phrase createMethodDestination(TypeElement type, ExecutableElement method, String caption, Font font)
+  {
+    Chunk chunk = new Chunk(caption, font);
+    Phrase phrase = new Phrase(chunk);
+
+    StringBuilder destination = new StringBuilder();
+    destination.append(type.getQualifiedName());
+    destination.append('.');
+    destination.append(method.getSimpleName());
+    destination.append('[');
+    for (VariableElement param : method.getParameters()) {
+      destination.append(param.asType()).append(':');
+    }
+    destination.append(']');
+    
+    LOG.debug("Create destination 1: " + destination);
+    phrase.add(PDFUtil.createAnchor(destination.toString()));
 
     return phrase;
   }
