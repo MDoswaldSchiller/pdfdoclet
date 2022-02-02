@@ -4,8 +4,6 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
-import com.tarsec.javadoc.pdfdoclet.writer.IndexWriter;
-import com.tarsec.javadoc.pdfdoclet.writer.TitlePageWriter;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
@@ -13,11 +11,13 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.sun.source.doctree.DocCommentTree;
 import com.sun.source.doctree.DocTree;
 import com.sun.source.util.DocTrees;
-import com.tarsec.javadoc.pdfdoclet.writer.WriterFactory;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
 import com.tarsec.javadoc.pdfdoclet.util.Utils;
+import com.tarsec.javadoc.pdfdoclet.writer.IndexWriter;
+import com.tarsec.javadoc.pdfdoclet.writer.TitlePageWriter;
+import com.tarsec.javadoc.pdfdoclet.writer.WriterFactory;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;

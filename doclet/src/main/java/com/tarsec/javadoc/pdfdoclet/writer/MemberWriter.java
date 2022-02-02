@@ -429,7 +429,7 @@ public class MemberWriter
     
 
     String declaration = Utils.getMemberModifiers(method) + method.getReturnType() + " ";
-    String name = type.getSimpleName().toString();
+    String name = method.getSimpleName().toString();
 
     //State.setCurrentMember(State.getCurrentClass() + "." + name);
 //    State.setCurrentDoc(commentDoc);
