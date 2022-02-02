@@ -109,7 +109,6 @@ public class Appendices implements IConstants
 //    State.setCurrentDoc(null);
     State.setCurrentPackage(null);
     State.setCurrentFile(file);
-    State.increasePackageChapter();
     State.setCurrentHeaderType(HEADER_APPENDIX);
     State.setContinued(false);
     String label = Configuration.getProperty(ARG_LB_APPENDIX, LB_APPENDIX);

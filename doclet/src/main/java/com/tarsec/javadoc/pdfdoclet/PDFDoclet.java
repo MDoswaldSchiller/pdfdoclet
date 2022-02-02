@@ -205,7 +205,6 @@ public class PDFDoclet implements IConstants
       List pkgList = (List) entry.getValue();
       // Get list of classes in package...
       ClassDoc[] pkgClasses = (ClassDoc[]) pkgList.toArray(new ClassDoc[pkgList.size()]);
-      State.increasePackageChapter();
       // Print package info (includes printing classes info)
       printPackage(pkgDoc, pkgClasses);
     }
@@ -285,8 +284,6 @@ public class PDFDoclet implements IConstants
 
     State.setContinued(false);
 
-    State.increasePackageSection();
-
     printClasses(JavadocUtil.sort(packageClasses), packageDoc);
 
     LOG.debug("<");
@@ -344,10 +341,8 @@ public class PDFDoclet implements IConstants
         // Check if this inner class has not yet been handled
         if (innerClassesList.get(innerClasses[u]) == null) {
           innerClassesList.put(innerClasses[u], "x");
-          State.setInnerClass(true);
           ClassDoc innerDoc = (ClassDoc) innerClasses[u];
           printClassWithInnerClasses(innerDoc, packageDoc, true);
-          State.setInnerClass(false);
         }
       }
     }

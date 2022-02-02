@@ -45,7 +45,6 @@ public class Overview implements IConstants
       return;
     }
 
-    State.setOverview(true);
 //    State.setCurrentDoc(rootDoc);
 
     PDFDocument.newPage();
@@ -130,7 +129,6 @@ public class Overview implements IConstants
       }
     }
 
-    State.setOverview(false);
     State.setContinued(false);
   }
 

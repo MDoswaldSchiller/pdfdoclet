@@ -162,7 +162,6 @@ public class PDFDocletNew implements Doclet
         PackageElement pkgDoc = entry.getKey();
         List<TypeElement> pkgList = entry.getValue();
 
-        State.increasePackageChapter();
         printPackage(pdfDocument, pkgDoc, pkgList, docTrees);
       }
 
@@ -239,8 +238,6 @@ public class PDFDocletNew implements Doclet
 
     State.setContinued(false);
 
-    State.increasePackageSection();
-
     printClasses(Utils.createSorted(types), packageDoc);
   }
   
@@ -288,11 +285,8 @@ public class PDFDocletNew implements Doclet
     else {
       LOG.debug("Print class: " + doc.getSimpleName());
     }
-    
+
     factory.createClassParagraph(doc).appendTo(PDFDocument.instance());
-   
-    
-   
 
     List<? extends Element> innerClasses = doc.getEnclosedElements();
     
@@ -300,9 +294,7 @@ public class PDFDocletNew implements Doclet
       // Check if this inner class has not yet been handled
       if (innerClassesList.get(type) == null) {
         innerClassesList.put(type, "x");
-        State.setInnerClass(true);
         printClassWithInnerClasses(type, packageDoc, true);
-        State.setInnerClass(false);
       }
     }
   }

@@ -48,7 +48,6 @@ public class Classes implements IConstants
     LOG.debug(">");
 
     PDFDocument.newPage();
-    State.increasePackageSection();
 
     State.setCurrentClass(classDoc.qualifiedName());
 //    State.setCurrentDoc(classDoc);

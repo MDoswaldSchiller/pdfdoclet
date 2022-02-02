@@ -14,7 +14,6 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
-import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -189,13 +188,6 @@ public abstract class HTMLTag implements IConstants
 
           String text = (String) obj;
           if (text.length() > 0) {
-            // Keep in memory if the text ended with a blank or not
-            if (text.endsWith(" ")) {
-              State.setLastTagEndedWithText(true);
-            }
-            else {
-              State.setLastTagEndedWithText(false);
-            }
             if (!isPre()) {
               // For all tag types other than PRE, remove hard-coded
               // line breaks and encode additional blanks between 

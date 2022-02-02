@@ -401,7 +401,6 @@ public class Configuration implements IConstants
     // look for a config file and debug parameter first
     boolean log4jInitialized = false;
     if (getBooleanConfigValue(ARG_DEBUG, false)) {
-      State.setDebug(true);
       Util.initLog4j(true);
       log4jInitialized = true;
     }

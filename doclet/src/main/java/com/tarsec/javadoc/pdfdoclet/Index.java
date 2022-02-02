@@ -127,7 +127,6 @@ public class Index implements IConstants
     LOG.debug("** Start creating Index...");
 
     State.setCurrentHeaderType(HEADER_INDEX);
-    State.increasePackageChapter();
 
     // Name of the package (large font)
     pdfDocument.newPage();

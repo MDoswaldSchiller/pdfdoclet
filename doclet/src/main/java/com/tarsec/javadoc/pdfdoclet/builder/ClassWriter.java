@@ -63,8 +63,6 @@ public class ClassWriter
     pdfDocument.newPage();
     Index.getInstance().addToMemberList(classElement.getSimpleName(), State.getCurrentPage() /*pdfDocument.getPageNumber()*/);
     
-    State.increasePackageSection();
-
     addTypeHeader(pdfDocument);
     addTypeHierarchy(pdfDocument);
 

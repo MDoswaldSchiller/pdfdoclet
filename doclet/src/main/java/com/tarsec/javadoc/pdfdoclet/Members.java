@@ -58,7 +58,6 @@ public class Members implements IConstants
     }
 
     LOG.debug("Print fields...");
-    State.setTypeOfCurrentMember(State.TYPE_FIELD);
     FieldDoc[] fields = classDoc.fields();
 
     if ((fields != null) && (fields.length > 0)) {
@@ -96,7 +95,6 @@ public class Members implements IConstants
     }
 
     LOG.debug("Print constructors...");
-    State.setTypeOfCurrentMember(State.TYPE_CONSTRUCTOR);
     ConstructorDoc[] constructors = classDoc.constructors();
 
     if ((constructors != null) && (constructors.length > 0)) {
@@ -134,7 +132,6 @@ public class Members implements IConstants
     }
 
     LOG.debug("Print methods...");
-    State.setTypeOfCurrentMember(State.TYPE_METHOD);
     MethodDoc[] methods = classDoc.methods();
 
     if ((methods != null) && (methods.length > 0)) {
@@ -160,7 +157,6 @@ public class Members implements IConstants
           State.setLastMethod(true);
         }
 
-        State.increasePackageMethod();
         State.setCurrentMethod(methods[i].name());
 
         Phrase returnType = PDFUtil.getReturnType(methods[i], 10);
@@ -180,7 +176,6 @@ public class Members implements IConstants
       }
     }
 
-    State.setTypeOfCurrentMember(State.TYPE_NONE);
     LOG.debug("<");
   }
 
