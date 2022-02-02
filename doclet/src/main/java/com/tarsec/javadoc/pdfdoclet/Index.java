@@ -12,7 +12,6 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +39,7 @@ public class Index implements IConstants
    * Holds a list of all classes, methods, constructors and fields.
    */
   private final Set<String> memberList = new TreeSet<>();
+  
   private Document pdfDocument = null;
   private PdfWriter pdfWriter = null;
 
@@ -215,35 +215,5 @@ public class Index implements IConstants
     LOG.debug("** Index created.");
 
     LOG.debug("<");
-  }
-
-  /**
-   * Inner class used to sort member page numbers.
-   */
-  class PageNumberSorter implements Comparator
-  {
-
-    /**
-     * Implements the Comparator interface. Makes sure that the page numbers of
-     * a member are sorted in ascending order.
-     *
-     * @param o1 The first entry for the comparison.
-     * @param o2 The second entry for the comparison.
-     * @return A value defining the order.
-     */
-    @Override
-    public int compare(Object o1, Object o2)
-    {
-      Integer int1 = (Integer) o1;
-      Integer int2 = (Integer) o2;
-      int result = -1;
-      if (int1.intValue() == int2.intValue()) {
-        result = 0;
-      }
-      if (int1.intValue() > int2.intValue()) {
-        result = 1;
-      }
-      return result;
-    }
   }
 }
