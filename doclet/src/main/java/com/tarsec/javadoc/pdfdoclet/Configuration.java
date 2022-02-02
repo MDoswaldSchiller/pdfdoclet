@@ -70,6 +70,8 @@ public class Configuration implements IConstants
    */
   private static boolean isShowExternalInheritedSummaryActive = false;
 
+  private static boolean isCreateIndexActive = true;
+  
   /**
    * Flag which determines if a bookmark frame should be created
    */
@@ -261,6 +263,12 @@ public class Configuration implements IConstants
     return isFilterActive;
   }
 
+  public static boolean isCreateIndexActive()
+  {
+    LOG.debug("Create index active: " + isCreateIndexActive);
+    return isCreateIndexActive;
+  }
+  
   /**
    * Returns the String with the comma-separated list of packages which defines
    * the order of those packages in the bookmarks frame.
@@ -508,6 +516,7 @@ public class Configuration implements IConstants
     isFilterActive = getBooleanConfigValue(ARG_FILTER, false);
     isCreateLinksActive = getBooleanConfigValue(ARG_CREATE_LINKS, true);
     isCreateFrame = getBooleanConfigValue(ARG_CREATE_FRAME, true);
+    isCreateIndexActive = getBooleanConfigValue(ARG_CREATE_INDEX, true);
     LOG.debug("Show author tag: " + isShowAuthorActive);
     LOG.debug("Show version tag: " + isShowVersionActive);
     LOG.debug("Show since tag: " + isShowSinceActive);
@@ -516,6 +525,7 @@ public class Configuration implements IConstants
     LOG.debug("Show external inherited summary tables: " + isShowExternalInheritedSummaryActive);
     LOG.debug("Filter active: " + isFilterActive);
     LOG.debug("Create links: " + isCreateLinksActive);
+    LOG.debug("Create index: " + isCreateIndexActive);
     LOG.debug("Create bookmarks frame: " + isCreateFrame);
   }
 

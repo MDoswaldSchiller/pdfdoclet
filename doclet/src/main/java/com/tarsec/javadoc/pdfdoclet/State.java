@@ -500,7 +500,8 @@ public class State
    */
   public static boolean isContinued()
   {
-    return isContinued;
+    //return isContinued;
+    return false;
   }
 
   /**

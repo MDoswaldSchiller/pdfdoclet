@@ -10,6 +10,7 @@ import com.sun.source.doctree.DocCommentTree;
 import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.Implementors;
+import com.tarsec.javadoc.pdfdoclet.Index;
 import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
@@ -32,7 +33,6 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.ElementFilter;
-import javax.lang.model.util.Types;
 import jdk.javadoc.doclet.DocletEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,9 +59,10 @@ public class ClassWriter
   public void appendTo(Document pdfDocument) throws DocumentException
   {
     LOG.debug(">class: {}", classElement.getQualifiedName());
-    Types typeUtils = environment.getTypeUtils();
 
     pdfDocument.newPage();
+    Index.getInstance().addToMemberList(classElement.getSimpleName(), State.getCurrentPage() /*pdfDocument.getPageNumber()*/);
+    
     State.increasePackageSection();
 
     addTypeHeader(pdfDocument);

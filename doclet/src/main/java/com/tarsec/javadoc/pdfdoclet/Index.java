@@ -13,10 +13,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Hashtable;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,24 +27,24 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 1.1 $
  * @author Marcel Schoen
  */
-public class Index implements IConstants, Comparator
+public class Index implements IConstants
 {
   private static final Logger LOG = LoggerFactory.getLogger(Index.class);
 
   /**
    * Container for member index information
    */
-  private static Hashtable memberIndex = new Hashtable();
-
-  private PageNumberSorter pageNumberSorter = new PageNumberSorter();
+  private final Map<String,Set<Integer>> memberIndex = new HashMap<>();
 
   /**
    * Holds a list of all classes, methods, constructors and fields.
    */
-  private static TreeMap memberList = new TreeMap();
+  private final Set<String> memberList = new TreeSet<>();
   private Document pdfDocument = null;
   private PdfWriter pdfWriter = null;
 
+  private static Index theInstance;
+  
   /**
    * Constructs an Index object for a given document.
    *
@@ -55,8 +55,15 @@ public class Index implements IConstants, Comparator
   {
     this.pdfWriter = writer;
     this.pdfDocument = document;
+    
+    theInstance = this;
   }
 
+  public static Index getInstance()
+  {
+    return theInstance;
+  }
+  
   /**
    * Adds a member (field or method) to the internal list used for the index
    * creation.
@@ -67,30 +74,29 @@ public class Index implements IConstants, Comparator
   public void addToMemberList(CharSequence memberName)
   {
     LOG.debug(">");
-    // Separate name of unqualified member only
-    String nameAsString = memberName.toString();
-    String memberShortName = nameAsString.substring(nameAsString.lastIndexOf(".") + 1, memberName.length());
-    addPageNoForMember(memberShortName);
-    memberList.put(memberShortName, memberShortName);
+    addMemberWithPage(memberName.toString(), State.getCurrentPage());
     LOG.debug("<");
   }
-
-  /**
-   * Creates a list for all page numbers of a given member if necessary. The
-   * current page number is then added to that list.
-   *
-   * @param memberName The short, unqualified member name.
-   */
-  private void addPageNoForMember(String memberName)
+  
+  public void addToMemberList(CharSequence memberName, int page)
   {
-    LOG.debug(">");
-    if (memberIndex.get(memberName) == null) {
-      memberIndex.put(memberName, new TreeSet());
-    }
-    TreeSet list = (TreeSet) memberIndex.get(memberName);
-    list.add(new Integer(State.getCurrentPage()));
-    LOG.debug("<");
+    addMemberWithPage(memberName.toString(), page);
   }
+  
+  private void addMemberWithPage(String memberName, int page)
+  {
+    String memberShortName = memberName.substring(memberName.lastIndexOf(".") + 1, memberName.length());
+    if (memberIndex.get(memberShortName) == null) {
+      memberIndex.put(memberShortName, new TreeSet());
+    }
+    
+    Set<Integer> list = memberIndex.get(memberName);
+    list.add(page);
+    
+    memberList.add(memberShortName);
+  }
+  
+  
 
   /**
    * Returns an Iterator for iterating through a sorted list of all page numbers
@@ -99,13 +105,9 @@ public class Index implements IConstants, Comparator
    * @param memberName The short, unqualified member name.
    * @return The iterator for the sorted page numbers (Integer objects).
    */
-  private Iterator getSortedPageNumbers(String memberName)
+  private Set<Integer> getSortedPageNumbers(String memberName)
   {
-    LOG.debug(">");
-    TreeSet list = (TreeSet) memberIndex.get(memberName);
-    Collections.synchronizedSet(list);
-    LOG.debug("<");
-    return list.iterator();
+    return memberIndex.get(memberName);
   }
 
   /**
@@ -117,7 +119,7 @@ public class Index implements IConstants, Comparator
   {
     LOG.debug(">");
 
-    if (!Configuration.getBooleanConfigValue(ARG_CREATE_INDEX, false)) {
+    if (!Configuration.isCreateIndexActive()) {
       LOG.debug("Index creation disabled.");
       return;
     }
@@ -133,7 +135,7 @@ public class Index implements IConstants, Comparator
     // Create "Index" bookmark
     String label = Configuration.getProperty(ARG_LB_OUTLINE_INDEX, LB_INDEX);
     String dest = "INDEX:";
-    Bookmarks.addRootBookmark(label, dest);
+//    Bookmarks.addRootBookmark(label, dest);
     Chunk indexChunk = new Chunk(label, Fonts.getFont(TIMES_ROMAN, BOLD, 30));
     indexChunk.setLocalDestination(dest);
 
@@ -151,22 +153,13 @@ public class Index implements IConstants, Comparator
 
     // fill index columns with text
     String letter = "";
-    Set keys = memberList.keySet();
+    Set<String> keys = memberList;
 
     // keys must be sorted case unsensitive
-    ArrayList sortedKeys = new ArrayList(keys.size());
+    List<String> sortedKeys = new ArrayList(keys);
+    Collections.sort(sortedKeys, String.CASE_INSENSITIVE_ORDER);
 
-    // Build sorted list of all entries
-    Iterator keysIterator = keys.iterator();
-    while (keysIterator.hasNext()) {
-      sortedKeys.add(keysIterator.next());
-    }
-    Collections.sort(sortedKeys, this);
-
-    Iterator realNames = sortedKeys.iterator();
-
-    while (realNames.hasNext()) {
-      String memberName = (String) realNames.next();
+    for (String memberName : sortedKeys) {
       String currentLetter = memberName.substring(0, 1).toUpperCase();
       LOG.debug("Create index entry for " + memberName);
 
@@ -184,14 +177,12 @@ public class Index implements IConstants, Comparator
       Paragraph phrase = new Paragraph((float) 10.0);
       phrase.add(new Chunk("\n" + memberName + "  ", Fonts.getFont(TIMES_ROMAN, 9)));
 
-      Iterator sortedPages = getSortedPageNumbers(memberName);
       boolean firstNo = true;
-      while (sortedPages.hasNext()) {
-        Integer pageNo = (Integer) sortedPages.next();
+      for (Integer pageNo : getSortedPageNumbers(memberName)) {
         // Always add 1 to the stored value, because the pages were
         // counted beginning with 0 internally, but their visible
         // numbering starts with 1
-        String pageNumberText = String.valueOf(pageNo.intValue() + 1);
+        String pageNumberText = String.valueOf(pageNo + 1);
         if (!firstNo) {
           phrase.add(new Chunk(", ", Fonts.getFont(TIMES_ROMAN, 9)));
         }
@@ -224,20 +215,6 @@ public class Index implements IConstants, Comparator
     LOG.debug("** Index created.");
 
     LOG.debug("<");
-  }
-
-  /**
-   * Implements the Comparator interface. Makes sure that the member names are
-   * sorted alphabetically, but WITHOUT regard to upper-/lowercase letters.
-   *
-   * @param o1 The first entry for the comparison.
-   * @param o2 The second entry for the comparison.
-   * @return A value defining the order.
-   */
-  @Override
-  public int compare(Object o1, Object o2)
-  {
-    return ((String) o1).compareToIgnoreCase((String) o2);
   }
 
   /**

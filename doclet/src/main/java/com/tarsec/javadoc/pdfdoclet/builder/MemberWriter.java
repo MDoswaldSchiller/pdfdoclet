@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.tarsec.javadoc.pdfdoclet.builder;
 
 import com.itextpdf.text.Chunk;
@@ -16,6 +12,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.IConstants;
+import com.tarsec.javadoc.pdfdoclet.Index;
 import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.elements.CellNoBorderNoPadding;
 import com.tarsec.javadoc.pdfdoclet.elements.CustomPdfPCell;
@@ -224,6 +221,7 @@ public class MemberWriter
 
     LOG.debug("<");
     pdfDocument.add(table);
+    Index.getInstance().addToMemberList(field.getSimpleName(), State.getCurrentPage() /*pdfDocument.getPageNumber()*/);
   }
   
   
@@ -560,6 +558,7 @@ public class MemberWriter
 
     LOG.debug("<");
     pdfDocument.add(table);
+    Index.getInstance().addToMemberList(method.getSimpleName(), State.getCurrentPage() /*pdfDocument.getPageNumber()*/);
   }
   
   
