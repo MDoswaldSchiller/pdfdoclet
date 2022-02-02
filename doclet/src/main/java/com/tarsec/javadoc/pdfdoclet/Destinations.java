@@ -8,10 +8,7 @@ package com.tarsec.javadoc.pdfdoclet;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Phrase;
-import com.sun.javadoc.ConstructorDoc;
 import com.sun.javadoc.ExecutableMemberDoc;
-import com.sun.javadoc.MethodDoc;
-import com.sun.javadoc.ProgramElementDoc;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import java.io.File;
 import java.io.IOException;
@@ -39,12 +36,12 @@ public class Destinations implements IConstants
   /**
    * Stores the names of all valid destinations.
    */
-  private static Properties destinations = new Properties();
+  private static final Properties destinations = new Properties();
 
   /**
    * Stores the names of the .html files that we process
    */
-  private static HashSet destinationFiles = new HashSet();
+  private static final HashSet destinationFiles = new HashSet();
 
   /**
    * Adds a file that can be linked to with an HTML anchor tag. Generally these
@@ -87,7 +84,7 @@ public class Destinations implements IConstants
    */
   public static void addValidDestination(String destination)
   {
-    LOG.debug("Add: " + destination);
+    LOG.debug("Add: {}", destination);
     destinations.setProperty(destination, "x");
   }
 
@@ -142,58 +139,6 @@ public class Destinations implements IConstants
 
     return "_LOCAL:" + fileHash + ":" + htmlAnchor.trim();
   }
-
-  /**
-   * Creates a destination in the document. This method does nothing if the
-   * given destination is invalid.
-   * <p>
-   * This method creates a phrase with one or two empty chunks who only serve as
-   * holders for the destinations.
-   *
-   * @param label The label for the destination.
-   * @param doc The javadoc element for which to create a destination.
-   * @param font The font for the label.
-   * @return The Phrase with the destination in it.
-   */
-  public static Phrase createDestination(String label, ProgramElementDoc doc, Font font)
-  {
-    boolean multiPart = false;
-    Chunk chunk = null;
-    boolean canHaveParms = false;
-    if (doc instanceof ConstructorDoc
-        || doc instanceof MethodDoc) {
-      canHaveParms = true;
-      LOG.debug("is method or constructor.");
-    }
-
-    if (canHaveParms) {
-      multiPart = true;
-      LOG.debug("Create multi-part link.");
-    }
-    chunk = new Chunk(label, font);
-    Phrase phrase = new Phrase(chunk);
-
-    String destination = doc.qualifiedName();
-    LOG.debug("Create destination 1: " + destination);
-    phrase.add(PDFUtil.createAnchor(destination));
-    if (multiPart) {
-      ExecutableMemberDoc execDoc = (ExecutableMemberDoc) doc;
-      String destinationTwo = destination + "()";
-      LOG.debug("Create destination 2: " + destinationTwo);
-      phrase.add(PDFUtil.createAnchor(destinationTwo));
-
-      String destinationThree = destination + execDoc.signature();
-      LOG.debug("Create destination 3: " + destinationThree);
-      phrase.add(PDFUtil.createAnchor(destinationThree));
-
-      String destinationFour = destination + execDoc.flatSignature();
-      LOG.debug("Create destination 4: " + destinationFour);
-      phrase.add(PDFUtil.createAnchor(destinationFour));
-    }
-
-    return phrase;
-  }
-
   
   public static Phrase createDestination(String label, TypeElement doc, Font font)
   {
@@ -277,21 +222,5 @@ public class Destinations implements IConstants
   public static String getFieldLinkQualifier(TypeElement type, VariableElement field)
   {
     return String.format("%s.%s", type.getQualifiedName(), field.getSimpleName());
-  }
-  
-  
-  /**
-   * Creates a link to a destination in the document. This method does nothing
-   * if the given destination is invalid.
-   *
-   * @param destination The destination for the link.
-   */
-  public static void createLinkTo(ProgramElementDoc doc, Chunk chunk)
-  {
-    String destination = doc.qualifiedName();
-    if (destinations.get(destination) != null) {
-      LOG.debug("Create link to: " + destination);
-      chunk.setLocalGoto(destination);
-    }
   }
 }

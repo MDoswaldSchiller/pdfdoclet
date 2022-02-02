@@ -3,6 +3,8 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
+import com.tarsec.javadoc.pdfdoclet.writer.IndexWriter;
+import com.tarsec.javadoc.pdfdoclet.writer.TitlePageWriter;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
@@ -50,7 +52,7 @@ public class PDFDoclet implements IConstants
   /**
    * Index generation class reference.
    */
-  private static Index index = null;
+  private static IndexWriter index = null;
 
   /**
    * Reference to the PDF file.
@@ -120,11 +122,11 @@ public class PDFDoclet implements IConstants
     }
 
     // Prepare index
-    index = new Index(pdfWriter, PDFDocument.instance());
+    index = new IndexWriter(pdfWriter, PDFDocument.instance());
 
     // Print title page
     LOG.debug("print Title page...");
-    TitlePage title = new TitlePage(PDFDocument.instance());
+    TitlePageWriter title = new TitlePageWriter(PDFDocument.instance());
     title.print();
     PDFDocument.instance().newPage();
 
@@ -536,7 +538,7 @@ public class PDFDoclet implements IConstants
    *
    * @return The index object.
    */
-  public static Index getIndex()
+  public static IndexWriter getIndex()
   {
     return index;
   }

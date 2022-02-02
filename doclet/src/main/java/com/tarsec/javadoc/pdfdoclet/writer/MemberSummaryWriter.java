@@ -1,4 +1,4 @@
-package com.tarsec.javadoc.pdfdoclet.builder;
+package com.tarsec.javadoc.pdfdoclet.writer;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;

@@ -1,7 +1,7 @@
 /*
  * @Copyright: Marcel Schoen, Switzerland, 2004, All Rights Reserved.
  */
-package com.tarsec.javadoc.pdfdoclet;
+package com.tarsec.javadoc.pdfdoclet.writer;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -10,15 +10,20 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.tarsec.javadoc.pdfdoclet.Configuration;
+import com.tarsec.javadoc.pdfdoclet.Fonts;
+import com.tarsec.javadoc.pdfdoclet.State;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import static com.tarsec.javadoc.pdfdoclet.IConstants.*;
 
 /**
  * Creates and alphabetical index at the end of the API document.
@@ -26,9 +31,9 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 1.1 $
  * @author Marcel Schoen
  */
-public class Index implements IConstants
+public class IndexWriter
 {
-  private static final Logger LOG = LoggerFactory.getLogger(Index.class);
+  private static final Logger LOG = LoggerFactory.getLogger(IndexWriter.class);
 
   /**
    * Container for member index information
@@ -40,10 +45,10 @@ public class Index implements IConstants
    */
   private final Set<String> memberList = new TreeSet<>();
   
-  private Document pdfDocument = null;
-  private PdfWriter pdfWriter = null;
+  private final Document pdfDocument;
+  private final PdfWriter pdfWriter;
 
-  private static Index theInstance;
+  private static IndexWriter theInstance;
   
   /**
    * Constructs an Index object for a given document.
@@ -51,15 +56,15 @@ public class Index implements IConstants
    * @param writer The PdfWriter used to create the document.
    * @param document The PDF document.
    */
-  public Index(PdfWriter writer, Document document)
+  public IndexWriter(PdfWriter writer, Document document)
   {
-    this.pdfWriter = writer;
-    this.pdfDocument = document;
+    this.pdfWriter = Objects.requireNonNull(writer);
+    this.pdfDocument = Objects.requireNonNull(document);
     
     theInstance = this;
   }
 
-  public static Index getInstance()
+  public static IndexWriter getInstance()
   {
     return theInstance;
   }

@@ -1,4 +1,4 @@
-package com.tarsec.javadoc.pdfdoclet.builder;
+package com.tarsec.javadoc.pdfdoclet.writer;
 
 import javax.lang.model.element.TypeElement;
 import jdk.javadoc.doclet.DocletEnvironment;

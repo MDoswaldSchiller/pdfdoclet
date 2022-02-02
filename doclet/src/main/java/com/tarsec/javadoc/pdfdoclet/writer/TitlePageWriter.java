@@ -1,16 +1,23 @@
 /*
  * @Copyright: Marcel Schoen, Switzerland, 2005, All Rights Reserved.
  */
-package com.tarsec.javadoc.pdfdoclet;
+package com.tarsec.javadoc.pdfdoclet.writer;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
+import com.tarsec.javadoc.pdfdoclet.Bookmarks;
+import com.tarsec.javadoc.pdfdoclet.Configuration;
+import com.tarsec.javadoc.pdfdoclet.Destinations;
+import com.tarsec.javadoc.pdfdoclet.Fonts;
+import com.tarsec.javadoc.pdfdoclet.IConstants;
+import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
 import java.io.File;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,22 +28,20 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 1.1 $
  * @author Marcel Schoen
  */
-public class TitlePage implements IConstants
+public class TitlePageWriter implements IConstants
 {
-  private static final Logger LOG = LoggerFactory.getLogger(TitlePage.class);
+  private static final Logger LOG = LoggerFactory.getLogger(TitlePageWriter.class);
 
-  private static boolean titlePrinted = false;
-
-  private Document pdfDocument = null;
+  private final Document pdfDocument;
 
   /**
    * Constructs a TitlePage object.
    *
    * @param pdfDocument The document into which the title page will be inserted.
    */
-  public TitlePage(Document pdfDocument)
+  public TitlePageWriter(Document pdfDocument)
   {
-    this.pdfDocument = pdfDocument;
+    this.pdfDocument = Objects.requireNonNull(pdfDocument);
   }
 
   /**

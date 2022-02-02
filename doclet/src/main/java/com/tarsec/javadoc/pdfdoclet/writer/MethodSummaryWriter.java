@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.tarsec.javadoc.pdfdoclet.builder;
+package com.tarsec.javadoc.pdfdoclet.writer;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -27,7 +27,7 @@ import jdk.javadoc.doclet.DocletEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import static com.tarsec.javadoc.pdfdoclet.IConstants.COURIER;
-import static com.tarsec.javadoc.pdfdoclet.builder.AbstractSummaryWriter.*;
+import static com.tarsec.javadoc.pdfdoclet.writer.AbstractSummaryWriter.*;
 
 /**
  *

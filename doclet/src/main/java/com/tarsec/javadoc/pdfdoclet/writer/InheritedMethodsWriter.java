@@ -1,4 +1,4 @@
-package com.tarsec.javadoc.pdfdoclet.builder;
+package com.tarsec.javadoc.pdfdoclet.writer;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -19,8 +19,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.ElementFilter;
@@ -33,37 +33,37 @@ import static com.tarsec.javadoc.pdfdoclet.IConstants.*;
  *
  * @author mdo
  */
-public class InheritedFieldsWriter
+public class InheritedMethodsWriter
 {
-  private static final Logger LOG = LoggerFactory.getLogger(InheritedFieldsWriter.class);
+  private static final Logger LOG = LoggerFactory.getLogger(InheritedMethodsWriter.class);
   
   protected final DocletEnvironment environment;
   protected Document pdfDocument;
 
-  public InheritedFieldsWriter(DocletEnvironment environment, Document pdfDocument)
+  public InheritedMethodsWriter(DocletEnvironment environment, Document pdfDocument)
   {
     this.environment = Objects.requireNonNull(environment);
     this.pdfDocument = Objects.requireNonNull(pdfDocument);
   }  
   
-  public void addInheritedFieldsInfo(TypeElement type) throws DocumentException
+  public void addInheritedMethodsInfo(TypeElement type) throws DocumentException
   {
     Set<TypeElement> superTypes = new LinkedHashSet<>();
     Set<TypeElement> interfaces = new LinkedHashSet<>();
     fillSuperTypes(type, superTypes, interfaces);
     
     for (TypeElement typeElement : Stream.concat(superTypes.stream(), interfaces.stream()).toList()) {
-      List<VariableElement> fields = ElementFilter.fieldsIn(typeElement.getEnclosedElements());
-      if (!fields.isEmpty()) {
-        addInheritedFieldsBox(typeElement, fields);
+      List<ExecutableElement> methods = ElementFilter.methodsIn(typeElement.getEnclosedElements());
+      if (!methods.isEmpty()) {
+        addInheritedMethodsBox(typeElement, methods);
       }
     }
   }
   
-  private void addInheritedFieldsBox(TypeElement typeElement, List<VariableElement> fields) throws DocumentException
+  private void addInheritedMethodsBox(TypeElement typeElement, List<ExecutableElement> methods) throws DocumentException
   {
-    fields.sort(Comparator.comparing(field -> field.getSimpleName().toString()));
-    LOG.debug("Fields: " + fields.size());
+    methods.sort(Comparator.comparing(method -> method.getSimpleName().toString()));
+    LOG.debug("Methods: " + methods.size());
 
     // Create cell for additional spacing below
     PdfPCell spacingCell = new PdfPCell();
@@ -79,7 +79,7 @@ public class InheritedFieldsWriter
 
     Paragraph newLine = new Paragraph();
     String type = (typeElement.getKind() == ElementKind.INTERFACE ? "interface" : "class");
-    newLine.add(new Chunk("Fields inherited from " + type + " ",
+    newLine.add(new Chunk("Methods inherited from " + type + " ",
                           Fonts.getFont(TIMES_ROMAN, BOLD, 10)));
     newLine.add(new LinkPhrase(typeElement.getQualifiedName().toString(),
                                null, 10, false));
@@ -88,13 +88,13 @@ public class InheritedFieldsWriter
 
     Paragraph paraList = new Paragraph();
 
-    for (int i = 0; i < fields.size(); i++) {
-      String name = fields.get(i).getSimpleName().toString();
-      String destination = String.format("%s.%s", typeElement.getQualifiedName(), fields.get(i).getSimpleName());
+    for (int i = 0; i < methods.size(); i++) {
+      String name = methods.get(i).getSimpleName().toString();
+      String destination = String.format("%s.%s", typeElement.getQualifiedName(), methods.get(i).getSimpleName());
 
       paraList.add(new LinkPhrase(destination, name, 10, false));
 
-      if (i != (fields.size() - 1)) {
+      if (i != (methods.size() - 1)) {
         paraList.add(new Chunk(", ", Fonts.getFont(TIMES_ROMAN, 9)));
       }
     }

@@ -1,4 +1,4 @@
-package com.tarsec.javadoc.pdfdoclet.builder;
+package com.tarsec.javadoc.pdfdoclet.writer;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -10,7 +10,6 @@ import com.sun.source.doctree.DocCommentTree;
 import com.tarsec.javadoc.pdfdoclet.Destinations;
 import com.tarsec.javadoc.pdfdoclet.Fonts;
 import com.tarsec.javadoc.pdfdoclet.Implementors;
-import com.tarsec.javadoc.pdfdoclet.Index;
 import com.tarsec.javadoc.pdfdoclet.State;
 import com.tarsec.javadoc.pdfdoclet.elements.LinkPhrase;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
@@ -61,7 +60,7 @@ public class ClassWriter
     LOG.debug(">class: {}", classElement.getQualifiedName());
 
     pdfDocument.newPage();
-    Index.getInstance().addToMemberList(classElement.getSimpleName(), State.getCurrentPage() /*pdfDocument.getPageNumber()*/);
+    IndexWriter.getInstance().addToMemberList(classElement.getSimpleName(), State.getCurrentPage() /*pdfDocument.getPageNumber()*/);
     
     addTypeHeader(pdfDocument);
     addTypeHierarchy(pdfDocument);

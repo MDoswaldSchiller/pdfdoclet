@@ -4,6 +4,8 @@
  */
 package com.tarsec.javadoc.pdfdoclet;
 
+import com.tarsec.javadoc.pdfdoclet.writer.IndexWriter;
+import com.tarsec.javadoc.pdfdoclet.writer.TitlePageWriter;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
@@ -11,7 +13,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.sun.source.doctree.DocCommentTree;
 import com.sun.source.doctree.DocTree;
 import com.sun.source.util.DocTrees;
-import com.tarsec.javadoc.pdfdoclet.builder.WriterFactory;
+import com.tarsec.javadoc.pdfdoclet.writer.WriterFactory;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
 import com.tarsec.javadoc.pdfdoclet.util.Util;
@@ -127,10 +129,10 @@ public class PDFDocletNew implements Doclet
 
       // Bookmarks.init();
       // Prepare index
-      Index index = new Index(pdfWriter, pdfDocument);
+      IndexWriter index = new IndexWriter(pdfWriter, pdfDocument);
 
       reporter.print(Diagnostic.Kind.NOTE, "Prepare title page");
-      TitlePage title = new TitlePage(pdfDocument);
+      TitlePageWriter title = new TitlePageWriter(pdfDocument);
       title.print();
       pdfDocument.newPage();
 
