@@ -137,7 +137,6 @@ public class AbstractSummaryWriter
   
   protected LinkPhrase getParameterTypePhrase(VariableElement param, int fontSize)
   {
-    System.out.println("Type: " + param.asType());
     javax.lang.model.element.Element paramElement = environment.getTypeUtils().asElement(param.asType());
     
     String fullType = paramElement != null ? paramElement.toString() : param.asType().toString();

@@ -9,7 +9,6 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.sun.source.doctree.DocCommentTree;
-import com.sun.source.doctree.DocTree;
 import com.sun.source.util.DocTrees;
 import com.tarsec.javadoc.pdfdoclet.html.HtmlParserWrapper;
 import com.tarsec.javadoc.pdfdoclet.util.PDFUtil;
@@ -57,7 +56,7 @@ public class PDFDocletNew implements Doclet
   /**
    * Reference to the PDF file.
    */
-  private Path pdfOutputFile = Paths.get("/tmp/test.pdf");
+  private Path pdfOutputFile;
 
   private Reporter reporter;
 
@@ -307,11 +306,8 @@ public class PDFDocletNew implements Doclet
     if (comment == null) {
       return "";
     }
-    List<? extends DocTree> fullBody = comment.getFullBody();
-    for (DocTree docTree : fullBody) {
-      System.out.println("Type: " + docTree.getKind() + " -> " + docTree.toString());
-    }
-    return "";
+    
+    return comment.getBody().toString();
   }
 
   private List<TypeElement> getTypes(DocletEnvironment environment)
@@ -330,20 +326,8 @@ public class PDFDocletNew implements Doclet
     Document pdfDocument = new Document();
     pdfDocument.setPageSize(Configuration.getPageSize());
     pdfDocument.setMargins(LEFT_MARGIN_WIDTH, RIGHT_MARGIN_WIDTH, TOP_MARGIN_WIDTH, BOTTOM_MARGIN_WIDTH);
-    //pdfDocument.open();
 
     return pdfDocument;
-  }
-
-  public void printElement(DocTrees trees, Element e)
-  {
-    DocCommentTree docCommentTree = trees.getDocCommentTree(e);
-    if (docCommentTree != null) {
-      System.out.println("Element (" + e.getKind() + ": "
-                         + e + ") has the following comments:");
-      System.out.println("Entire body: " + docCommentTree.getFullBody());
-      System.out.println("Block tags: " + docCommentTree.getBlockTags());
-    }
   }
 
   @Override
@@ -422,6 +406,7 @@ public class PDFDocletNew implements Doclet
         "-docletpath", "/home/mdo/Dev/MIS/Japi/1_general/trunk/schiller-general-layer/commons/commons-core/target/", 
         "-sourcepath", "/home/mdo/Dev/MIS/Japi/1_general/trunk/schiller-general-layer/commons/commons-core/src/main/java/", 
         "-classpath", "/home/mdo/.m2/repository/org/slf4j/slf4j-api/1.7.35/slf4j-api-1.7.35.jar:/home/mdo/.m2/repository/org/checkerframework/checker-qual/3.21.1/checker-qual-3.21.1.jar:/home/mdo/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-linux.jar",
+        "--pdf=/tmp/bla.pdf",
         "ch.schiller.japi.commons.io"
     };
     DocumentationTool docTool = ToolProvider.getSystemDocumentationTool();
