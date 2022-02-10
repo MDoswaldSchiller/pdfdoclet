@@ -18,7 +18,7 @@
 	<!-- =========================================================================== -->
 
 	<properties>
-		<pdfdoclet.version>${pom.version}</pdfdoclet.version>
+		<pdfdoclet.version>${project.version}</pdfdoclet.version>
 	</properties>
 
     <description>
